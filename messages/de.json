@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "title": "Kreatin-Dosierungsrechner — Finde Deine Tägliche Dosis nach Gewicht",
+    "description": "Berechne deine genaue Kreatin-Dosis basierend auf Körpergewicht, Ziel und Aktivitätsniveau. Basierend auf ISSN-Richtlinien."
+  },
+  "calculator": {
+    "title": "Kreatin-Dosierungsrechner",
+    "subtitle": "Erhalte deine persönliche tägliche Kreatin-Dosis — wissenschaftlich fundiert, kostenlos.",
+    "fields": {
+      "weight": "Körpergewicht",
+      "weightPlaceholder": "Gib dein Gewicht ein",
+      "weightUnit": "Einheit",
+      "goal": "Dein Ziel",
+      "activityLevel": "Aktivitätsniveau",
+      "creatineType": "Kreatin-Typ",
+      "loadingPhase": "Ladephase einbeziehen?"
+    },
+    "goals": {
+      "muscle_growth": "Muskelwachstum",
+      "performance": "Athletische Leistung",
+      "endurance": "Ausdauer",
+      "general_health": "Allgemeine Gesundheit"
+    },
+    "activity": {
+      "sedentary": "Sitzend (wenig/kein Sport)",
+      "light": "Leicht Aktiv (1–3 Tage/Woche)",
+      "moderate": "Mäßig Aktiv (3–5 Tage/Woche)",
+      "very_active": "Sehr Aktiv (6–7 Tage/Woche)",
+      "athlete": "Leistungssportler (2x/Tag)"
+    },
+    "creatineTypes": {
+      "monohydrate": "Monohydrat (Empfohlen)",
+      "hcl": "Kreatin HCl",
+      "micronized": "Mikronisiertes Kreatin"
+    },
+    "button": "Meine Dosis Berechnen",
+    "results": {
+      "title": "Dein Kreatin-Plan",
+      "maintenanceDose": "Tägliche Erhaltungsdosis",
+      "loadingDose": "Ladephasen-Dosis",
+      "loadingSchedule": "Ladeprogramm (Tage 1–7)",
+      "loadingInstruction": "Nimm {dose}g, aufgeteilt in 4 Portionen à {serving}g über den Tag verteilt",
+      "maintenanceInstruction": "Nach der Ladephase: nimm {dose}g einmal täglich",
+      "noLoadingInstruction": "Nimm {dose}g einmal täglich (keine Ladephase)",
+      "hydration": "Empfohlene Wasseraufnahme",
+      "hydrationValue": "Mindestens {amount}ml ({liters}L) pro Tag",
+      "timing": "Bester Einnahmezeitpunkt",
+      "timingValue": "Nach dem Training oder zu einer Mahlzeit",
+      "disclaimer": "⚠️ Dieser Rechner dient nur zu Informationszwecken. Konsultiere einen Arzt, bevor du Nahrungsergänzungsmittel einnimmst."
+    }
+  },
+  "nav": {
+    "home": "Rechner",
+    "hcl": "HCl-Rechner",
+    "byWeight": "Dosis nach Gewicht",
+    "blog": "Artikel",
+    "about": "Über uns",
+    "contact": "Kontakt"
+  },
+  "footer": {
+    "tagline": "Wissenschaftlich fundierte Kreatin-Dosierung, kostenlos für alle.",
+    "disclaimer": "Kein medizinischer Rat. Konsultiere immer einen Fachmann.",
+    "privacy": "Datenschutzerklärung",
+    "contact": "Kontaktiere uns",
+    "about": "Über Uns",
+    "home": "Rechner"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "title": "Calculateur de Dose de Créatine — Trouvez Votre Dose Quotidienne par Poids",
+    "description": "Calculez votre dose exacte de créatine selon votre poids, votre objectif et votre niveau d'activité. Basé sur les recommandations de l'ISSN."
+  },
+  "calculator": {
+    "title": "Calculateur de Dose de Créatine",
+    "subtitle": "Obtenez votre dose quotidienne personnalisée de créatine — scientifiquement fondée, gratuite.",
+    "fields": {
+      "weight": "Poids Corporel",
+      "weightPlaceholder": "Entrez votre poids",
+      "weightUnit": "Unité",
+      "goal": "Votre Objectif",
+      "activityLevel": "Niveau d'Activité",
+      "creatineType": "Type de Créatine",
+      "loadingPhase": "Inclure une Phase de Charge?"
+    },
+    "goals": {
+      "muscle_growth": "Croissance Musculaire",
+      "performance": "Performance Athlétique",
+      "endurance": "Endurance",
+      "general_health": "Santé Générale"
+    },
+    "activity": {
+      "sedentary": "Sédentaire (peu/pas d'exercice)",
+      "light": "Légèrement Actif (1–3 jours/semaine)",
+      "moderate": "Modérément Actif (3–5 jours/semaine)",
+      "very_active": "Très Actif (6–7 jours/semaine)",
+      "athlete": "Athlète d'Élite (2x/jour)"
+    },
+    "creatineTypes": {
+      "monohydrate": "Monohydrate (Recommandé)",
+      "hcl": "Créatine HCl",
+      "micronized": "Créatine Micronisée"
+    },
+    "button": "Calculer Ma Dose",
+    "results": {
+      "title": "Votre Plan de Créatine",
+      "maintenanceDose": "Dose de Maintien Quotidienne",
+      "loadingDose": "Dose de Phase de Charge",
+      "loadingSchedule": "Programme de Charge (Jours 1–7)",
+      "loadingInstruction": "Prenez {dose}g, divisés en 4 portions de {serving}g tout au long de la journée",
+      "maintenanceInstruction": "Après la charge : prenez {dose}g une fois par jour",
+      "noLoadingInstruction": "Prenez {dose}g une fois par jour (sans phase de charge)",
+      "hydration": "Apport en Eau Recommandé",
+      "hydrationValue": "Au moins {amount}ml ({liters}L) par jour",
+      "timing": "Meilleur Moment pour Prendre",
+      "timingValue": "Après l'entraînement ou avec un repas",
+      "disclaimer": "⚠️ Ce calculateur est uniquement à titre informatif. Consultez un professionnel de la santé avant de commencer tout supplément."
+    }
+  },
+  "nav": {
+    "home": "Calculateur",
+    "hcl": "Calculateur HCl",
+    "byWeight": "Dose par Poids",
+    "blog": "Articles",
+    "about": "À Propos",
+    "contact": "Contact"
+  },
+  "footer": {
+    "tagline": "Dosage de créatine basé sur la science, gratuit pour tous.",
+    "disclaimer": "Pas un conseil médical. Consultez toujours un professionnel.",
+    "privacy": "Politique de Confidentialité",
+    "contact": "Nous Contacter",
+    "about": "À Propos de Nous",
+    "home": "Calculateur"
+  }
+}

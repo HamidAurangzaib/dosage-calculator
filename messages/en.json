@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "title": "Creatine Dosage Calculator — Find Your Daily Dose by Weight",
+    "description": "Calculate your exact creatine dose based on body weight, goal, and activity level. Based on ISSN guidelines."
+  },
+  "calculator": {
+    "title": "Creatine Dosage Calculator",
+    "subtitle": "Get your personalized daily creatine dose — science-backed, free.",
+    "fields": {
+      "weight": "Body Weight",
+      "weightPlaceholder": "Enter your weight",
+      "weightUnit": "Unit",
+      "goal": "Your Goal",
+      "activityLevel": "Activity Level",
+      "creatineType": "Creatine Type",
+      "loadingPhase": "Include Loading Phase?"
+    },
+    "goals": {
+      "muscle_growth": "Muscle Growth",
+      "performance": "Athletic Performance",
+      "endurance": "Endurance",
+      "general_health": "General Health"
+    },
+    "activity": {
+      "sedentary": "Sedentary (little/no exercise)",
+      "light": "Lightly Active (1–3 days/week)",
+      "moderate": "Moderately Active (3–5 days/week)",
+      "very_active": "Very Active (6–7 days/week)",
+      "athlete": "Elite Athlete (2x/day training)"
+    },
+    "creatineTypes": {
+      "monohydrate": "Monohydrate (Recommended)",
+      "hcl": "Creatine HCl",
+      "micronized": "Micronized Creatine"
+    },
+    "button": "Calculate My Dose",
+    "results": {
+      "title": "Your Creatine Plan",
+      "maintenanceDose": "Daily Maintenance Dose",
+      "loadingDose": "Loading Phase Dose",
+      "loadingSchedule": "Loading Schedule (Days 1–7)",
+      "loadingInstruction": "Take {dose}g, split into 4 servings of {serving}g throughout the day",
+      "maintenanceInstruction": "After loading: take {dose}g once daily",
+      "noLoadingInstruction": "Take {dose}g once daily (no loading phase)",
+      "hydration": "Recommended Water Intake",
+      "hydrationValue": "At least {amount}ml ({liters}L) per day",
+      "timing": "Best Time to Take",
+      "timingValue": "Post-workout or with a meal",
+      "disclaimer": "⚠️ This calculator is for informational purposes only. Consult a healthcare professional before starting any supplement."
+    }
+  },
+  "nav": {
+    "home": "Calculator",
+    "hcl": "HCl Calculator",
+    "byWeight": "Dose by Weight",
+    "blog": "Articles",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "footer": {
+    "tagline": "Science-based creatine dosage, free for everyone.",
+    "disclaimer": "Not medical advice. Always consult a qualified professional.",
+    "privacy": "Privacy Policy",
+    "contact": "Contact Us",
+    "about": "About Us",
+    "home": "Calculator"
+  }
+}

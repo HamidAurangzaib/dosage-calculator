@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "title": "Calculadora de Dosagem de Creatina — Encontre Sua Dose Diária por Peso",
+    "description": "Calcule sua dose exata de creatina com base no peso corporal, objetivo e nível de atividade. Baseado nas diretrizes da ISSN."
+  },
+  "calculator": {
+    "title": "Calculadora de Dosagem de Creatina",
+    "subtitle": "Obtenha sua dose diária personalizada de creatina — baseada em ciência, gratuita.",
+    "fields": {
+      "weight": "Peso Corporal",
+      "weightPlaceholder": "Digite seu peso",
+      "weightUnit": "Unidade",
+      "goal": "Seu Objetivo",
+      "activityLevel": "Nível de Atividade",
+      "creatineType": "Tipo de Creatina",
+      "loadingPhase": "Incluir Fase de Carga?"
+    },
+    "goals": {
+      "muscle_growth": "Crescimento Muscular",
+      "performance": "Desempenho Atlético",
+      "endurance": "Resistência",
+      "general_health": "Saúde Geral"
+    },
+    "activity": {
+      "sedentary": "Sedentário (pouco/nenhum exercício)",
+      "light": "Levemente Ativo (1–3 dias/semana)",
+      "moderate": "Moderadamente Ativo (3–5 dias/semana)",
+      "very_active": "Muito Ativo (6–7 dias/semana)",
+      "athlete": "Atleta de Elite (2x/dia)"
+    },
+    "creatineTypes": {
+      "monohydrate": "Monohidrato (Recomendado)",
+      "hcl": "Creatina HCl",
+      "micronized": "Creatina Micronizada"
+    },
+    "button": "Calcular Minha Dose",
+    "results": {
+      "title": "Seu Plano de Creatina",
+      "maintenanceDose": "Dose de Manutenção Diária",
+      "loadingDose": "Dose da Fase de Carga",
+      "loadingSchedule": "Cronograma de Carga (Dias 1–7)",
+      "loadingInstruction": "Tome {dose}g, divididos em 4 porções de {serving}g ao longo do dia",
+      "maintenanceInstruction": "Após a carga: tome {dose}g uma vez ao dia",
+      "noLoadingInstruction": "Tome {dose}g uma vez ao dia (sem fase de carga)",
+      "hydration": "Ingestão de Água Recomendada",
+      "hydrationValue": "Pelo menos {amount}ml ({liters}L) por dia",
+      "timing": "Melhor Hora para Tomar",
+      "timingValue": "Pós-treino ou com uma refeição",
+      "disclaimer": "⚠️ Esta calculadora é apenas para fins informativos. Consulte um profissional de saúde antes de iniciar qualquer suplemento."
+    }
+  },
+  "nav": {
+    "home": "Calculadora",
+    "hcl": "Calculadora HCl",
+    "byWeight": "Dose por Peso",
+    "blog": "Artigos",
+    "about": "Sobre",
+    "contact": "Contato"
+  },
+  "footer": {
+    "tagline": "Dosagem de creatina baseada em ciência, gratuita para todos.",
+    "disclaimer": "Não é conselho médico. Sempre consulte um profissional.",
+    "privacy": "Política de Privacidade",
+    "contact": "Fale Conosco",
+    "about": "Sobre Nós",
+    "home": "Calculadora"
+  }
+}
