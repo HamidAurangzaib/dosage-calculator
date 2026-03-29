@@ -15,16 +15,16 @@ export async function generateMetadata({
     description:
       'Enter your weight to get your exact creatine dose in grams. Supports kg and lbs. Loading phase + maintenance dose calculated instantly.',
     alternates: {
-      canonical: `https://www.creatinecalc.com/${params.locale}/creatine-dosage-by-weight`,
+      canonical: `https://www.creatinedosagecalculator.com/${params.locale}/creatine-dosage-by-weight`,
       languages: {
-        en: 'https://www.creatinecalc.com/en/creatine-dosage-by-weight',
-        es: 'https://www.creatinecalc.com/es/creatine-dosage-by-weight',
-        fr: 'https://www.creatinecalc.com/fr/creatine-dosage-by-weight',
-        de: 'https://www.creatinecalc.com/de/creatine-dosage-by-weight',
-        pt: 'https://www.creatinecalc.com/pt/creatine-dosage-by-weight',
-        ar: 'https://www.creatinecalc.com/ar/creatine-dosage-by-weight',
-        ur: 'https://www.creatinecalc.com/ur/creatine-dosage-by-weight',
-        'x-default': 'https://www.creatinecalc.com/en/creatine-dosage-by-weight',
+        en: 'https://www.creatinedosagecalculator.com/en/creatine-dosage-by-weight',
+        es: 'https://www.creatinedosagecalculator.com/es/creatine-dosage-by-weight',
+        fr: 'https://www.creatinedosagecalculator.com/fr/creatine-dosage-by-weight',
+        de: 'https://www.creatinedosagecalculator.com/de/creatine-dosage-by-weight',
+        pt: 'https://www.creatinedosagecalculator.com/pt/creatine-dosage-by-weight',
+        ar: 'https://www.creatinedosagecalculator.com/ar/creatine-dosage-by-weight',
+        ur: 'https://www.creatinedosagecalculator.com/ur/creatine-dosage-by-weight',
+        'x-default': 'https://www.creatinedosagecalculator.com/en/creatine-dosage-by-weight',
       },
     },
   };
@@ -37,7 +37,7 @@ export default function DosageByWeightPage({ params }: { params: { locale: strin
     <>
       <StructuredData locale={params.locale} includeApp />
 
-      <div className="max-w-4xl mx-auto px-4 py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="text-center mb-10">
           <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
             Creatine Dosage by Weight Calculator

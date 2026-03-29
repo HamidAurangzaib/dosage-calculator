@@ -14,16 +14,16 @@ export async function generateMetadata({
     description:
       'Calculate your Creatine HCl dose by body weight. HCl requires 40–50% less than monohydrate. Free calculator + science-backed guide.',
     alternates: {
-      canonical: `https://www.creatinecalc.com/${params.locale}/creatine-hcl-calculator`,
+      canonical: `https://www.creatinedosagecalculator.com/${params.locale}/creatine-hcl-calculator`,
       languages: {
-        en: 'https://www.creatinecalc.com/en/creatine-hcl-calculator',
-        es: 'https://www.creatinecalc.com/es/creatine-hcl-calculator',
-        fr: 'https://www.creatinecalc.com/fr/creatine-hcl-calculator',
-        de: 'https://www.creatinecalc.com/de/creatine-hcl-calculator',
-        pt: 'https://www.creatinecalc.com/pt/creatine-hcl-calculator',
-        ar: 'https://www.creatinecalc.com/ar/creatine-hcl-calculator',
-        ur: 'https://www.creatinecalc.com/ur/creatine-hcl-calculator',
-        'x-default': 'https://www.creatinecalc.com/en/creatine-hcl-calculator',
+        en: 'https://www.creatinedosagecalculator.com/en/creatine-hcl-calculator',
+        es: 'https://www.creatinedosagecalculator.com/es/creatine-hcl-calculator',
+        fr: 'https://www.creatinedosagecalculator.com/fr/creatine-hcl-calculator',
+        de: 'https://www.creatinedosagecalculator.com/de/creatine-hcl-calculator',
+        pt: 'https://www.creatinedosagecalculator.com/pt/creatine-hcl-calculator',
+        ar: 'https://www.creatinedosagecalculator.com/ar/creatine-hcl-calculator',
+        ur: 'https://www.creatinedosagecalculator.com/ur/creatine-hcl-calculator',
+        'x-default': 'https://www.creatinedosagecalculator.com/en/creatine-hcl-calculator',
       },
     },
   };
@@ -57,7 +57,7 @@ export default function HclCalculatorPage({ params }: { params: { locale: string
     <>
       <StructuredData locale={params.locale} faqItems={faqItems} includeFAQ includeApp />
 
-      <div className="max-w-4xl mx-auto px-4 py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="text-center mb-10">
           <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
             Creatine HCl Dosage Calculator
@@ -68,8 +68,26 @@ export default function HclCalculatorPage({ params }: { params: { locale: string
           </p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8 mb-8">
-          <CreatineCalculator defaultCreatineType="hcl" />
+        <div className="flex flex-col lg:flex-row gap-8 mb-8">
+          <div className="flex-1 bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8">
+            <CreatineCalculator defaultCreatineType="hcl" />
+          </div>
+          <div className="lg:w-72 shrink-0 space-y-5">
+            <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-5">
+              <p className="font-bold text-emerald-800 mb-3">🔬 HCl Key Facts</p>
+              <ul className="space-y-2 text-sm text-emerald-700">
+                <li className="flex gap-2"><span>✓</span> Only 1–2g/day needed</li>
+                <li className="flex gap-2"><span>✓</span> ~38x more soluble than monohydrate</li>
+                <li className="flex gap-2"><span>✓</span> No loading phase required</li>
+                <li className="flex gap-2"><span>✓</span> Gentler on digestion</li>
+              </ul>
+            </div>
+            <div className="bg-white border border-gray-200 rounded-2xl p-5 text-sm">
+              <p className="font-bold text-gray-900 mb-3">Compare Types</p>
+              <Link href={`/${params.locale}`} className="text-emerald-700 hover:underline font-medium block mb-2">← Back to Main Calculator</Link>
+              <Link href={`/${params.locale}/creatine-dosage-by-weight`} className="text-emerald-700 hover:underline font-medium block">Dose by Weight →</Link>
+            </div>
+          </div>
         </div>
 
         <AdSlot slot="2345678901" format="auto" />

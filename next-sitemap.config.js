@@ -1,15 +1,15 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: 'https://www.creatinecalc.com',
+  siteUrl: 'https://www.creatinedosagecalculator.com',
   generateRobotsTxt: true,
   alternateRefs: [
-    { href: 'https://www.creatinecalc.com/en', hreflang: 'en' },
-    { href: 'https://www.creatinecalc.com/es', hreflang: 'es' },
-    { href: 'https://www.creatinecalc.com/fr', hreflang: 'fr' },
-    { href: 'https://www.creatinecalc.com/de', hreflang: 'de' },
-    { href: 'https://www.creatinecalc.com/pt', hreflang: 'pt' },
-    { href: 'https://www.creatinecalc.com/ar', hreflang: 'ar' },
-    { href: 'https://www.creatinecalc.com/ur', hreflang: 'ur' },
+    { href: 'https://www.creatinedosagecalculator.com/en', hreflang: 'en' },
+    { href: 'https://www.creatinedosagecalculator.com/es', hreflang: 'es' },
+    { href: 'https://www.creatinedosagecalculator.com/fr', hreflang: 'fr' },
+    { href: 'https://www.creatinedosagecalculator.com/de', hreflang: 'de' },
+    { href: 'https://www.creatinedosagecalculator.com/pt', hreflang: 'pt' },
+    { href: 'https://www.creatinedosagecalculator.com/ar', hreflang: 'ar' },
+    { href: 'https://www.creatinedosagecalculator.com/ur', hreflang: 'ur' },
   ],
   robotsTxtOptions: {
     policies: [{ userAgent: '*', allow: '/' }],

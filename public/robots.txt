@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://www.creatinecalc.com
+Host: https://www.creatinedosagecalculator.com
 
 # Sitemaps
-Sitemap: https://www.creatinecalc.com/sitemap.xml
+Sitemap: https://www.creatinedosagecalculator.com/sitemap.xml

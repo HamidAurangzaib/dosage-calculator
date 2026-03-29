@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ['latin'], display: 'swap' });
 const rtlLocales = ['ar', 'ur'];
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.creatinecalc.com'),
+  metadataBase: new URL('https://www.creatinedosagecalculator.com'),
 };
 
 export function generateStaticParams() {

@@ -9,7 +9,7 @@ export async function generateMetadata({
     title: 'Privacy Policy — CreatineCalc',
     description: 'Privacy policy for CreatineCalc. Learn how we collect and use data, including AdSense and Analytics disclosures.',
     alternates: {
-      canonical: `https://www.creatinecalc.com/${params.locale}/privacy-policy`,
+      canonical: `https://www.creatinedosagecalculator.com/${params.locale}/privacy-policy`,
     },
   };
 }
@@ -18,7 +18,7 @@ export default function PrivacyPolicyPage() {
   const lastUpdated = 'March 29, 2026';
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-12">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <h1 className="text-4xl font-extrabold text-gray-900 mb-2">Privacy Policy</h1>
       <p className="text-sm text-gray-500 mb-8">Last updated: {lastUpdated}</p>
 
@@ -27,7 +27,7 @@ export default function PrivacyPolicyPage() {
           <h2 className="text-xl font-bold text-gray-900">1. Introduction</h2>
           <p>
             CreatineCalc (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) operates the website
-            www.creatinecalc.com. This Privacy Policy explains how we collect, use, and protect
+            www.creatinedosagecalculator.com. This Privacy Policy explains how we collect, use, and protect
             your information when you use our website.
           </p>
         </section>
@@ -179,7 +179,7 @@ export default function PrivacyPolicyPage() {
           <h2 className="text-xl font-bold text-gray-900">10. Contact</h2>
           <p>
             For any privacy-related requests or questions, please contact us at:{' '}
-            <strong>privacy@creatinecalc.com</strong>
+            <strong>privacy@creatinedosagecalculator.com</strong>
           </p>
         </section>
       </div>

@@ -11,14 +11,14 @@ export async function generateMetadata({
     description:
       'Learn about CreatineCalc, our mission to provide accurate creatine dosage information based on ISSN guidelines, and why we built this free tool.',
     alternates: {
-      canonical: `https://www.creatinecalc.com/${params.locale}/about`,
+      canonical: `https://www.creatinedosagecalculator.com/${params.locale}/about`,
     },
   };
 }
 
 export default function AboutPage({ params }: { params: { locale: string } }) {
   return (
-    <div className="max-w-3xl mx-auto px-4 py-12">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <h1 className="text-4xl font-extrabold text-gray-900 mb-6">About CreatineCalc</h1>
 
       <div className="prose prose-gray max-w-none space-y-6 text-gray-700">

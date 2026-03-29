@@ -15,7 +15,7 @@ export default function StructuredData({
   includeFAQ = false,
   includeApp = false,
 }: StructuredDataProps) {
-  const baseUrl = 'https://www.creatinecalc.com';
+  const baseUrl = 'https://www.creatinedosagecalculator.com';
 
   const websiteSchema = {
     '@context': 'https://schema.org',

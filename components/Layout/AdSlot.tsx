@@ -1,5 +1,5 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 interface AdSlotProps {
   slot: string;
@@ -7,16 +7,26 @@ interface AdSlotProps {
   className?: string;
 }
 
+const ADS_ENABLED = process.env.NEXT_PUBLIC_ADS_ENABLED === 'true';
+
 export default function AdSlot({ slot, format = 'auto', className }: AdSlotProps) {
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
-    try {
-      // @ts-expect-error adsbygoogle global
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch {}
+    setMounted(true);
+    if (ADS_ENABLED) {
+      try {
+        // @ts-expect-error adsbygoogle global
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch {}
+    }
   }, []);
 
+  if (!ADS_ENABLED) return null;
+  if (!mounted) return null;
+
   return (
-    <div className={`ad-container my-6 min-h-[100px] ${className ?? ''}`}>
+    <div className={`ad-container my-6 ${className ?? ''}`}>
       <ins
         className="adsbygoogle"
         style={{ display: 'block' }}

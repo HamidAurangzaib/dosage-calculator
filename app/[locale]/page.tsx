@@ -15,16 +15,16 @@ export async function generateMetadata({
     title: t('title'),
     description: t('description'),
     alternates: {
-      canonical: `https://www.creatinecalc.com/${params.locale}`,
+      canonical: `https://www.creatinedosagecalculator.com/${params.locale}`,
       languages: {
-        en: 'https://www.creatinecalc.com/en',
-        es: 'https://www.creatinecalc.com/es',
-        fr: 'https://www.creatinecalc.com/fr',
-        de: 'https://www.creatinecalc.com/de',
-        pt: 'https://www.creatinecalc.com/pt',
-        ar: 'https://www.creatinecalc.com/ar',
-        ur: 'https://www.creatinecalc.com/ur',
-        'x-default': 'https://www.creatinecalc.com/en',
+        en: 'https://www.creatinedosagecalculator.com/en',
+        es: 'https://www.creatinedosagecalculator.com/es',
+        fr: 'https://www.creatinedosagecalculator.com/fr',
+        de: 'https://www.creatinedosagecalculator.com/de',
+        pt: 'https://www.creatinedosagecalculator.com/pt',
+        ar: 'https://www.creatinedosagecalculator.com/ar',
+        ur: 'https://www.creatinedosagecalculator.com/ur',
+        'x-default': 'https://www.creatinedosagecalculator.com/en',
       },
     },
   };
@@ -73,7 +73,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
     <>
       <StructuredData locale={params.locale} faqItems={faqItems} includeFAQ includeApp />
 
-      <div className="max-w-4xl mx-auto px-4 py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Hero */}
         <div className="text-center mb-10">
           <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
@@ -85,9 +85,47 @@ export default function HomePage({ params }: { params: { locale: string } }) {
           </p>
         </div>
 
-        {/* Calculator */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8 mb-8">
-          <CreatineCalculator />
+        {/* Calculator — two column on desktop */}
+        <div className="flex flex-col lg:flex-row gap-8 mb-8">
+          <div className="flex-1 bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8">
+            <CreatineCalculator />
+          </div>
+
+          {/* Side info panel — desktop only */}
+          <div className="lg:w-80 shrink-0 space-y-5">
+            <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-5">
+              <p className="font-bold text-emerald-800 mb-3 text-base">📊 ISSN-Based Formulas</p>
+              <ul className="space-y-2 text-sm text-emerald-700">
+                <li className="flex gap-2"><span>✓</span> Maintenance: 0.03 g/kg/day</li>
+                <li className="flex gap-2"><span>✓</span> Loading: 0.3 g/kg/day × 7 days</li>
+                <li className="flex gap-2"><span>✓</span> HCl: 1–2g/day (no loading)</li>
+                <li className="flex gap-2"><span>✓</span> Water: 2.5–3L/day minimum</li>
+              </ul>
+            </div>
+
+            <div className="bg-white border border-gray-200 rounded-2xl p-5">
+              <p className="font-bold text-gray-900 mb-3 text-base">🔬 More Calculators</p>
+              <ul className="space-y-3 text-sm">
+                <li>
+                  <Link href={`/${params.locale}/creatine-hcl-calculator`} className="text-emerald-700 hover:underline font-medium">
+                    Creatine HCl Dosage Calculator →
+                  </Link>
+                  <p className="text-gray-500 text-xs mt-0.5">Lower dose, better solubility</p>
+                </li>
+                <li>
+                  <Link href={`/${params.locale}/creatine-dosage-by-weight`} className="text-emerald-700 hover:underline font-medium">
+                    Dose by Body Weight →
+                  </Link>
+                  <p className="text-gray-500 text-xs mt-0.5">Quick reference for all weights</p>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 text-sm text-amber-800">
+              <p className="font-semibold mb-1">⚠️ Disclaimer</p>
+              <p>This calculator is for informational purposes only. Consult a healthcare professional before starting any supplement.</p>
+            </div>
+          </div>
         </div>
 
         {/* Ad slot after calculator */}
