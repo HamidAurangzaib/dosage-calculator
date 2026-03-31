@@ -163,21 +163,43 @@ export default function HclCalculatorPage({ params }: { params: { locale: string
           </div>
         </section>
 
-        <section className="mt-8 p-5 bg-emerald-50 rounded-xl border border-emerald-100">
-          <p className="font-semibold text-gray-800 mb-3">Related Calculators</p>
-          <div className="flex flex-wrap gap-3 text-sm">
-            <Link href={`/${params.locale}`} className="text-emerald-700 hover:underline font-medium">
-              Main Creatine Calculator →
-            </Link>
-            <Link href={`/${params.locale}/creatine-dosage-by-weight`} className="text-emerald-700 hover:underline font-medium">
-              Dose by Weight →
-            </Link>
-            <Link href={`/${params.locale}/blog`} className="text-emerald-700 hover:underline font-medium">
-              Read the HCl vs Monohydrate Guide →
-            </Link>
+        {/* Further Reading */}
+        <section className="mt-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Further Reading</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {[
+              { slug: 'creatine-hcl-vs-monohydrate', title: 'Creatine HCl vs Monohydrate', desc: 'A full comparison of both forms — dosage, absorption, cost, and which suits your goals.' },
+              { slug: 'creatine-monohydrate-side-effects', title: 'Creatine Side Effects: Real vs Myths', desc: 'Separating fact from fiction on kidney damage, hair loss, bloating, and more.' },
+              { slug: 'best-time-to-take-creatine', title: 'Best Time to Take Creatine', desc: 'Does creatine timing actually matter? The research on pre vs post-workout dosing.' },
+            ].map((article) => (
+              <Link
+                key={article.slug}
+                href={`/${params.locale}/blog/${article.slug}`}
+                className="group bg-white border border-gray-200 rounded-xl p-5 hover:border-emerald-300 hover:shadow-md transition-all"
+              >
+                <h3 className="font-bold text-gray-900 mb-2 group-hover:text-emerald-700 transition-colors">{article.title}</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">{article.desc}</p>
+                <span className="inline-block mt-3 text-sm text-emerald-600 font-medium">Read article →</span>
+              </Link>
+            ))}
           </div>
         </section>
       </div>
+
+      {/* BreadcrumbList schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: `https://www.creatinedosagecalculator.com/${params.locale}` },
+              { '@type': 'ListItem', position: 2, name: 'Creatine HCl Calculator', item: `https://www.creatinedosagecalculator.com/${params.locale}/creatine-hcl-calculator` },
+            ],
+          }),
+        }}
+      />
     </>
   );
 }

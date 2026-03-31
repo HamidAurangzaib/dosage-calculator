@@ -63,6 +63,20 @@
   <url><loc>https://www.creatinedosagecalculator.com/ar/creatine-dosage-by-weight</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://www.creatinedosagecalculator.com/ur/creatine-dosage-by-weight</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
 
+  <!-- Creatine Guide (Pillar Page) -->
+  <url>
+    <loc>https://www.creatinedosagecalculator.com/en/creatine-guide</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.creatinedosagecalculator.com/en/creatine-guide"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.creatinedosagecalculator.com/es/creatine-guide"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.creatinedosagecalculator.com/fr/creatine-guide"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.creatinedosagecalculator.com/de/creatine-guide"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.creatinedosagecalculator.com/pt/creatine-guide"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://www.creatinedosagecalculator.com/ar/creatine-guide"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://www.creatinedosagecalculator.com/ur/creatine-guide"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
   <!-- Blog Index -->
   <url><loc>https://www.creatinedosagecalculator.com/en/blog</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.creatinedosagecalculator.com/es/blog</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>

@@ -118,21 +118,43 @@ export default function DosageByWeightPage({ params }: { params: { locale: strin
           </p>
         </section>
 
-        <section className="mt-8 p-5 bg-emerald-50 rounded-xl border border-emerald-100">
-          <p className="font-semibold text-gray-800 mb-3">Explore More</p>
-          <div className="flex flex-wrap gap-3 text-sm">
-            <Link href={`/${params.locale}`} className="text-emerald-700 hover:underline font-medium">
-              Main Creatine Calculator →
-            </Link>
-            <Link href={`/${params.locale}/creatine-hcl-calculator`} className="text-emerald-700 hover:underline font-medium">
-              Creatine HCl Calculator →
-            </Link>
-            <Link href={`/${params.locale}/blog`} className="text-emerald-700 hover:underline font-medium">
-              Creatine Articles →
-            </Link>
+        {/* Further Reading */}
+        <section className="mt-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Further Reading</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {[
+              { slug: 'how-much-creatine-per-day-by-weight', title: 'Exact Dosage Tables by Weight', desc: 'Ready-to-use dosage tables from 50kg to 120kg — daily and loading phase amounts.' },
+              { slug: 'creatine-loading-phase-guide', title: 'Creatine Loading Phase Guide', desc: 'Should you do a loading phase? What doses, timing, and duration work best.' },
+              { slug: 'creatine-dosage-for-beginners', title: 'Creatine Dosage for Beginners', desc: 'New to creatine? Everything you need to know to start correctly and safely.' },
+            ].map((article) => (
+              <Link
+                key={article.slug}
+                href={`/${params.locale}/blog/${article.slug}`}
+                className="group bg-white border border-gray-200 rounded-xl p-5 hover:border-emerald-300 hover:shadow-md transition-all"
+              >
+                <h3 className="font-bold text-gray-900 mb-2 group-hover:text-emerald-700 transition-colors">{article.title}</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">{article.desc}</p>
+                <span className="inline-block mt-3 text-sm text-emerald-600 font-medium">Read article →</span>
+              </Link>
+            ))}
           </div>
         </section>
       </div>
+
+      {/* BreadcrumbList schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: `https://www.creatinedosagecalculator.com/${params.locale}` },
+              { '@type': 'ListItem', position: 2, name: 'Creatine Dosage by Weight', item: `https://www.creatinedosagecalculator.com/${params.locale}/creatine-dosage-by-weight` },
+            ],
+          }),
+        }}
+      />
     </>
   );
 }

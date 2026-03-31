@@ -31,6 +31,19 @@ export async function generateMetadata({
   };
 }
 
+// Topic-based related article mapping — ensures relevance, not just recency
+const relatedMap: Record<string, string[]> = {
+  'how-much-creatine-per-day': ['creatine-loading-phase-guide', 'creatine-dosage-for-beginners', 'how-much-creatine-per-day-by-weight'],
+  'creatine-loading-phase-guide': ['how-much-creatine-per-day', 'best-time-to-take-creatine', 'creatine-dosage-for-beginners'],
+  'creatine-for-muscle-growth': ['creatine-loading-phase-guide', 'best-time-to-take-creatine', 'creatine-dosage-for-beginners'],
+  'creatine-hcl-vs-monohydrate': ['creatine-monohydrate-side-effects', 'how-much-creatine-per-day', 'how-much-creatine-per-day-by-weight'],
+  'creatine-for-women': ['how-much-creatine-per-day', 'creatine-monohydrate-side-effects', 'creatine-dosage-for-beginners'],
+  'best-time-to-take-creatine': ['creatine-loading-phase-guide', 'how-much-creatine-per-day', 'creatine-dosage-for-beginners'],
+  'creatine-dosage-for-beginners': ['how-much-creatine-per-day', 'creatine-loading-phase-guide', 'best-time-to-take-creatine', 'creatine-monohydrate-side-effects'],
+  'creatine-monohydrate-side-effects': ['creatine-hcl-vs-monohydrate', 'creatine-dosage-for-beginners', 'how-much-creatine-per-day'],
+  'how-much-creatine-per-day-by-weight': ['how-much-creatine-per-day', 'creatine-loading-phase-guide', 'creatine-dosage-for-beginners'],
+};
+
 export default function BlogPostPage({
   params,
 }: {
@@ -39,11 +52,37 @@ export default function BlogPostPage({
   const post = getPostBySlug(params.slug);
   if (!post) notFound();
 
-  const allPosts = getAllPosts().filter((p) => p.slug !== params.slug).slice(0, 4);
+  const allPosts = getAllPosts();
+
+  // Sidebar: all posts except current, up to 5
+  const sidebarPosts = allPosts.filter((p) => p.slug !== params.slug).slice(0, 5);
+
+  // Related articles: topic-mapped, fall back to recent
+  const relatedSlugs = relatedMap[params.slug] ?? [];
+  const relatedPosts = relatedSlugs
+    .map((s) => allPosts.find((p) => p.slug === s))
+    .filter(Boolean)
+    .slice(0, 4) as typeof allPosts;
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `https://www.creatinedosagecalculator.com/${params.locale}` },
+      { '@type': 'ListItem', position: 2, name: 'Articles', item: `https://www.creatinedosagecalculator.com/${params.locale}/blog` },
+      { '@type': 'ListItem', position: 3, name: post.title, item: `https://www.creatinedosagecalculator.com/${params.locale}/blog/${params.slug}` },
+    ],
+  };
 
   return (
     <>
       <StructuredData locale={params.locale} />
+
+      {/* BreadcrumbList schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Breadcrumb */}
@@ -74,7 +113,6 @@ export default function BlogPostPage({
               </div>
             </header>
 
-
             {/* Article body — strip leading H1 (already shown in header) */}
             <article className="prose prose-lg prose-gray max-w-none mt-8
               prose-h1:text-3xl prose-h1:font-extrabold prose-h1:text-gray-900
@@ -96,8 +134,7 @@ export default function BlogPostPage({
               </ReactMarkdown>
             </article>
 
-
-            {/* CTA */}
+            {/* CTA — calculator */}
             <div className="mt-10 p-8 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl border border-emerald-100 text-center">
               <p className="font-extrabold text-gray-900 mb-2 text-2xl">
                 Calculate Your Exact Creatine Dose
@@ -105,24 +142,66 @@ export default function BlogPostPage({
               <p className="text-gray-600 mb-5 max-w-md mx-auto">
                 Free calculator — personalized by body weight, goal, and activity level. Based on ISSN guidelines.
               </p>
-              <Link
-                href={`/${params.locale}`}
-                className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-3 rounded-xl transition-colors text-lg shadow-sm"
-              >
-                Use the Free Calculator →
-              </Link>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Link
+                  href={`/${params.locale}`}
+                  className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-3 rounded-xl transition-colors text-lg shadow-sm"
+                >
+                  Use the Free Creatine Dosage Calculator →
+                </Link>
+                <Link
+                  href={`/${params.locale}/creatine-hcl-calculator`}
+                  className="inline-block bg-white hover:bg-gray-50 text-emerald-700 font-bold px-6 py-3 rounded-xl transition-colors text-base shadow-sm border border-emerald-200"
+                >
+                  Creatine HCl Calculator →
+                </Link>
+              </div>
             </div>
+
+            {/* Related Articles */}
+            {relatedPosts.length > 0 && (
+              <section className="mt-12">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Related Articles</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {relatedPosts.map((related) => (
+                    <Link
+                      key={related.slug}
+                      href={`/${params.locale}/blog/${related.slug}`}
+                      className="group bg-white border border-gray-200 rounded-xl p-5 hover:border-emerald-300 hover:shadow-md transition-all"
+                    >
+                      <h3 className="font-bold text-gray-900 mb-2 group-hover:text-emerald-700 transition-colors text-base">
+                        {related.title}
+                      </h3>
+                      <p className="text-sm text-gray-600 leading-relaxed line-clamp-2">
+                        {related.description}
+                      </p>
+                      <span className="inline-block mt-3 text-sm text-emerald-600 font-medium">
+                        Read article →
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+
+                <div className="mt-5 flex flex-wrap gap-4 text-sm">
+                  <Link href={`/${params.locale}/blog`} className="text-emerald-600 hover:text-emerald-700 font-semibold">
+                    ← View all creatine articles
+                  </Link>
+                  <Link href={`/${params.locale}/creatine-guide`} className="text-emerald-600 hover:text-emerald-700 font-semibold">
+                    Complete Creatine Guide →
+                  </Link>
+                </div>
+              </section>
+            )}
           </main>
 
           {/* Sidebar */}
           <aside className="lg:w-72 shrink-0 space-y-6">
-            {/* Quick links */}
             <div className="bg-white border border-gray-200 rounded-2xl p-5 sticky top-20">
-              <p className="font-bold text-gray-900 mb-4 text-base">Quick Calculator Links</p>
+              <p className="font-bold text-gray-900 mb-4 text-base">Free Calculators</p>
               <ul className="space-y-2 text-sm">
                 <li>
                   <Link href={`/${params.locale}`} className="flex items-center gap-2 text-emerald-700 hover:text-emerald-800 font-medium">
-                    <span>💊</span> Main Creatine Calculator
+                    <span>💊</span> Creatine Dosage Calculator
                   </Link>
                 </li>
                 <li>
@@ -132,7 +211,7 @@ export default function BlogPostPage({
                 </li>
                 <li>
                   <Link href={`/${params.locale}/creatine-dosage-by-weight`} className="flex items-center gap-2 text-emerald-700 hover:text-emerald-800 font-medium">
-                    <span>⚖️</span> Dose by Weight
+                    <span>⚖️</span> Dose by Body Weight
                   </Link>
                 </li>
               </ul>
@@ -141,7 +220,7 @@ export default function BlogPostPage({
 
               <p className="font-bold text-gray-900 mb-3 text-base">More Articles</p>
               <ul className="space-y-3">
-                {allPosts.map((p) => (
+                {sidebarPosts.map((p) => (
                   <li key={p.slug}>
                     <Link
                       href={`/${params.locale}/blog/${p.slug}`}
@@ -153,12 +232,18 @@ export default function BlogPostPage({
                 ))}
               </ul>
 
-              <div className="mt-5">
+              <div className="mt-5 space-y-2">
                 <Link
                   href={`/${params.locale}/blog`}
-                  className="text-sm font-semibold text-emerald-600 hover:text-emerald-700"
+                  className="block text-sm font-semibold text-emerald-600 hover:text-emerald-700"
                 >
                   ← All Articles
+                </Link>
+                <Link
+                  href={`/${params.locale}/creatine-guide`}
+                  className="block text-sm font-semibold text-emerald-600 hover:text-emerald-700"
+                >
+                  Complete Creatine Guide →
                 </Link>
               </div>
             </div>

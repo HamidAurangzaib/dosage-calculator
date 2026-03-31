@@ -32,6 +32,7 @@ export default function Header() {
     { href: `/${locale}`, label: t('home') },
     { href: `/${locale}/creatine-hcl-calculator`, label: t('hcl') },
     { href: `/${locale}/creatine-dosage-by-weight`, label: t('byWeight') },
+    { href: `/${locale}/creatine-guide`, label: 'Guide' },
     { href: `/${locale}/blog`, label: t('blog') },
     { href: `/${locale}/about`, label: t('about') },
     { href: `/${locale}/contact`, label: t('contact') },

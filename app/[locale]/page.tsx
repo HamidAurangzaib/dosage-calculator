@@ -246,31 +246,81 @@ export default function HomePage({ params }: { params: { locale: string } }) {
         {/* Bottom ad */}
         <AdSlot slot="0987654321" format="rectangle" />
 
-        {/* Internal links */}
-        <section className="mt-8 p-5 bg-emerald-50 rounded-xl border border-emerald-100">
-          <p className="font-semibold text-gray-800 mb-3">Explore More Calculators</p>
-          <div className="flex flex-wrap gap-3 text-sm">
-            <Link
-              href={`/${params.locale}/creatine-hcl-calculator`}
-              className="text-emerald-700 hover:underline font-medium"
-            >
-              Creatine HCl Calculator →
+        {/* Further Reading */}
+        <section className="mt-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Further Reading</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {[
+              {
+                slug: 'creatine-dosage-for-beginners',
+                title: 'Creatine Dosage for Beginners',
+                desc: 'New to creatine? Learn how much to start with and whether you need a loading phase.',
+              },
+              {
+                slug: 'best-time-to-take-creatine',
+                title: 'Best Time to Take Creatine',
+                desc: 'Before or after your workout? The research on creatine timing explained simply.',
+              },
+              {
+                slug: 'creatine-loading-phase-guide',
+                title: 'Creatine Loading Phase Guide',
+                desc: 'What a loading phase is, whether you need one, and how to do it correctly.',
+              },
+              {
+                slug: 'creatine-hcl-vs-monohydrate',
+                title: 'Creatine HCl vs Monohydrate',
+                desc: 'Which form is better for your goals? A side-by-side comparison.',
+              },
+              {
+                slug: 'creatine-monohydrate-side-effects',
+                title: 'Creatine Side Effects: Real vs Myths',
+                desc: 'Kidney damage, hair loss, bloating — what the research actually says.',
+              },
+              {
+                slug: 'how-much-creatine-per-day-by-weight',
+                title: 'Exact Creatine Dosage by Weight',
+                desc: 'Ready-to-use dosage tables for every body weight from 50kg to 120kg.',
+              },
+            ].map((article) => (
+              <Link
+                key={article.slug}
+                href={`/${params.locale}/blog/${article.slug}`}
+                className="group bg-white border border-gray-200 rounded-xl p-5 hover:border-emerald-300 hover:shadow-md transition-all"
+              >
+                <h3 className="font-bold text-gray-900 mb-2 group-hover:text-emerald-700 transition-colors text-base">
+                  {article.title}
+                </h3>
+                <p className="text-sm text-gray-600 leading-relaxed">{article.desc}</p>
+                <span className="inline-block mt-3 text-sm text-emerald-600 font-medium">
+                  Read article →
+                </span>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-5 flex flex-wrap gap-4 text-sm">
+            <Link href={`/${params.locale}/blog`} className="text-emerald-600 hover:text-emerald-700 font-semibold">
+              View all creatine articles →
             </Link>
-            <Link
-              href={`/${params.locale}/creatine-dosage-by-weight`}
-              className="text-emerald-700 hover:underline font-medium"
-            >
-              Dose by Weight Calculator →
-            </Link>
-            <Link
-              href={`/${params.locale}/blog`}
-              className="text-emerald-700 hover:underline font-medium"
-            >
-              Creatine Articles →
+            <Link href={`/${params.locale}/creatine-guide`} className="text-emerald-600 hover:text-emerald-700 font-semibold">
+              Complete Creatine Guide →
             </Link>
           </div>
         </section>
       </div>
+
+      {/* BreadcrumbList schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Creatine Dosage Calculator', item: `https://www.creatinedosagecalculator.com/${params.locale}` },
+            ],
+          }),
+        }}
+      />
     </>
   );
 }
