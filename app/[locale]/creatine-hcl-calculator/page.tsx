@@ -10,9 +10,8 @@ export async function generateMetadata({
   params: { locale: string };
 }): Promise<Metadata> {
   return {
-    title: 'Creatine HCl Dosage Calculator — Lower Dose, Same Results',
-    description:
-      'Calculate your Creatine HCl dose by body weight. HCl requires 40–50% less than monohydrate. Free calculator + science-backed guide.',
+    title: 'Creatine HCl Dosage Calculator — Exact Dose by Body Weight',
+    description: 'Creatine HCl needs 40–50% less than monohydrate. Enter your weight and get your exact HCl dose instantly. Free, science-backed calculator.',
     alternates: {
       canonical: `https://www.creatinedosagecalculator.com/${params.locale}/creatine-hcl-calculator`,
       languages: {

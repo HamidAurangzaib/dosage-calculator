@@ -11,9 +11,8 @@ export async function generateMetadata({
   params: { locale: string };
 }): Promise<Metadata> {
   return {
-    title: 'Creatine Dosage by Weight Calculator — Exact Grams Per Kg/Lbs',
-    description:
-      'Enter your weight to get your exact creatine dose in grams. Supports kg and lbs. Loading phase + maintenance dose calculated instantly.',
+    title: 'Creatine Dosage by Weight — How Many Grams Per Kg or Lbs?',
+    description: 'Not sure how much creatine to take for your weight? Enter your kg or lbs and get your exact daily dose + loading phase in seconds. Free tool.',
     alternates: {
       canonical: `https://www.creatinedosagecalculator.com/${params.locale}/creatine-dosage-by-weight`,
       languages: {

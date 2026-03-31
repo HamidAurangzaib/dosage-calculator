@@ -8,8 +8,8 @@ export async function generateMetadata({
   params: { locale: string };
 }): Promise<Metadata> {
   return {
-    title: 'Creatine Articles & Guides — CreatineCalc',
-    description: 'Science-backed articles on creatine dosage, loading phase, HCl vs monohydrate, muscle growth, and more.',
+    title: 'Creatine Guides & Dosage Tips — Expert Articles',
+    description: 'Learn exactly how to take creatine — dosage by weight, loading phase, HCl vs monohydrate, creatine for women, and muscle growth. Free guides.',
     alternates: {
       canonical: `https://www.creatinedosagecalculator.com/${params.locale}/blog`,
     },
