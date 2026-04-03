@@ -9,8 +9,11 @@ export interface BlogPost {
   title: string;
   description: string;
   date: string;
+  lastUpdated?: string;
   content: string;
   keywords: string[];
+  references: string[];
+  reviewedBy?: string;
 }
 
 export function getAllPosts(): BlogPost[] {
@@ -24,8 +27,11 @@ export function getAllPosts(): BlogPost[] {
         title: data.title,
         description: data.description,
         date: data.date,
+        lastUpdated: data.lastUpdated,
         content,
         keywords: data.keywords || [],
+        references: data.references || [],
+        reviewedBy: data.reviewedBy,
       };
     })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());

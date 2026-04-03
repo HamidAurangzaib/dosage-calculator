@@ -135,16 +135,48 @@ export default function BlogPostPage({
                 {post.title}
               </h1>
               <p className="text-lg text-gray-600 leading-relaxed mb-4">{post.description}</p>
-              <div className="flex items-center gap-4 text-sm text-gray-400 border-b border-gray-200 pb-4">
-                <time>
-                  {new Date(post.date).toLocaleDateString('en-US', {
-                    year: 'numeric', month: 'long', day: 'numeric',
-                  })}
+              <div className="flex flex-wrap items-center gap-3 text-sm text-gray-400 border-b border-gray-200 pb-4">
+                <time dateTime={post.date}>
+                  Published {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                 </time>
+                {post.lastUpdated && post.lastUpdated !== post.date && (
+                  <>
+                    <span>·</span>
+                    <span>Updated {new Date(post.lastUpdated).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                  </>
+                )}
                 <span>·</span>
                 <span>{Math.ceil(post.content.split(' ').length / 200)} min read</span>
+                {post.reviewedBy && (
+                  <>
+                    <span>·</span>
+                    <span className="inline-flex items-center gap-1 text-emerald-700 font-medium">
+                      <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg>
+                      Verified against {post.reviewedBy}
+                    </span>
+                  </>
+                )}
               </div>
             </header>
+
+            {/* E-E-A-T: Author / Expertise box */}
+            <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-4 mb-8 flex gap-4 items-start">
+              <div className="w-11 h-11 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg shrink-0">CC</div>
+              <div>
+                <p className="font-semibold text-gray-900 text-sm">Written by the CreatineCalc Research Team</p>
+                <p className="text-gray-600 text-sm mt-0.5">
+                  Our content is based on peer-reviewed sports nutrition research and the{' '}
+                  <strong>ISSN Position Stand on Creatine Supplementation</strong> — the gold standard reference in the field.
+                  Formulas and dosage guidance are cross-referenced against primary literature before publication.
+                </p>
+              </div>
+            </div>
+
+            {/* YMYL Disclaimer — above-the-fold for health content */}
+            <div className="bg-amber-50 border-l-4 border-amber-400 rounded-r-xl p-4 mb-8 text-sm text-amber-800">
+              <p className="font-semibold mb-1">Important — Health Disclaimer</p>
+              <p>This article is for <strong>educational purposes only</strong> and does not constitute medical advice. Creatine supplementation affects individuals differently. Consult a qualified healthcare professional before starting any supplement, especially if you have pre-existing health conditions, kidney concerns, or are pregnant.</p>
+            </div>
 
             {/* Article body — strip leading H1 (already shown in header) */}
             <article className="prose prose-lg prose-gray max-w-none mt-8
@@ -190,6 +222,25 @@ export default function BlogPostPage({
                 </Link>
               </div>
             </div>
+
+            {/* Scientific References — E-E-A-T / YMYL trust signal */}
+            {post.references && post.references.length > 0 && (
+              <section className="mt-12 border-t border-gray-200 pt-8">
+                <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                  Scientific References
+                </h2>
+                <p className="text-sm text-gray-500 mb-4">All claims in this article are supported by peer-reviewed research. Key sources:</p>
+                <ol className="space-y-2">
+                  {post.references.map((ref, i) => (
+                    <li key={i} className="text-sm text-gray-600 flex gap-3">
+                      <span className="text-emerald-600 font-bold shrink-0">[{i + 1}]</span>
+                      <span>{ref}</span>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            )}
 
             {/* Related Articles */}
             {relatedPosts.length > 0 && (

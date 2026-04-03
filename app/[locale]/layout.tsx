@@ -63,6 +63,22 @@ export default async function RootLayout({
         />
       </head>
       <body className={inter.className}>
+        {/* Organization schema — E-E-A-T authority signal */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'CreatineCalc',
+              url: 'https://www.creatinedosagecalculator.com',
+              description: 'Science-based creatine dosage calculator and educational resource based on ISSN guidelines.',
+              foundingDate: '2026',
+              knowsAbout: ['Creatine supplementation', 'Sports nutrition', 'Exercise physiology', 'ISSN guidelines'],
+              sameAs: [],
+            }),
+          }}
+        />
         <NextIntlClientProvider messages={messages}>
           <Header />
           <main className="min-h-screen">{children}</main>
