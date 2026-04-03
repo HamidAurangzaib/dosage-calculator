@@ -13,6 +13,20 @@ const rtlLocales = ['ar', 'ur'];
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.creatinedosagecalculator.com'),
+  openGraph: {
+    siteName: 'CreatineCalc',
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@creatinecalc',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
 };
 
 export function generateStaticParams() {

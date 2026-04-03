@@ -14,6 +14,17 @@ export async function generateMetadata({
   return {
     title: t('title'),
     description: t('description'),
+    keywords: ['creatine dosage calculator', 'how much creatine per day', 'creatine dose by weight', 'ISSN creatine', 'creatine monohydrate dose', 'creatine loading phase'],
+    openGraph: {
+      title: t('title'),
+      description: t('description'),
+      url: `https://www.creatinedosagecalculator.com/${params.locale}`,
+      type: 'website',
+    },
+    twitter: {
+      title: t('title'),
+      description: t('description'),
+    },
     alternates: {
       canonical: `https://www.creatinedosagecalculator.com/${params.locale}`,
       languages: {

@@ -13,6 +13,17 @@ export async function generateMetadata({
   return {
     title: 'Creatine Dosage by Weight — How Many Grams Per Kg or Lbs?',
     description: 'Not sure how much creatine to take for your weight? Enter your kg or lbs and get your exact daily dose + loading phase in seconds. Free tool.',
+    keywords: ['creatine dosage by weight', 'creatine dose per kg', 'creatine grams per pound', 'how much creatine for my weight', 'creatine weight calculator'],
+    openGraph: {
+      title: 'Creatine Dosage by Weight — How Many Grams Per Kg or Lbs?',
+      description: 'Not sure how much creatine to take for your weight? Enter your kg or lbs and get your exact daily dose + loading phase in seconds. Free tool.',
+      url: `https://www.creatinedosagecalculator.com/${params.locale}/creatine-dosage-by-weight`,
+      type: 'website',
+    },
+    twitter: {
+      title: 'Creatine Dosage by Weight — How Many Grams Per Kg or Lbs?',
+      description: 'Not sure how much creatine for your weight? Get your exact dose in seconds. Free calculator.',
+    },
     alternates: {
       canonical: `https://www.creatinedosagecalculator.com/${params.locale}/creatine-dosage-by-weight`,
       languages: {

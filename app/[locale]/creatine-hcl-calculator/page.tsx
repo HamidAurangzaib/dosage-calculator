@@ -12,6 +12,17 @@ export async function generateMetadata({
   return {
     title: 'Creatine HCl Dosage Calculator — Exact Dose by Body Weight',
     description: 'Creatine HCl needs 40–50% less than monohydrate. Enter your weight and get your exact HCl dose instantly. Free, science-backed calculator.',
+    keywords: ['creatine hcl dosage', 'creatine hcl calculator', 'creatine hydrochloride dose', 'creatine hcl vs monohydrate', 'how much creatine hcl'],
+    openGraph: {
+      title: 'Creatine HCl Dosage Calculator — Exact Dose by Body Weight',
+      description: 'Creatine HCl needs 40–50% less than monohydrate. Enter your weight and get your exact HCl dose instantly. Free, science-backed calculator.',
+      url: `https://www.creatinedosagecalculator.com/${params.locale}/creatine-hcl-calculator`,
+      type: 'website',
+    },
+    twitter: {
+      title: 'Creatine HCl Dosage Calculator — Exact Dose by Body Weight',
+      description: 'Creatine HCl needs 40–50% less than monohydrate. Enter your weight and get your exact HCl dose instantly. Free.',
+    },
     alternates: {
       canonical: `https://www.creatinedosagecalculator.com/${params.locale}/creatine-hcl-calculator`,
       languages: {

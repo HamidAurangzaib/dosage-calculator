@@ -21,12 +21,25 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const post = getPostBySlug(params.slug);
   if (!post) return {};
+  const url = `https://www.creatinedosagecalculator.com/${params.locale}/blog/${params.slug}`;
   return {
-    title: `${post.title} — CreatineCalc`,
+    title: post.title,
     description: post.description,
     keywords: post.keywords,
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      url,
+      type: 'article',
+      publishedTime: post.date,
+      authors: ['CreatineCalc Team'],
+    },
+    twitter: {
+      title: post.title,
+      description: post.description,
+    },
     alternates: {
-      canonical: `https://www.creatinedosagecalculator.com/${params.locale}/blog/${params.slug}`,
+      canonical: url,
     },
   };
 }
@@ -68,6 +81,18 @@ export default function BlogPostPage({
     .filter(Boolean)
     .slice(0, 4) as typeof allPosts;
 
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    dateModified: post.date,
+    author: { '@type': 'Organization', name: 'CreatineCalc', url: 'https://www.creatinedosagecalculator.com' },
+    publisher: { '@type': 'Organization', name: 'CreatineCalc', url: 'https://www.creatinedosagecalculator.com' },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://www.creatinedosagecalculator.com/${params.locale}/blog/${params.slug}` },
+  };
+
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -82,7 +107,11 @@ export default function BlogPostPage({
     <>
       <StructuredData locale={params.locale} />
 
-      {/* BreadcrumbList schema */}
+      {/* Article + BreadcrumbList schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}

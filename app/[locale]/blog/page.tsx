@@ -10,6 +10,17 @@ export async function generateMetadata({
   return {
     title: 'Creatine Guides & Dosage Tips — Expert Articles',
     description: 'Learn exactly how to take creatine — dosage by weight, loading phase, HCl vs monohydrate, creatine for women, and muscle growth. Free guides.',
+    keywords: ['creatine guide', 'creatine articles', 'how to take creatine', 'creatine supplement tips', 'creatine loading guide'],
+    openGraph: {
+      title: 'Creatine Guides & Dosage Tips — Expert Articles',
+      description: 'Learn exactly how to take creatine — dosage, loading phase, HCl vs monohydrate, and more. Free science-backed guides.',
+      url: `https://www.creatinedosagecalculator.com/${params.locale}/blog`,
+      type: 'website',
+    },
+    twitter: {
+      title: 'Creatine Guides & Dosage Tips — Expert Articles',
+      description: 'Science-backed creatine guides — dosage, loading phase, HCl vs monohydrate, and more. Free.',
+    },
     alternates: {
       canonical: `https://www.creatinedosagecalculator.com/${params.locale}/blog`,
     },
@@ -82,6 +93,21 @@ export default function BlogIndexPage({ params }: { params: { locale: string } }
           </article>
         ))}
       </div>
+
+      {/* BreadcrumbList schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: `https://www.creatinedosagecalculator.com/${params.locale}` },
+              { '@type': 'ListItem', position: 2, name: 'Articles', item: `https://www.creatinedosagecalculator.com/${params.locale}/blog` },
+            ],
+          }),
+        }}
+      />
 
       {/* CTA */}
       <div className="bg-white border border-gray-200 rounded-2xl p-8 text-center">

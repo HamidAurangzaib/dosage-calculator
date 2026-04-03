@@ -10,6 +10,12 @@ export async function generateMetadata({
     title: 'About CreatineCalc — Science-Based Creatine Dosage',
     description:
       'Learn about CreatineCalc, our mission to provide accurate creatine dosage information based on ISSN guidelines, and why we built this free tool.',
+    openGraph: {
+      title: 'About CreatineCalc — Science-Based Creatine Dosage',
+      description: 'Learn about CreatineCalc — our mission, formulas, and commitment to unbiased, ISSN-backed creatine dosage information.',
+      url: `https://www.creatinedosagecalculator.com/${params.locale}/about`,
+      type: 'website',
+    },
     alternates: {
       canonical: `https://www.creatinedosagecalculator.com/${params.locale}/about`,
     },
@@ -79,6 +85,20 @@ export default function AboutPage({ params }: { params: { locale: string } }) {
           </p>
         </div>
       </div>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: `https://www.creatinedosagecalculator.com/${params.locale}` },
+              { '@type': 'ListItem', position: 2, name: 'About', item: `https://www.creatinedosagecalculator.com/${params.locale}/about` },
+            ],
+          }),
+        }}
+      />
 
       <div className="mt-10 flex gap-4 flex-wrap">
         <Link
