@@ -81,6 +81,30 @@ const articles = [
     description: 'Is creatine effective and safe for women? Dosage differences, benefits, and what the research shows.',
     category: 'Goals',
   },
+  {
+    slug: 'can-i-take-creatine-before-bed',
+    title: 'Can I Take Creatine Before Bed?',
+    description: 'Does nighttime creatine dosing affect sleep, recovery, or results? The science on before-bed timing explained.',
+    category: 'Protocols',
+  },
+  {
+    slug: 'how-much-water-on-creatine',
+    title: 'How Much Water Should You Drink on Creatine?',
+    description: 'Exact daily water targets by body weight, why hydration matters for creatine, and signs you\'re not drinking enough.',
+    category: 'Getting Started',
+  },
+  {
+    slug: 'micronized-creatine-vs-monohydrate',
+    title: 'Micronized Creatine vs Monohydrate',
+    description: 'Same molecule, smaller particles. What actually differs between micronized and regular creatine, and which to buy.',
+    category: 'Types',
+  },
+  {
+    slug: 'can-you-mix-creatine-with-protein-powder',
+    title: 'Can You Mix Creatine With Protein Powder?',
+    description: 'Yes — and it may actually improve creatine uptake. How to combine them, best timing, and what to avoid.',
+    category: 'Protocols',
+  },
 ];
 
 const categories = ['Getting Started', 'Protocols', 'Types', 'Safety', 'Goals'];
