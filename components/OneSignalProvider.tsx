@@ -21,12 +21,9 @@ export default function OneSignalProvider() {
               safari_web_id: "${SAFARI_WEB_ID}",
               serviceWorkerPath: "/OneSignalSDKWorker.js",
               notifyButton: { enable: false },
-              autoRegister: false,
               autoResubscribe: true,
-              promptOptions: {
-                slidedown: { prompts: [] }
-              }
             });
+            console.log("[CreatineCalc] OneSignal SDK initialized");
           });
         `}
       </Script>

@@ -12,6 +12,16 @@ interface OneSignalSDK {
     permission?: boolean | string;
     requestPermission: () => Promise<void>;
   };
+  User?: {
+    PushSubscription?: {
+      optIn: () => Promise<void>;
+      optedIn?: boolean;
+      id?: string | null;
+    };
+  };
+  Slidedown?: {
+    promptPush: (options?: { force?: boolean }) => Promise<void>;
+  };
 }
 
 declare global {
@@ -38,6 +48,11 @@ export default function PushNotificationPrompt() {
           const supported = OneSignal.Notifications?.isPushSupported?.() ?? true;
           if (!supported) return;
 
+          // Don't show prompt if already subscribed
+          const alreadyOptedIn = OneSignal.User?.PushSubscription?.optedIn;
+          if (alreadyOptedIn) return;
+
+          // Don't show if browser permission already explicitly granted
           const permission = OneSignal.Notifications?.permission;
           if (permission === true || permission === 'granted') return;
 
@@ -55,9 +70,15 @@ export default function PushNotificationPrompt() {
     window.OneSignalDeferred = window.OneSignalDeferred || [];
     window.OneSignalDeferred.push(async (OneSignal) => {
       try {
-        await OneSignal.Notifications?.requestPermission();
+        // optIn() handles the full subscription flow in v16:
+        // 1. Requests browser permission
+        // 2. Registers the service worker
+        // 3. Creates the subscription
+        // 4. Sends it to OneSignal servers
+        await OneSignal.User?.PushSubscription?.optIn();
+        console.log('[CreatineCalc] Push subscription optIn() completed');
       } catch (err) {
-        console.error('OneSignal permission request failed', err);
+        console.error('[CreatineCalc] Push subscription failed:', err);
       }
     });
     dismiss();
