@@ -59,6 +59,13 @@ const relatedMap: Record<string, string[]> = {
   'how-much-water-on-creatine': ['creatine-dosage-for-beginners', 'creatine-monohydrate-side-effects', 'how-much-creatine-per-day'],
   'micronized-creatine-vs-monohydrate': ['creatine-hcl-vs-monohydrate', 'can-you-mix-creatine-with-protein-powder', 'creatine-monohydrate-side-effects'],
   'can-you-mix-creatine-with-protein-powder': ['micronized-creatine-vs-monohydrate', 'best-time-to-take-creatine', 'creatine-for-muscle-growth'],
+  'creatine-and-caffeine': ['best-time-to-take-creatine', 'can-you-mix-creatine-with-protein-powder', 'creatine-dosage-for-beginners'],
+  'does-creatine-make-you-gain-weight': ['creatine-monohydrate-side-effects', 'how-much-water-on-creatine', 'creatine-for-women'],
+  'creatine-for-endurance-athletes': ['best-time-to-take-creatine', 'creatine-loading-phase-guide', 'how-much-water-on-creatine'],
+  'creatine-for-brain-cognitive-performance': ['how-long-does-creatine-take-to-work', 'creatine-for-seniors', 'creatine-monohydrate-side-effects'],
+  'creatine-vs-whey-protein': ['can-you-mix-creatine-with-protein-powder', 'how-much-creatine-per-day', 'creatine-for-muscle-growth'],
+  'how-long-does-creatine-take-to-work': ['creatine-loading-phase-guide', 'creatine-dosage-for-beginners', 'how-much-creatine-per-day'],
+  'creatine-for-seniors': ['creatine-for-brain-cognitive-performance', 'creatine-for-women', 'creatine-monohydrate-side-effects'],
 };
 
 export default function BlogPostPage({
@@ -80,6 +87,16 @@ export default function BlogPostPage({
     .map((s) => allPosts.find((p) => p.slug === s))
     .filter(Boolean)
     .slice(0, 4) as typeof allPosts;
+
+  const faqSchema = post.faq && post.faq.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: post.faq.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer },
+    })),
+  } : null;
 
   const articleSchema = {
     '@context': 'https://schema.org',
@@ -107,7 +124,7 @@ export default function BlogPostPage({
     <>
       <StructuredData locale={params.locale} />
 
-      {/* Article + BreadcrumbList schema */}
+      {/* Article + BreadcrumbList + FAQ schema */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
@@ -116,6 +133,12 @@ export default function BlogPostPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Breadcrumb */}
@@ -198,6 +221,28 @@ export default function BlogPostPage({
                 {post.content.replace(/^#\s+.+\n/, '')}
               </ReactMarkdown>
             </article>
+
+            {/* FAQ Section — renders when faq frontmatter present; also outputs FAQPage schema */}
+            {post.faq && post.faq.length > 0 && (
+              <section className="mt-12 border-t border-gray-200 pt-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
+                <div className="space-y-4">
+                  {post.faq.map((item, i) => (
+                    <details key={i} className="group bg-white border border-gray-200 rounded-xl overflow-hidden">
+                      <summary className="flex justify-between items-center cursor-pointer px-5 py-4 font-semibold text-gray-900 hover:bg-gray-50 transition-colors list-none">
+                        <span>{item.question}</span>
+                        <svg className="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform shrink-0 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </summary>
+                      <div className="px-5 pb-5 pt-2 text-gray-700 leading-relaxed text-sm border-t border-gray-100">
+                        {item.answer}
+                      </div>
+                    </details>
+                  ))}
+                </div>
+              </section>
+            )}
 
             {/* CTA — calculator */}
             <div className="mt-10 p-8 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl border border-emerald-100 text-center">

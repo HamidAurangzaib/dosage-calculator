@@ -105,6 +105,48 @@ const articles = [
     description: 'Yes — and it may actually improve creatine uptake. How to combine them, best timing, and what to avoid.',
     category: 'Protocols',
   },
+  {
+    slug: 'creatine-and-caffeine',
+    title: 'Creatine and Caffeine: Can You Take Them Together?',
+    description: 'Does caffeine cancel out creatine? The research says no. How to safely stack creatine with caffeine and pre-workout.',
+    category: 'Protocols',
+  },
+  {
+    slug: 'does-creatine-make-you-gain-weight',
+    title: 'Does Creatine Make You Gain Weight?',
+    description: 'Creatine causes water weight gain — but not fat. Learn exactly how much, how fast, and what it means for your physique.',
+    category: 'Safety',
+  },
+  {
+    slug: 'creatine-for-endurance-athletes',
+    title: 'Creatine for Endurance Athletes',
+    description: 'Does creatine help runners and cyclists? The evidence for endurance sports is more nuanced — and more positive — than most think.',
+    category: 'Goals',
+  },
+  {
+    slug: 'creatine-for-brain-cognitive-performance',
+    title: 'Creatine for Brain Health & Cognitive Performance',
+    description: 'New research shows creatine improves memory, processing speed, and resilience to mental fatigue — even in non-athletes.',
+    category: 'Goals',
+  },
+  {
+    slug: 'creatine-vs-whey-protein',
+    title: 'Creatine vs Whey Protein: Do You Need Both?',
+    description: 'Creatine and whey do completely different jobs. Most people benefit from both — when to prioritize each, and how to combine them.',
+    category: 'Getting Started',
+  },
+  {
+    slug: 'how-long-does-creatine-take-to-work',
+    title: 'How Long Does Creatine Take to Work?',
+    description: 'Creatine starts working immediately, but visible results take 1–4 weeks. A day-by-day timeline of what to expect.',
+    category: 'Getting Started',
+  },
+  {
+    slug: 'creatine-for-seniors',
+    title: 'Creatine for Seniors: Benefits, Dosage & Safety After 50',
+    description: 'For adults over 50, creatine preserves muscle, supports brain function, and may reduce fall risk. The dosage and safety details.',
+    category: 'Goals',
+  },
 ];
 
 const categories = ['Getting Started', 'Protocols', 'Types', 'Safety', 'Goals'];
