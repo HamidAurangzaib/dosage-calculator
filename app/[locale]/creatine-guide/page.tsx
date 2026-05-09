@@ -147,6 +147,36 @@ const articles = [
     description: 'For adults over 50, creatine preserves muscle, supports brain function, and may reduce fall risk. The dosage and safety details.',
     category: 'Goals',
   },
+  {
+    slug: 'creatine-on-rest-days',
+    title: 'Creatine on Rest Days: Should You Take It?',
+    description: 'Why daily dosing — including rest days — keeps muscles saturated and maximizes results. The science of consistency.',
+    category: 'Protocols',
+  },
+  {
+    slug: 'creatine-for-fat-loss',
+    title: 'Creatine for Fat Loss: Does It Help You Cut?',
+    description: 'Creatine doesn’t directly burn fat — but it preserves muscle and boosts training intensity during a cut. How to use it.',
+    category: 'Goals',
+  },
+  {
+    slug: 'vegan-creatine',
+    title: 'Vegan Creatine: Why Plant-Based Athletes Need It More',
+    description: 'Vegans have lower baseline creatine stores and see the largest benefits from supplementation. Plant-based dosing and sources.',
+    category: 'Goals',
+  },
+  {
+    slug: 'should-you-cycle-creatine',
+    title: 'Should You Cycle Creatine? The Science Says No',
+    description: 'Cycling creatine is one of the most persistent myths in supplement culture. Here’s why the ISSN recommends against it.',
+    category: 'Protocols',
+  },
+  {
+    slug: 'creatine-and-alcohol',
+    title: 'Creatine and Alcohol: Does Drinking Cancel the Benefits?',
+    description: 'Mixing creatine and alcohol won’t kill gains, but the combination has real downsides. What alcohol does to recovery.',
+    category: 'Safety',
+  },
 ];
 
 const categories = ['Getting Started', 'Protocols', 'Types', 'Safety', 'Goals'];

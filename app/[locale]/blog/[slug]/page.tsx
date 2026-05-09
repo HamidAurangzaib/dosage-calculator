@@ -66,6 +66,11 @@ const relatedMap: Record<string, string[]> = {
   'creatine-vs-whey-protein': ['can-you-mix-creatine-with-protein-powder', 'how-much-creatine-per-day', 'creatine-for-muscle-growth'],
   'how-long-does-creatine-take-to-work': ['creatine-loading-phase-guide', 'creatine-dosage-for-beginners', 'how-much-creatine-per-day'],
   'creatine-for-seniors': ['creatine-for-brain-cognitive-performance', 'creatine-for-women', 'creatine-monohydrate-side-effects'],
+  'creatine-on-rest-days': ['best-time-to-take-creatine', 'how-much-creatine-per-day', 'should-you-cycle-creatine'],
+  'creatine-for-fat-loss': ['does-creatine-make-you-gain-weight', 'creatine-for-women', 'creatine-for-endurance-athletes'],
+  'vegan-creatine': ['creatine-for-brain-cognitive-performance', 'creatine-for-women', 'how-much-creatine-per-day'],
+  'should-you-cycle-creatine': ['creatine-on-rest-days', 'creatine-monohydrate-side-effects', 'how-long-does-creatine-take-to-work'],
+  'creatine-and-alcohol': ['creatine-and-caffeine', 'how-much-water-on-creatine', 'creatine-monohydrate-side-effects'],
 };
 
 export default function BlogPostPage({
