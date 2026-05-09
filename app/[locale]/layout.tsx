@@ -6,6 +6,8 @@ import Script from 'next/script';
 import '../globals.css';
 import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
+import OneSignalProvider from '@/components/OneSignalProvider';
+import PushNotificationPrompt from '@/components/PushNotificationPrompt';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
@@ -79,10 +81,12 @@ export default async function RootLayout({
             }),
           }}
         />
+        <OneSignalProvider />
         <NextIntlClientProvider messages={messages}>
           <Header />
           <main className="min-h-screen">{children}</main>
           <Footer />
+          <PushNotificationPrompt />
         </NextIntlClientProvider>
       </body>
     </html>

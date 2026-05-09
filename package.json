@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "indexnow": "node scripts/submit-indexnow.js"
+    "indexnow": "node scripts/submit-indexnow.js",
+    "notify": "node scripts/send-notification.js"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
