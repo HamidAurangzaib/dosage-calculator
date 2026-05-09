@@ -16,8 +16,8 @@ export default function AdSlot({ slot, format = 'auto', className }: AdSlotProps
     setMounted(true);
     if (ADS_ENABLED) {
       try {
-        // @ts-expect-error adsbygoogle global
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
+        const w = window as Window & { adsbygoogle?: unknown[] };
+        (w.adsbygoogle = w.adsbygoogle || []).push({});
       } catch {}
     }
   }, []);

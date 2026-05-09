@@ -8,6 +8,7 @@ import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
 import OneSignalProvider from '@/components/OneSignalProvider';
 import PushNotificationPrompt from '@/components/PushNotificationPrompt';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
@@ -89,6 +90,7 @@ export default async function RootLayout({
           <PushNotificationPrompt />
         </NextIntlClientProvider>
       </body>
+      <GoogleAnalytics gaId="G-BJY7JE2V1R" />
     </html>
   );
 }
