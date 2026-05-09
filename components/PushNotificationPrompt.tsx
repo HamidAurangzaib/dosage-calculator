@@ -6,9 +6,17 @@ const STORAGE_KEY = 'cc-push-prompt-dismissed';
 const DISMISS_DAYS = 30;
 const SHOW_DELAY_MS = 30_000;
 
+interface OneSignalSDK {
+  Notifications?: {
+    isPushSupported?: () => boolean;
+    permission?: boolean | string;
+    requestPermission: () => Promise<void>;
+  };
+}
+
 declare global {
   interface Window {
-    OneSignalDeferred?: Array<(os: any) => void>;
+    OneSignalDeferred?: Array<(os: OneSignalSDK) => void>;
   }
 }
 
@@ -25,7 +33,7 @@ export default function PushNotificationPrompt() {
 
     const timer = setTimeout(async () => {
       window.OneSignalDeferred = window.OneSignalDeferred || [];
-      window.OneSignalDeferred.push(async (OneSignal: any) => {
+      window.OneSignalDeferred.push((OneSignal) => {
         try {
           const supported = OneSignal.Notifications?.isPushSupported?.() ?? true;
           if (!supported) return;
@@ -45,9 +53,9 @@ export default function PushNotificationPrompt() {
 
   const handleAccept = () => {
     window.OneSignalDeferred = window.OneSignalDeferred || [];
-    window.OneSignalDeferred.push(async (OneSignal: any) => {
+    window.OneSignalDeferred.push(async (OneSignal) => {
       try {
-        await OneSignal.Notifications.requestPermission();
+        await OneSignal.Notifications?.requestPermission();
       } catch (err) {
         console.error('OneSignal permission request failed', err);
       }
