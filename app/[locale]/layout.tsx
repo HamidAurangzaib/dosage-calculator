@@ -7,7 +7,6 @@ import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
 import OneSignalProvider from '@/components/OneSignalProvider';
 import PushNotificationPrompt from '@/components/PushNotificationPrompt';
-import { GoogleAnalytics } from '@next/third-parties/google';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
@@ -57,13 +56,28 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={dir}>
       <head>
-        {/* Plain <script> (not next/script) so AdSense's crawler can see the tag
-            in the server-rendered HTML — required for site verification. */}
+        {/* Google AdSense — plain <script> so verification crawler can see it in raw HTML */}
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7279468081497893"
           crossOrigin="anonymous"
         ></script>
+
+        {/* Google Analytics 4 — plain <script> so the tag fires on initial HTML load
+            (no JS hydration delay) and is visible to Tag Assistant / verification tools.
+            Matches Google's official gtag.js snippet exactly. */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-BJY7JE2V1R"
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-BJY7JE2V1R');`,
+          }}
+        />
       </head>
       <body className={inter.className}>
         {/* Organization schema — E-E-A-T authority signal */}
@@ -90,7 +104,6 @@ export default async function RootLayout({
           <PushNotificationPrompt />
         </NextIntlClientProvider>
       </body>
-      <GoogleAnalytics gaId="G-BJY7JE2V1R" />
     </html>
   );
 }
