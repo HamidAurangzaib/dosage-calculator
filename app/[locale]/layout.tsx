@@ -60,7 +60,7 @@ export default async function RootLayout({
       <head>
         <Script
           async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7279468081497893"
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
