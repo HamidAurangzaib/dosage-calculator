@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
-import Script from 'next/script';
 import '../globals.css';
 import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
@@ -58,12 +57,13 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={dir}>
       <head>
-        <Script
+        {/* Plain <script> (not next/script) so AdSense's crawler can see the tag
+            in the server-rendered HTML — required for site verification. */}
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7279468081497893"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
+        ></script>
       </head>
       <body className={inter.className}>
         {/* Organization schema — E-E-A-T authority signal */}
