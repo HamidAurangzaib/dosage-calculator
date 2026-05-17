@@ -7,6 +7,7 @@ import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
 import OneSignalProvider from '@/components/OneSignalProvider';
 import PushNotificationPrompt from '@/components/PushNotificationPrompt';
+import CookieConsent from '@/components/CookieConsent';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
@@ -102,6 +103,7 @@ gtag('config', 'G-BJY7JE2V1R');`,
           <main className="min-h-screen">{children}</main>
           <Footer />
           <PushNotificationPrompt />
+          <CookieConsent locale={locale} />
         </NextIntlClientProvider>
       </body>
     </html>

@@ -15,7 +15,7 @@ export async function generateMetadata({
 }
 
 export default function PrivacyPolicyPage() {
-  const lastUpdated = 'March 29, 2026';
+  const lastUpdated = 'May 11, 2026';
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -54,16 +54,17 @@ export default function PrivacyPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-gray-900">3. Google AdSense</h2>
+          <h2 className="text-xl font-bold text-gray-900">3. Google AdSense &amp; DoubleClick</h2>
           <p>
-            This website uses <strong>Google AdSense</strong>, a third-party advertising service
-            provided by Google LLC. Google AdSense uses cookies to serve ads based on your prior
-            visits to this or other websites.
+            This website uses <strong>Google AdSense</strong> and the <strong>Google DoubleClick
+            DART cookie</strong>, third-party advertising services provided by Google LLC. These
+            services use cookies and similar identifiers to serve ads to you based on your prior
+            visits to this site and other websites on the internet.
           </p>
           <p className="mt-2">
-            Google&apos;s use of advertising cookies enables it and its partners to serve ads based
-            on your visit to this site and/or other sites on the internet. You can opt out of
-            personalized advertising by visiting{' '}
+            Google&apos;s use of the DART cookie enables it and its partners to serve personalized
+            advertising. We do not have access to or control over these cookies. You can opt out of
+            personalized advertising at any time by visiting{' '}
             <a
               href="https://www.google.com/settings/ads"
               className="text-emerald-600 hover:underline"
@@ -71,6 +72,15 @@ export default function PrivacyPolicyPage() {
               rel="noopener noreferrer"
             >
               Google Ads Settings
+            </a>
+            {' '}or by managing your preferences at{' '}
+            <a
+              href="https://www.aboutads.info/choices/"
+              className="text-emerald-600 hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              aboutads.info/choices
             </a>
             .
           </p>
@@ -82,7 +92,7 @@ export default function PrivacyPolicyPage() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Google&apos;s Privacy & Terms
+              Google&apos;s Privacy &amp; Terms
             </a>
             .
           </p>
@@ -152,7 +162,61 @@ export default function PrivacyPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-gray-900">7. Third-Party Links</h2>
+          <h2 className="text-xl font-bold text-gray-900">7. California Privacy Rights (CCPA)</h2>
+          <p>
+            If you are a California resident, the California Consumer Privacy Act (CCPA) provides
+            you with the following rights regarding your personal information:
+          </p>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>The right to know what personal information we collect, use, and share</li>
+            <li>The right to request deletion of your personal information</li>
+            <li>The right to opt out of the sale or sharing of your personal information</li>
+            <li>The right to non-discrimination for exercising your CCPA rights</li>
+          </ul>
+          <p className="mt-2">
+            We do not sell your personal information. To exercise your CCPA rights, contact us at
+            the email address below. We will respond within 45 days as required by law.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-xl font-bold text-gray-900">8. Cookie Consent &amp; Withdrawal</h2>
+          <p>
+            When you first visit our site, you are shown a cookie consent banner asking you to
+            accept or decline non-essential cookies (advertising and analytics). Your choice is
+            stored locally in your browser for up to 12 months, after which you will be asked again.
+          </p>
+          <p className="mt-2">
+            You can withdraw your consent at any time by:
+          </p>
+          <ul className="list-disc list-inside space-y-2 mt-2">
+            <li>Clearing your browser&apos;s cookies and site data for this website</li>
+            <li>Using your browser&apos;s &quot;Do Not Track&quot; setting</li>
+            <li>Installing the{' '}
+              <a
+                href="https://tools.google.com/dlpage/gaoptout"
+                className="text-emerald-600 hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >Google Analytics Opt-out Browser Add-on</a>
+            </li>
+            <li>Adjusting your{' '}
+              <a
+                href="https://www.google.com/settings/ads"
+                className="text-emerald-600 hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >Google Ads Settings</a>{' '}to opt out of personalized advertising
+            </li>
+          </ul>
+          <p className="mt-2">
+            Withdrawing consent will not affect the lawfulness of any data processing carried out
+            before your withdrawal.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-xl font-bold text-gray-900">9. Third-Party Links</h2>
           <p>
             Our website may contain links to third-party sites. We are not responsible for the
             privacy practices of those sites and encourage you to review their privacy policies.
@@ -160,7 +224,7 @@ export default function PrivacyPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-gray-900">8. Children&apos;s Privacy</h2>
+          <h2 className="text-xl font-bold text-gray-900">10. Children&apos;s Privacy</h2>
           <p>
             Our website is not directed at children under 13. We do not knowingly collect personal
             information from children.
@@ -168,7 +232,7 @@ export default function PrivacyPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-gray-900">9. Changes to This Policy</h2>
+          <h2 className="text-xl font-bold text-gray-900">11. Changes to This Policy</h2>
           <p>
             We may update this Privacy Policy from time to time. Changes will be posted on this
             page with an updated &quot;Last updated&quot; date.
@@ -176,7 +240,7 @@ export default function PrivacyPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-bold text-gray-900">10. Contact</h2>
+          <h2 className="text-xl font-bold text-gray-900">12. Contact</h2>
           <p>
             For any privacy-related requests or questions, please contact us at:{' '}
             <strong>privacy@creatinedosagecalculator.com</strong>
