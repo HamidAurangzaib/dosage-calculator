@@ -7,7 +7,6 @@ import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
 import OneSignalProvider from '@/components/OneSignalProvider';
 import PushNotificationPrompt from '@/components/PushNotificationPrompt';
-import CookieConsent from '@/components/CookieConsent';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
@@ -57,16 +56,30 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={dir}>
       <head>
-        {/* Google AdSense — plain <script> so verification crawler can see it in raw HTML */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7279468081497893"
-          crossOrigin="anonymous"
-        ></script>
+        {/* ─── Ezoic Privacy Scripts ─────────────────────────────────────
+            MUST load FIRST and SYNCHRONOUSLY — before any ad/analytics scripts.
+            Must keep data-cfasync="false" before src (required by Ezoic CMP
+            compliance — prevents Cloudflare from reordering or async-loading).
+            ESLint warnings about no-sync-scripts are intentional here. */}
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+        <script data-cfasync="false" src="https://cmp.gatekeeperconsent.com/min.js"></script>
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+        <script data-cfasync="false" src="https://the.gatekeeperconsent.com/cmp.min.js"></script>
 
-        {/* Google Analytics 4 — plain <script> so the tag fires on initial HTML load
-            (no JS hydration delay) and is visible to Tag Assistant / verification tools.
-            Matches Google's official gtag.js snippet exactly. */}
+        {/* ─── Ezoic Header Script ───────────────────────────────────────
+            Initializes the Ezoic ad system. Loads after privacy scripts. */}
+        <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.ezstandalone = window.ezstandalone || {};
+ezstandalone.cmd = ezstandalone.cmd || [];`,
+          }}
+        />
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+        <script src="//ezoicanalytics.com/analytics.js"></script>
+
+        {/* ─── Google Analytics 4 ────────────────────────────────────────
+            Independent of Ezoic. Plain <script> for visibility in raw HTML. */}
         <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-BJY7JE2V1R"
@@ -103,7 +116,6 @@ gtag('config', 'G-BJY7JE2V1R');`,
           <main className="min-h-screen">{children}</main>
           <Footer />
           <PushNotificationPrompt />
-          <CookieConsent locale={locale} />
         </NextIntlClientProvider>
       </body>
     </html>
