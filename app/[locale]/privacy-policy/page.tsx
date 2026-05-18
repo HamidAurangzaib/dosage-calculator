@@ -15,7 +15,7 @@ export async function generateMetadata({
 }
 
 export default function PrivacyPolicyPage() {
-  const lastUpdated = 'May 11, 2026';
+  const lastUpdated = 'May 17, 2026';
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -96,6 +96,18 @@ export default function PrivacyPolicyPage() {
             </a>
             .
           </p>
+
+          <p className="mt-4">
+            This site is also part of the <strong>Ezoic</strong> advertising platform, which works with
+            additional vetted advertising partners to monetize content. Ezoic and its partners may
+            use cookies and similar technologies to deliver and measure ads. The complete, always
+            up-to-date list of these advertising partners and the data they collect is published below:
+          </p>
+          {/* Ezoic auto-injects the current list of ~30 ad partner disclosures into this span.
+              Updates automatically whenever Ezoic adds or removes a demand partner. */}
+          <div className="mt-3 text-sm bg-gray-50 border border-gray-200 rounded-lg p-4">
+            <span id="ezoic-privacy-policy-embed"></span>
+          </div>
         </section>
 
         <section>
