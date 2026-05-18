@@ -82,14 +82,14 @@ ezstandalone.cmd = ezstandalone.cmd || [];`,
             Independent of Ezoic. Plain <script> for visibility in raw HTML. */}
         <script
           async
-          src="https://www.googletagmanager.com/gtag/js?id=G-BJY7JE2V1R"
+          src="https://www.googletagmanager.com/gtag/js?id=G-JY12RDBN3D"
         ></script>
         <script
           dangerouslySetInnerHTML={{
             __html: `window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', 'G-BJY7JE2V1R');`,
+gtag('config', 'G-JY12RDBN3D');`,
           }}
         />
       </head>
