@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
 import { useState } from 'react';
@@ -42,7 +43,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link href={`/${locale}`} className="flex items-center gap-2 font-extrabold text-xl text-emerald-600">
-          <span className="text-2xl">💪</span>
+          <Image src="/dosagelogo.png" alt="CreatineCalc logo" width={36} height={36} className="rounded-full" priority />
           CreatineCalc
         </Link>
 

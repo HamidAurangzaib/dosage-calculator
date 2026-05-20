@@ -18,10 +18,12 @@ export const metadata: Metadata = {
     siteName: 'CreatineCalc',
     type: 'website',
     locale: 'en_US',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'CreatineCalc — Science-Based Creatine Dosage Calculator' }],
   },
   twitter: {
     card: 'summary_large_image',
     site: '@creatinecalc',
+    images: ['/og-image.png'],
   },
   robots: {
     index: true,

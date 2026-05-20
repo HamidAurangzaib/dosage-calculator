@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
 
 export default function Footer() {
@@ -10,7 +11,10 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <p className="font-extrabold text-white text-lg mb-2">💪 CreatineCalc</p>
+            <p className="font-extrabold text-white text-lg mb-2 flex items-center gap-2">
+              <Image src="/dosagelogo.png" alt="CreatineCalc logo" width={32} height={32} className="rounded-full bg-white" />
+              CreatineCalc
+            </p>
             <p className="text-sm text-gray-400">{t('tagline')}</p>
           </div>
 
