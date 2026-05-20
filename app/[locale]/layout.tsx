@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
@@ -7,6 +7,7 @@ import Header from '@/components/Layout/Header';
 import Footer from '@/components/Layout/Footer';
 import OneSignalProvider from '@/components/OneSignalProvider';
 import PushNotificationPrompt from '@/components/PushNotificationPrompt';
+import PWAInstallPrompt from '@/components/PWAInstallPrompt';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
@@ -30,6 +31,15 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true },
   },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'CreatineCalc',
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#059669',
 };
 
 export function generateStaticParams() {
@@ -118,6 +128,7 @@ gtag('config', 'G-JY12RDBN3D');`,
           <main className="min-h-screen">{children}</main>
           <Footer />
           <PushNotificationPrompt />
+          <PWAInstallPrompt />
         </NextIntlClientProvider>
       </body>
     </html>
