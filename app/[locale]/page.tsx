@@ -207,12 +207,24 @@ export default function HomePage({ params }: { params: { locale: string } }) {
           <p className="text-gray-700 mb-3">
             Your dose isn&apos;t one-size-fits-all. Heavier individuals with higher muscle mass may
             benefit from the upper end of the range, while lighter individuals may only need 3g/day.
-            Elite athletes and those pursuing rapid muscle growth can adjust upward based on activity
-            multipliers.
+            See our{' '}
+            <Link href={`/${params.locale}/creatine-dosage-by-weight`} className="text-emerald-600 hover:underline font-medium">
+              creatine dosage by body weight
+            </Link>
+            {' '}reference for an exact dose chart from 50kg to 120kg. Elite athletes and those
+            pursuing rapid muscle growth can adjust upward based on activity multipliers.
           </p>
           <p className="text-gray-700 mb-3">
             Creatine HCl is a notable exception — due to its superior solubility and bioavailability,
-            an effective dose is typically only 1–2g/day. No loading phase is required.
+            an effective dose is typically only 1–2g/day, and no{' '}
+            <Link href={`/${params.locale}/blog/creatine-loading-phase-guide`} className="text-emerald-600 hover:underline font-medium">
+              loading phase
+            </Link>
+            {' '}is required. Use our dedicated{' '}
+            <Link href={`/${params.locale}/creatine-hcl-calculator`} className="text-emerald-600 hover:underline font-medium">
+              Creatine HCl dosage calculator
+            </Link>
+            {' '}to get your exact HCl dose by body weight.
           </p>
           <p className="text-gray-700">
             Always pair creatine with adequate hydration. Because creatine pulls water into muscle
