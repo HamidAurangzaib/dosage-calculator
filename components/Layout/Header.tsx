@@ -9,11 +9,7 @@ import { useState } from 'react';
 const locales = [
   { code: 'en', label: 'EN' },
   { code: 'es', label: 'ES' },
-  { code: 'fr', label: 'FR' },
-  { code: 'de', label: 'DE' },
-  { code: 'pt', label: 'PT' },
   { code: 'ar', label: 'AR' },
-  { code: 'ur', label: 'UR' },
 ];
 
 export default function Header() {

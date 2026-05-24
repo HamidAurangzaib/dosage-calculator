@@ -30,11 +30,7 @@ export async function generateMetadata({
       languages: {
         en: 'https://www.creatinedosagecalculator.com/en',
         es: 'https://www.creatinedosagecalculator.com/es',
-        fr: 'https://www.creatinedosagecalculator.com/fr',
-        de: 'https://www.creatinedosagecalculator.com/de',
-        pt: 'https://www.creatinedosagecalculator.com/pt',
         ar: 'https://www.creatinedosagecalculator.com/ar',
-        ur: 'https://www.creatinedosagecalculator.com/ur',
         'x-default': 'https://www.creatinedosagecalculator.com/en',
       },
     },

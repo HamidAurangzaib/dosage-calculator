@@ -29,11 +29,7 @@ export async function generateMetadata({
       languages: {
         en: 'https://www.creatinedosagecalculator.com/en/creatine-dosage-by-weight',
         es: 'https://www.creatinedosagecalculator.com/es/creatine-dosage-by-weight',
-        fr: 'https://www.creatinedosagecalculator.com/fr/creatine-dosage-by-weight',
-        de: 'https://www.creatinedosagecalculator.com/de/creatine-dosage-by-weight',
-        pt: 'https://www.creatinedosagecalculator.com/pt/creatine-dosage-by-weight',
         ar: 'https://www.creatinedosagecalculator.com/ar/creatine-dosage-by-weight',
-        ur: 'https://www.creatinedosagecalculator.com/ur/creatine-dosage-by-weight',
         'x-default': 'https://www.creatinedosagecalculator.com/en/creatine-dosage-by-weight',
       },
     },

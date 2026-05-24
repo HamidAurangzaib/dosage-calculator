@@ -8,7 +8,7 @@ import remarkGfm from 'remark-gfm';
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
-  const locales = ['en', 'es', 'fr', 'de', 'pt', 'ar', 'ur'];
+  const locales = ['en', 'es', 'ar'];
   return locales.flatMap((locale) =>
     posts.map((post) => ({ locale, slug: post.slug }))
   );

@@ -11,7 +11,7 @@ import PWAInstallPrompt from '@/components/PWAInstallPrompt';
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' });
 
-const rtlLocales = ['ar', 'ur'];
+const rtlLocales = ['ar'];
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.creatinedosagecalculator.com'),
@@ -46,11 +46,7 @@ export function generateStaticParams() {
   return [
     { locale: 'en' },
     { locale: 'es' },
-    { locale: 'fr' },
-    { locale: 'de' },
-    { locale: 'pt' },
     { locale: 'ar' },
-    { locale: 'ur' },
   ];
 }
 

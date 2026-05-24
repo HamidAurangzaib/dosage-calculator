@@ -15,11 +15,7 @@ export async function generateMetadata({
       languages: {
         en: 'https://www.creatinedosagecalculator.com/en/creatine-guide',
         es: 'https://www.creatinedosagecalculator.com/es/creatine-guide',
-        fr: 'https://www.creatinedosagecalculator.com/fr/creatine-guide',
-        de: 'https://www.creatinedosagecalculator.com/de/creatine-guide',
-        pt: 'https://www.creatinedosagecalculator.com/pt/creatine-guide',
         ar: 'https://www.creatinedosagecalculator.com/ar/creatine-guide',
-        ur: 'https://www.creatinedosagecalculator.com/ur/creatine-guide',
         'x-default': 'https://www.creatinedosagecalculator.com/en/creatine-guide',
       },
     },

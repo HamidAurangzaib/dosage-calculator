@@ -13,6 +13,18 @@ const nextConfig = {
   async headers() {
     return [{ source: '/(.*)', headers: securityHeaders }];
   },
+  async redirects() {
+    return [
+      { source: '/fr/:path*', destination: '/en/:path*', permanent: true },
+      { source: '/de/:path*', destination: '/en/:path*', permanent: true },
+      { source: '/pt/:path*', destination: '/en/:path*', permanent: true },
+      { source: '/ur/:path*', destination: '/en/:path*', permanent: true },
+      { source: '/fr', destination: '/en', permanent: true },
+      { source: '/de', destination: '/en', permanent: true },
+      { source: '/pt', destination: '/en', permanent: true },
+      { source: '/ur', destination: '/en', permanent: true },
+    ];
+  },
   async rewrites() {
     return [
       // Proxy /ads.txt to Ezoic's always-up-to-date ad-network authorization list.

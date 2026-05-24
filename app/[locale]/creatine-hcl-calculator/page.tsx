@@ -28,11 +28,7 @@ export async function generateMetadata({
       languages: {
         en: 'https://www.creatinedosagecalculator.com/en/creatine-hcl-calculator',
         es: 'https://www.creatinedosagecalculator.com/es/creatine-hcl-calculator',
-        fr: 'https://www.creatinedosagecalculator.com/fr/creatine-hcl-calculator',
-        de: 'https://www.creatinedosagecalculator.com/de/creatine-hcl-calculator',
-        pt: 'https://www.creatinedosagecalculator.com/pt/creatine-hcl-calculator',
         ar: 'https://www.creatinedosagecalculator.com/ar/creatine-hcl-calculator',
-        ur: 'https://www.creatinedosagecalculator.com/ur/creatine-hcl-calculator',
         'x-default': 'https://www.creatinedosagecalculator.com/en/creatine-hcl-calculator',
       },
     },
