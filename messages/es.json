@@ -64,5 +64,35 @@
     "contact": "Contáctanos",
     "about": "Sobre Nosotros",
     "home": "Calculadora"
+  },
+  "pages": {
+    "hcl": {
+      "title": "Calculadora de Dosis de Creatina HCl por Peso Corporal",
+      "description": "La creatina HCl requiere un 40–50% menos que el monohidrato. Introduce tu peso y obtén tu dosis exacta de HCl al instante. Calculadora gratuita y basada en la ciencia."
+    },
+    "byWeight": {
+      "title": "Dosis de Creatina por Peso — ¿Cuántos Gramos por Kg o Lbs?",
+      "description": "¿No sabes cuánta creatina tomar según tu peso? Introduce tus kg o lbs y obtén tu dosis diaria exacta + fase de carga en segundos. Herramienta gratuita."
+    },
+    "guide": {
+      "title": "Guía Completa de Creatina — Dosis, Carga, Tipos y Seguridad",
+      "description": "Todo lo que necesitas saber sobre la creatina: cuánto tomar, fase de carga, HCl vs monohidrato, efectos secundarios, momento y dosis por peso. Incluye calculadora gratuita."
+    },
+    "about": {
+      "title": "Sobre CreatineCalc — Dosis de Creatina Basada en Ciencia",
+      "description": "Conoce CreatineCalc, nuestros estándares editoriales, metodología científica y compromiso con información imparcial sobre dosis de creatina respaldada por la ISSN."
+    },
+    "privacy": {
+      "title": "Política de Privacidad — CreatineCalc",
+      "description": "Política de privacidad de CreatineCalc. Conoce cómo recopilamos y usamos los datos, incluyendo divulgaciones sobre AdSense y Analytics."
+    },
+    "contact": {
+      "title": "Contáctanos — CreatineCalc",
+      "description": "Ponte en contacto con el equipo de CreatineCalc. Preguntas, comentarios o correcciones son bienvenidos."
+    },
+    "research": {
+      "title": "Investigación de Creatina — Datos Clave de 30 Años de Ciencia",
+      "description": "Estadísticas clave sobre la creatina, fórmulas de dosis y hallazgos de investigación recopilados de las directrices de la ISSN y estudios revisados por pares. Libre para citar y compartir."
+    }
   }
 }

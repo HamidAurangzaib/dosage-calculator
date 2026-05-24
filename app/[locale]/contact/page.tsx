@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 import ContactForm from './ContactForm';
 
 export async function generateMetadata({
@@ -6,9 +7,10 @@ export async function generateMetadata({
 }: {
   params: { locale: string };
 }): Promise<Metadata> {
+  const t = await getTranslations({ locale: params.locale, namespace: 'pages' });
   return {
-    title: 'Contact Us — CreatineCalc',
-    description: 'Get in touch with the CreatineCalc team. Questions, feedback, or corrections welcome.',
+    title: t('contact.title'),
+    description: t('contact.description'),
     alternates: {
       canonical: `https://www.creatinedosagecalculator.com/${params.locale}/contact`,
     },

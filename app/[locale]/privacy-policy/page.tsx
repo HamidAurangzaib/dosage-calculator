@@ -1,13 +1,15 @@
 import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 
 export async function generateMetadata({
   params,
 }: {
   params: { locale: string };
 }): Promise<Metadata> {
+  const t = await getTranslations({ locale: params.locale, namespace: 'pages' });
   return {
-    title: 'Privacy Policy — CreatineCalc',
-    description: 'Privacy policy for CreatineCalc. Learn how we collect and use data, including AdSense and Analytics disclosures.',
+    title: t('privacy.title'),
+    description: t('privacy.description'),
     alternates: {
       canonical: `https://www.creatinedosagecalculator.com/${params.locale}/privacy-policy`,
     },

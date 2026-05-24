@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 
 export async function generateMetadata({
@@ -6,10 +7,10 @@ export async function generateMetadata({
 }: {
   params: { locale: string };
 }): Promise<Metadata> {
+  const t = await getTranslations({ locale: params.locale, namespace: 'pages' });
   return {
-    title: 'Complete Creatine Guide — Dosage, Loading, Types & Safety',
-    description:
-      'Everything you need to know about creatine: how much to take, loading phase, HCl vs monohydrate, side effects, timing, and dosage by weight. Free calculator included.',
+    title: t('guide.title'),
+    description: t('guide.description'),
     alternates: {
       canonical: `https://www.creatinedosagecalculator.com/${params.locale}/creatine-guide`,
       languages: {

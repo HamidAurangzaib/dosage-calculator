@@ -64,5 +64,35 @@
     "contact": "Contact Us",
     "about": "About Us",
     "home": "Calculator"
+  },
+  "pages": {
+    "hcl": {
+      "title": "Creatine HCl Dosage Calculator — Exact Dose by Body Weight",
+      "description": "Creatine HCl needs 40–50% less than monohydrate. Enter your weight and get your exact HCl dose instantly. Free, science-backed calculator."
+    },
+    "byWeight": {
+      "title": "Creatine Dosage by Weight — How Many Grams Per Kg or Lbs?",
+      "description": "Not sure how much creatine to take for your weight? Enter your kg or lbs and get your exact daily dose + loading phase in seconds. Free tool."
+    },
+    "guide": {
+      "title": "Complete Creatine Guide — Dosage, Loading, Types & Safety",
+      "description": "Everything you need to know about creatine: how much to take, loading phase, HCl vs monohydrate, side effects, timing, and dosage by weight. Free calculator included."
+    },
+    "about": {
+      "title": "About CreatineCalc — Science-Based Creatine Dosage",
+      "description": "Learn about CreatineCalc, our editorial standards, scientific methodology, and commitment to unbiased, ISSN-backed creatine dosage information."
+    },
+    "privacy": {
+      "title": "Privacy Policy — CreatineCalc",
+      "description": "Privacy policy for CreatineCalc. Learn how we collect and use data, including AdSense and Analytics disclosures."
+    },
+    "contact": {
+      "title": "Contact Us — CreatineCalc",
+      "description": "Get in touch with the CreatineCalc team. Questions, feedback, or corrections welcome."
+    },
+    "research": {
+      "title": "Creatine Research & Stats — Key Facts from 30 Years of Science",
+      "description": "Key creatine statistics, dosage formulas, and research findings compiled from ISSN guidelines and peer-reviewed studies. Free to reference and share."
+    }
   }
 }

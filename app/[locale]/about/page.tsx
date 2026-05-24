@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 
 export async function generateMetadata({
@@ -6,13 +7,13 @@ export async function generateMetadata({
 }: {
   params: { locale: string };
 }): Promise<Metadata> {
+  const t = await getTranslations({ locale: params.locale, namespace: 'pages' });
   return {
-    title: 'About CreatineCalc — Science-Based Creatine Dosage',
-    description:
-      'Learn about CreatineCalc, our editorial standards, scientific methodology, and commitment to unbiased, ISSN-backed creatine dosage information.',
+    title: t('about.title'),
+    description: t('about.description'),
     openGraph: {
-      title: 'About CreatineCalc — Science-Based Creatine Dosage',
-      description: 'Learn about CreatineCalc — our mission, editorial standards, and commitment to unbiased, ISSN-backed creatine dosage information.',
+      title: t('about.title'),
+      description: t('about.description'),
       url: `https://www.creatinedosagecalculator.com/${params.locale}/about`,
       type: 'website',
     },

@@ -23,6 +23,11 @@ const nextConfig = {
       { source: '/de', destination: '/en', permanent: true },
       { source: '/pt', destination: '/en', permanent: true },
       { source: '/ur', destination: '/en', permanent: true },
+      // Blog is English-only — redirect es/ar blog paths to the English version
+      { source: '/es/blog/:path*', destination: '/en/blog/:path*', permanent: true },
+      { source: '/ar/blog/:path*', destination: '/en/blog/:path*', permanent: true },
+      { source: '/es/blog', destination: '/en/blog', permanent: true },
+      { source: '/ar/blog', destination: '/en/blog', permanent: true },
     ];
   },
   async rewrites() {

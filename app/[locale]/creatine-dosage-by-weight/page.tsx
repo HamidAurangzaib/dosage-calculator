@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 import CreatineCalculator from '@/components/Calculator/CreatineCalculator';
 import StructuredData from '@/components/SEO/StructuredData';
 import AdSlot from '@/components/Layout/AdSlot';
@@ -10,19 +11,20 @@ export async function generateMetadata({
 }: {
   params: { locale: string };
 }): Promise<Metadata> {
+  const t = await getTranslations({ locale: params.locale, namespace: 'pages' });
   return {
-    title: 'Creatine Dosage by Weight — How Many Grams Per Kg or Lbs?',
-    description: 'Not sure how much creatine to take for your weight? Enter your kg or lbs and get your exact daily dose + loading phase in seconds. Free tool.',
+    title: t('byWeight.title'),
+    description: t('byWeight.description'),
     keywords: ['creatine dosage by weight', 'creatine dose per kg', 'creatine grams per pound', 'how much creatine for my weight', 'creatine weight calculator'],
     openGraph: {
-      title: 'Creatine Dosage by Weight — How Many Grams Per Kg or Lbs?',
-      description: 'Not sure how much creatine to take for your weight? Enter your kg or lbs and get your exact daily dose + loading phase in seconds. Free tool.',
+      title: t('byWeight.title'),
+      description: t('byWeight.description'),
       url: `https://www.creatinedosagecalculator.com/${params.locale}/creatine-dosage-by-weight`,
       type: 'website',
     },
     twitter: {
-      title: 'Creatine Dosage by Weight — How Many Grams Per Kg or Lbs?',
-      description: 'Not sure how much creatine for your weight? Get your exact dose in seconds. Free calculator.',
+      title: t('byWeight.title'),
+      description: t('byWeight.description'),
     },
     alternates: {
       canonical: `https://www.creatinedosagecalculator.com/${params.locale}/creatine-dosage-by-weight`,

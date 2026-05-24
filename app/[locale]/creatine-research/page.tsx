@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 
 export async function generateMetadata({
@@ -6,13 +7,14 @@ export async function generateMetadata({
 }: {
   params: { locale: string };
 }): Promise<Metadata> {
+  const t = await getTranslations({ locale: params.locale, namespace: 'pages' });
   return {
-    title: 'Creatine Research & Stats — Key Facts from 30 Years of Science',
-    description: 'Key creatine statistics, dosage formulas, and research findings compiled from ISSN guidelines and peer-reviewed studies. Free to reference and share.',
+    title: t('research.title'),
+    description: t('research.description'),
     keywords: ['creatine research', 'creatine statistics', 'creatine facts', 'ISSN creatine guidelines', 'creatine studies'],
     openGraph: {
-      title: 'Creatine Research & Stats — Key Facts from 30 Years of Science',
-      description: 'Key creatine statistics, dosage formulas, and research findings. Based on ISSN guidelines and peer-reviewed studies.',
+      title: t('research.title'),
+      description: t('research.description'),
       url: `https://www.creatinedosagecalculator.com/${params.locale}/creatine-research`,
       type: 'website',
     },

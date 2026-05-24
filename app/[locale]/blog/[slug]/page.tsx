@@ -7,11 +7,10 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 export async function generateStaticParams() {
+  // Blog is English-only. The /es/blog/* and /ar/blog/* paths are 308-redirected
+  // to /en/blog/* in next.config.mjs, so we only pre-render the English versions.
   const posts = getAllPosts();
-  const locales = ['en', 'es', 'ar'];
-  return locales.flatMap((locale) =>
-    posts.map((post) => ({ locale, slug: post.slug }))
-  );
+  return posts.map((post) => ({ locale: 'en', slug: post.slug }));
 }
 
 export async function generateMetadata({
