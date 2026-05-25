@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getAllPosts, getPostBySlug } from '@/lib/blog';
 import StructuredData from '@/components/SEO/StructuredData';
 import AffiliateDisclosure from '@/components/AffiliateDisclosure';
+import ProductCards from '@/components/ProductCards';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -248,9 +249,26 @@ export default function BlogPostPage({
               prose-td:text-gray-600
               prose-hr:border-gray-200
             ">
-              <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
-                {post.content.replace(/^#\s+.+\n/, '')}
-              </ReactMarkdown>
+              {(() => {
+                const body = post.content.replace(/^#\s+.+\n/, '');
+                const hasProducts = post.products && post.products.length > 0;
+                // Split on the <!--PRODUCTS--> marker to place the product
+                // comparison + cards exactly where the author wants them.
+                const [before, after] = body.split('<!--PRODUCTS-->');
+                return (
+                  <>
+                    <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+                      {before}
+                    </ReactMarkdown>
+                    {hasProducts && <ProductCards products={post.products!} />}
+                    {after && (
+                      <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+                        {after}
+                      </ReactMarkdown>
+                    )}
+                  </>
+                );
+              })()}
             </article>
 
             {/* FAQ Section — renders when faq frontmatter present; also outputs FAQPage schema */}

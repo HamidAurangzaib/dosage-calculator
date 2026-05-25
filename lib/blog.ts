@@ -9,6 +9,19 @@ export interface FaqItem {
   answer: string;
 }
 
+export interface Product {
+  name: string;
+  link: string;            // Amazon affiliate URL
+  image?: string;          // optional: /products/xxx.jpg (self-hosted) — Amazon ToS bars hotlinking their CDN
+  rating?: number;         // e.g. 4.6
+  reviews?: number;        // e.g. 30841
+  bestFor: string;         // short award label, e.g. "Best Unflavored Creatine"
+  form: string;            // "Powder", "Capsules", "Powder (pre-workout)"
+  servings?: string;       // "200 servings"
+  dose?: string;           // "5g per serving"
+  highlights: string[];    // bullet pros
+}
+
 export interface BlogPost {
   slug: string;
   title: string;
@@ -21,6 +34,7 @@ export interface BlogPost {
   reviewedBy?: string;
   faq?: FaqItem[];
   affiliate?: boolean; // set true on articles containing Amazon affiliate links — shows disclosure
+  products?: Product[]; // optional product roundup (renders comparison table + cards)
 }
 
 export function getAllPosts(): BlogPost[] {
@@ -41,6 +55,7 @@ export function getAllPosts(): BlogPost[] {
         reviewedBy: data.reviewedBy,
         faq: data.faq || [],
         affiliate: data.affiliate || false,
+        products: data.products || [],
       };
     })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
