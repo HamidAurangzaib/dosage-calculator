@@ -2,9 +2,33 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getAllPosts, getPostBySlug } from '@/lib/blog';
 import StructuredData from '@/components/SEO/StructuredData';
+import AffiliateDisclosure from '@/components/AffiliateDisclosure';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+
+// Custom renderers for the article markdown.
+// Amazon affiliate links auto-render as prominent buttons with the
+// required rel="sponsored nofollow" attribute and open in a new tab.
+const AMAZON_RE = /amazon\.|amzn\.to|amzn\.com|a\.co\//i;
+const markdownComponents = {
+  a: ({ href, children }: { href?: string; children?: React.ReactNode }) => {
+    if (href && AMAZON_RE.test(href)) {
+      return (
+        <a
+          href={href}
+          target="_blank"
+          rel="sponsored nofollow noopener"
+          className="not-prose inline-flex items-center gap-2 my-2 bg-amber-400 hover:bg-amber-500 text-gray-900 font-bold px-5 py-2.5 rounded-lg no-underline transition-colors shadow-sm"
+        >
+          {children}
+          <span aria-hidden>→</span>
+        </a>
+      );
+    }
+    return <a href={href}>{children}</a>;
+  },
+};
 
 export async function generateStaticParams() {
   // Blog is English-only. The /es/blog/* and /ar/blog/* paths are 308-redirected
@@ -205,6 +229,9 @@ export default function BlogPostPage({
               <p>This article is for <strong>educational purposes only</strong> and does not constitute medical advice. Creatine supplementation affects individuals differently. Consult a qualified healthcare professional before starting any supplement, especially if you have pre-existing health conditions, kidney concerns, or are pregnant.</p>
             </div>
 
+            {/* Affiliate disclosure — only on articles flagged with affiliate: true */}
+            {post.affiliate && <AffiliateDisclosure locale={params.locale} />}
+
             {/* Article body — strip leading H1 (already shown in header) */}
             <article className="prose prose-lg prose-gray max-w-none mt-8
               prose-h1:text-3xl prose-h1:font-extrabold prose-h1:text-gray-900
@@ -221,7 +248,7 @@ export default function BlogPostPage({
               prose-td:text-gray-600
               prose-hr:border-gray-200
             ">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
                 {post.content.replace(/^#\s+.+\n/, '')}
               </ReactMarkdown>
             </article>

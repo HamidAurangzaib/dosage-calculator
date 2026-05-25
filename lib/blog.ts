@@ -20,6 +20,7 @@ export interface BlogPost {
   references: string[];
   reviewedBy?: string;
   faq?: FaqItem[];
+  affiliate?: boolean; // set true on articles containing Amazon affiliate links — shows disclosure
 }
 
 export function getAllPosts(): BlogPost[] {
@@ -39,6 +40,7 @@ export function getAllPosts(): BlogPost[] {
         references: data.references || [],
         reviewedBy: data.reviewedBy,
         faq: data.faq || [],
+        affiliate: data.affiliate || false,
       };
     })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
