@@ -2,7 +2,7 @@
 Pipeline orchestrator.
 
 Runs the 5 stages in sequence. If a viable article is produced, writes it to
-content/blog/<slug>.mdx and emits metadata.json for the GitHub Actions PR step.
+src/blog/<slug>.mdx and emits metadata.json for the GitHub Actions PR step.
 
 Exits 0 in all cases (including no-article-produced) to keep the workflow
 green; the workflow's PR-creation step is conditional on metadata.json existing.
