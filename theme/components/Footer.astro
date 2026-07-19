@@ -39,6 +39,31 @@ const year = new Date().getFullYear();
         </p>
         <p class="max-w-sm text-sm text-gray-400">{t('footer.tagline')}</p>
 
+        <!-- A reachable human contact is a baseline trust signal for health
+             content, and the only contact detail this site actually has. -->
+        <p class="mt-4 text-sm">
+          <a
+            href={`mailto:${site.contactEmail}`}
+            class="inline-flex items-center gap-2 text-gray-300 transition-colors hover:text-white"
+          >
+            <svg
+              class="h-4 w-4 shrink-0"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              ></path>
+            </svg>
+            {site.contactEmail}
+          </a>
+        </p>
+
         <div class="mt-6">
           <SocialLinks locale={locale} />
         </div>

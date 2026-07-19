@@ -38,6 +38,7 @@ const PAGE_PATHS = [
   '/privacy-policy',
   '/terms',
   '/sitemap',
+  '/editorial-team',
   '/blog',
   '/creatine-guide',
   '/creatine-research',
@@ -61,6 +62,35 @@ for (const locale of RETIRED_LOCALES) {
   for (const path of PAGE_PATHS) {
     redirects[`/${locale}${path}`] = `/en${path}`;
   }
+}
+
+/*
+ * Un-prefixed paths.
+ *
+ * Every page lives under a locale (/en/about), so a visitor who types
+ * /about — or a stray inbound link that drops the prefix — used to hit a
+ * hard 404. These send them to the English page instead. Conventional
+ * aliases (/about-us, /contact-us, /privacy) are covered too, since those
+ * are the paths people and crawlers guess at.
+ */
+for (const path of PAGE_PATHS) {
+  if (path) redirects[path] = `/en${path}`;
+}
+
+const PATH_ALIASES = {
+  '/about-us': '/en/about',
+  '/contact-us': '/en/contact',
+  '/privacy': '/en/privacy-policy',
+  '/privacy-policy': '/en/privacy-policy',
+  '/articles': '/en/blog',
+};
+
+for (const [from, to] of Object.entries(PATH_ALIASES)) {
+  redirects[from] = to;
+}
+
+for (const slug of blogSlugs) {
+  redirects[`/blog/${slug}`] = `/en/blog/${slug}`;
 }
 
 // The blog is authored in English only (commit 2dbf483), so the Spanish and

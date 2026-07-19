@@ -56,6 +56,7 @@
         "titleKey": "footer.company",
         "links": [
           { "key": "nav.about", "href": "/about" },
+          { "key": "footer.editorialTeam", "href": "/editorial-team" },
           { "key": "nav.contact", "href": "/contact" },
           { "key": "footer.privacy", "href": "/privacy-policy" },
           { "key": "footer.terms", "href": "/terms" },
