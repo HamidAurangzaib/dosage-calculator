@@ -1,0 +1,155 @@
+---
+import { getCollection } from 'astro:content';
+
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import { BLOG_PAGE_SIZE } from '@/lib/blog';
+import { ACTIVE_LOCALES, BLOG_LOCALES, LOCALE_META } from '@theme/i18n/config';
+import { localeStaticPaths, localizedUrl, useTranslations, type Locale } from '@theme/i18n/utils';
+
+export const getStaticPaths = localeStaticPaths;
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+
+/*
+ * Static page links are derived by scanning the page files themselves rather
+ * than from a hand-maintained list, so a new page under src/pages/[locale]/
+ * appears here automatically. Dynamic routes ([...page], [slug]) and the 404 are
+ * excluded — they are enumerated from real content further down.
+ */
+const pageModules = import.meta.glob('/src/pages/[locale]/*.astro');
+
+const staticPaths = Object.keys(pageModules)
+  .map((file) => file.replace('/src/pages/[locale]/', '').replace('.astro', ''))
+  .filter((name) => !name.startsWith('[') && name !== '404')
+  .map((name) => (name === 'index' ? '/' : `/${name}`))
+  .sort((a, b) => (a === '/' ? -1 : b === '/' ? 1 : a.localeCompare(b)));
+
+// A page's own nav label if it has one, otherwise a title-cased slug.
+const NAV_LABEL: Record<string, string> = {
+  '/': t('nav.home'),
+  '/about': t('nav.about'),
+  '/contact': t('nav.contact'),
+  '/creatine-guide': t('nav.guide'),
+  '/creatine-research': t('nav.research'),
+  '/creatine-hcl-calculator': t('nav.hcl'),
+  '/creatine-dosage-by-weight': t('nav.byWeight'),
+  '/privacy-policy': t('footer.privacy'),
+  '/terms': t('footer.terms'),
+  '/sitemap': t('footer.sitemap'),
+};
+
+const labelFor = (path: string) =>
+  NAV_LABEL[path] ??
+  path
+    .replace(/^\//, '')
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+
+const staticPages = staticPaths.map((path) => ({
+  href: localizedUrl(locale, path),
+  label: labelFor(path),
+}));
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+// Blog routes exist under the English prefix only.
+const blogLocale = BLOG_LOCALES[0];
+const blogListPath = localizedUrl(blogLocale, '/blog');
+
+const pageCount = Math.max(1, Math.ceil(posts.length / BLOG_PAGE_SIZE));
+const blogPages = Array.from({ length: pageCount }, (_, index) => ({
+  href: index === 0 ? blogListPath : `${blogListPath}/${index + 1}`,
+  label: `${t('common.page')} ${index + 1}`,
+}));
+
+const listClass = 'space-y-2 text-sm';
+const linkClass = 'text-[var(--accent)] transition-colors hover:text-[var(--tint-brand-ink)] hover:underline';
+---
+
+<BaseLayout
+  locale={locale}
+  title={t('pages.sitemap.title')}
+  description={t('pages.sitemap.description')}
+  canonicalPath={localizedUrl(locale, '/sitemap')}
+>
+  <div class="mx-auto max-w-4xl">
+    <h1 class="mb-3 text-4xl font-extrabold text-[var(--text-primary)]">{t('sitemapPage.title')}</h1>
+    <p class="mb-10 text-lg text-[var(--text-secondary)]">
+      {t('sitemapPage.intro', { siteTitle: t('site.title') })}
+    </p>
+
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+      <section aria-labelledby="sitemap-pages">
+        <h2 id="sitemap-pages" class="mb-3 text-lg font-bold text-[var(--text-primary)]">
+          {t('sitemapPage.pages')}
+        </h2>
+        <ul class={listClass}>
+          {
+            staticPages.map((page) => (
+              <li>
+                <a href={page.href} class={linkClass}>
+                  {page.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section aria-labelledby="sitemap-languages">
+        <h2 id="sitemap-languages" class="mb-3 text-lg font-bold text-[var(--text-primary)]">
+          {t('sitemapPage.languages')}
+        </h2>
+        <ul class={listClass}>
+          {
+            ACTIVE_LOCALES.map((code) => (
+              <li>
+                <a href={localizedUrl(code, '/')} class={linkClass} hreflang={code}>
+                  {LOCALE_META[code].label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section aria-labelledby="sitemap-blog-pages">
+        <h2 id="sitemap-blog-pages" class="mb-3 text-lg font-bold text-[var(--text-primary)]">
+          {t('sitemapPage.blogPages')}
+        </h2>
+        <ul class={listClass}>
+          {
+            blogPages.map((page) => (
+              <li>
+                <a href={page.href} class={linkClass}>
+                  {page.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section aria-labelledby="sitemap-articles" class="md:col-span-2">
+        <h2 id="sitemap-articles" class="mb-3 text-lg font-bold text-[var(--text-primary)]">
+          {t('sitemapPage.articles')} ({posts.length})
+        </h2>
+        <ul class="grid grid-cols-1 gap-2 text-sm sm:grid-cols-2">
+          {
+            posts.map((post) => (
+              <li>
+                <a href={localizedUrl(blogLocale, `/blog/${post.id}`)} class={linkClass}>
+                  {post.data.title}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

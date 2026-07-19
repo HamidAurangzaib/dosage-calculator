@@ -1,0 +1,85 @@
+---
+import { useTranslations, type Locale } from '@theme/i18n/utils';
+import type { Page } from 'astro';
+
+interface Props {
+  locale: Locale;
+  page: Page<unknown>;
+  /** Page 1's URL, e.g. "/en/blog". Page N is `${basePath}/${N}`. */
+  basePath: string;
+}
+
+const { locale, page, basePath } = Astro.props;
+const t = useTranslations(locale);
+
+// Numbered links are built from basePath rather than `page.url.first`, which is
+// not populated by Astro here and yielded href="undefined/2".
+const hrefForPage = (number: number) =>
+  number === 1 ? basePath : `${basePath}/${number}`;
+
+// Build the numbered list from the page count Astro already computed.
+const pages = Array.from({ length: page.lastPage }, (_, index) => index + 1);
+
+const from = page.total === 0 ? 0 : (page.currentPage - 1) * page.size + 1;
+const to = Math.min(page.currentPage * page.size, page.total);
+
+const base =
+  'inline-flex h-10 min-w-10 items-center justify-center rounded-lg border px-3 text-sm font-medium transition-colors';
+const enabled = 'border-[var(--border-strong)] bg-[var(--surface-card)] text-[var(--text-secondary)] hover:border-brand-400 hover:text-[var(--accent)]';
+const disabled = 'cursor-not-allowed border-[var(--border-subtle)] bg-[var(--surface-sunken)] text-[var(--text-muted)]';
+const active = 'border-brand-600 bg-brand-600 text-white';
+---
+
+{
+  page.lastPage > 1 && (
+    <nav class="mt-10 flex flex-col items-center gap-4" aria-label="Pagination">
+      <p class="text-sm text-[var(--text-muted)]">
+        {t('common.showingResults', { from, to, total: page.total })}
+      </p>
+
+      <ul class="flex flex-wrap items-center justify-center gap-2">
+        <li>
+          {page.url.prev ? (
+            <a href={page.url.prev} rel="prev" class={`${base} ${enabled}`}>
+              {t('common.previous')}
+            </a>
+          ) : (
+            <span class={`${base} ${disabled}`} aria-disabled="true">
+              {t('common.previous')}
+            </span>
+          )}
+        </li>
+
+        {pages.map((number) => (
+          <li>
+            {number === page.currentPage ? (
+              <span class={`${base} ${active}`} aria-current="page">
+                {number}
+              </span>
+            ) : (
+              <a
+                href={hrefForPage(number)}
+                aria-label={t('common.goToPage', { page: number })}
+                class={`${base} ${enabled}`}
+              >
+                {number}
+              </a>
+            )}
+          </li>
+        ))}
+
+        <li>
+          {page.url.next ? (
+            <a href={page.url.next} rel="next" class={`${base} ${enabled}`}>
+              {t('common.next')}
+            </a>
+          ) : (
+            <span class={`${base} ${disabled}`} aria-disabled="true">
+              {t('common.next')}
+            </span>
+          )}
+        </li>
+      </ul>
+    </nav>
+  )
+}

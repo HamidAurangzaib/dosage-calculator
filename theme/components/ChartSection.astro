@@ -1,0 +1,58 @@
+---
+interface Props {
+  title: string;
+  /** Screen-reader caption describing what the table compares. */
+  caption?: string;
+  headers: string[];
+  rows: string[][];
+  class?: string;
+}
+
+const { title, caption, headers, rows, class: className = '' } = Astro.props;
+---
+
+<section class={`mb-12 ${className}`} aria-labelledby="chart-section-heading">
+  <h2 id="chart-section-heading" class="mb-4 text-2xl font-bold text-[var(--text-primary)]">
+    {title}
+  </h2>
+
+  <!-- The wrapper scrolls, not the page body. -->
+  <div class="overflow-x-auto rounded-xl border border-[var(--border-subtle)]">
+    <table class="w-full border-collapse text-sm">
+      {caption && <caption class="sr-only">{caption}</caption>}
+      <thead>
+        <tr class="bg-brand-600 text-white">
+          {
+            headers.map((header) => (
+              <th scope="col" class="p-3 text-start font-semibold">
+                {header}
+              </th>
+            ))
+          }
+        </tr>
+      </thead>
+      <tbody>
+        {
+          rows.map((row, rowIndex) => (
+            <tr class={rowIndex % 2 === 0 ? 'bg-[var(--surface-card)]' : 'bg-[var(--surface-sunken)]'}>
+              {row.map((cell, cellIndex) =>
+                cellIndex === 0 ? (
+                  <th
+                    scope="row"
+                    class="border-b border-[var(--border-subtle)] p-3 text-start font-medium text-[var(--text-secondary)]"
+                  >
+                    {cell}
+                  </th>
+                ) : (
+                  <td class="border-b border-[var(--border-subtle)] p-3 text-[var(--text-secondary)]">{cell}</td>
+                ),
+              )}
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <slot />
+</section>

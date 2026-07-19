@@ -1,0 +1,160 @@
+---
+import site from '@/config/site.json';
+import { useTranslations, type Locale } from '@theme/i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const inputClass =
+  'w-full min-h-[44px] rounded-lg border border-[var(--border-strong)] bg-[var(--surface-card)] px-4 py-3 text-base text-[var(--text-primary)] placeholder:text-[var(--text-muted)] transition-colors focus:border-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-brand-500/40';
+---
+
+<div>
+  <form id="contact-form" class="space-y-5" novalidate>
+    <div>
+      <label for="contact-name" class="mb-1 block text-sm font-semibold text-[var(--text-secondary)]">
+        {t('contact.name')}
+      </label>
+      <input
+        id="contact-name"
+        name="name"
+        type="text"
+        required
+        autocomplete="name"
+        placeholder={t('contact.namePlaceholder')}
+        class={inputClass}
+      />
+    </div>
+
+    <div>
+      <label for="contact-email" class="mb-1 block text-sm font-semibold text-[var(--text-secondary)]">
+        {t('contact.email')}
+      </label>
+      <input
+        id="contact-email"
+        name="email"
+        type="email"
+        required
+        autocomplete="email"
+        placeholder={t('contact.emailPlaceholder')}
+        class={inputClass}
+      />
+    </div>
+
+    <div>
+      <label for="contact-message" class="mb-1 block text-sm font-semibold text-[var(--text-secondary)]">
+        {t('contact.message')}
+      </label>
+      <textarea
+        id="contact-message"
+        name="message"
+        required
+        rows="5"
+        placeholder={t('contact.messagePlaceholder')}
+        class={`${inputClass} resize-y`}></textarea>
+    </div>
+
+    <!--
+      Status is announced politely rather than assertively: the user is not
+      interrupted mid-typing, but the send/success/error transition is spoken.
+    -->
+    <p
+      id="contact-status"
+      role="status"
+      aria-live="polite"
+      class="hidden rounded-lg border p-3 text-sm"
+      data-sending={t('contact.sending')}
+      data-success-title={t('contact.successTitle')}
+      data-success-body={t('contact.successBody')}
+      data-generic-error={t('contact.genericError')}
+      data-network-error={t('contact.networkError')}
+    >
+    </p>
+
+    <button
+      id="contact-submit"
+      type="submit"
+      class="w-full rounded-xl bg-brand-600 px-6 py-4 text-base font-bold text-white shadow-sm transition-colors hover:bg-brand-700 disabled:cursor-not-allowed disabled:bg-brand-400"
+      data-label={t('contact.send')}
+    >
+      {t('contact.send')}
+    </button>
+  </form>
+
+  <p class="mt-6 text-center text-sm text-[var(--text-muted)]">
+    {t('contact.orEmailUs')}{' '}
+    <a
+      href={`mailto:${site.contactEmail}`}
+      class="font-semibold text-[var(--accent)] underline underline-offset-2 hover:text-[var(--accent)]"
+    >
+      {site.contactEmail}
+    </a>
+  </p>
+</div>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const status = document.getElementById('contact-status');
+  const submit = document.getElementById('contact-submit') as HTMLButtonElement | null;
+
+  if (form && status && submit) {
+    const sendLabel = submit.dataset.label ?? 'Send Message';
+
+    const show = (message: string, tone: 'pending' | 'success' | 'error') => {
+      status.textContent = message;
+      status.classList.remove('hidden');
+      status.className =
+        'rounded-lg border p-3 text-sm ' +
+        {
+          pending: 'border-[var(--border-subtle)] bg-[var(--surface-sunken)] text-[var(--text-secondary)]',
+          success: 'border-[var(--tint-brand-border)] bg-[var(--tint-brand-bg)] text-[var(--tint-brand-ink)]',
+          error: 'border-red-200 bg-red-50 text-red-700',
+        }[tone];
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      // Let the browser surface its own field-level messages first.
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const payload = Object.fromEntries(new FormData(form).entries());
+
+      submit.disabled = true;
+      submit.textContent = status.dataset.sending ?? 'Sending...';
+      show(status.dataset.sending ?? 'Sending...', 'pending');
+
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          show(data.error ?? status.dataset.genericError ?? 'Something went wrong.', 'error');
+        } else {
+          show(
+            `${status.dataset.successTitle ?? 'Message sent!'} ${status.dataset.successBody ?? ''}`.trim(),
+            'success',
+          );
+          form.reset();
+        }
+      } catch {
+        show(status.dataset.networkError ?? 'Network error. Please try again.', 'error');
+      } finally {
+        submit.disabled = false;
+        submit.textContent = sendLabel;
+      }
+    });
+  }
+</script>

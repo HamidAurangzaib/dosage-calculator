@@ -1,0 +1,545 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+
+@plugin '@tailwindcss/typography';
+
+/* Dark mode is driven by a `data-theme` stamp on <html>, not the media query
+   alone, so the toggle can override the OS preference in both directions. */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* ===========================================================================
+   SEMANTIC TOKENS
+   Every surface, border and ink in the theme resolves through these. Dark mode
+   restates the same names, so components never branch on theme themselves.
+   =========================================================================== */
+:root {
+  color-scheme: light;
+
+  --surface-page: #f8fafc;
+  --surface-card: #ffffff;
+  --surface-sunken: #f1f5f9;
+  --surface-inverse: #0f172a;
+
+  /* Frosted panels. Alpha is what sells the glass — never a solid fill. */
+  --glass-bg: rgb(255 255 255 / 0.72);
+  --glass-border: rgb(255 255 255 / 0.85);
+  --glass-shadow: 0 8px 32px -8px rgb(15 23 42 / 0.12);
+
+  --border-subtle: #e2e8f0;
+  --border-strong: #cbd5e1;
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --text-inverse: #f8fafc;
+
+  --accent: #059669;
+  --accent-hover: #047857;
+  --accent-soft: #ecfdf5;
+  --accent-border: #a7f3d0;
+  --accent-ink: #065f46;
+
+  /*
+   * Tinted panels. Each set is bg / ink / border so a coloured callout keeps
+   * its contrast in both themes — light fills with dark ink on light, low-alpha
+   * fills with light ink on dark. Without these, a brand-50 panel stays a
+   * glaring light block on a dark page and its ink drops below contrast.
+   */
+  --tint-brand-bg: #ecfdf5;
+  --tint-brand-ink: #065f46;
+  --tint-brand-border: #a7f3d0;
+
+  --tint-info-bg: #eff6ff;
+  --tint-info-ink: #1d4ed8;
+  --tint-info-border: #bfdbfe;
+
+  --tint-violet-bg: #f5f3ff;
+  --tint-violet-ink: #6d28d9;
+  --tint-violet-border: #ddd6fe;
+
+  --tint-neutral-bg: #f8fafc;
+  --tint-neutral-ink: #475569;
+  --tint-neutral-border: #e2e8f0;
+
+  --tint-caution-bg: #fffbeb;
+  --tint-caution-ink: #92400e;
+  --tint-caution-border: #fde68a;
+
+  /* Chart palette — light steps. Validated against the white card surface:
+     adjacent CVD ΔE 20.1, normal-vision ΔE 21.2, both ≥ 3:1 contrast. */
+  --viz-series-1: #059669;
+  --viz-series-2: #2a78d6;
+  --viz-muted: #cbd5e1;
+  --viz-grid: #eef1f5;
+  --viz-axis: #d5dbe3;
+  --viz-surface: #ffffff;
+
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 1px 3px rgb(15 23 42 / 0.06);
+  --shadow-raised: 0 2px 4px rgb(15 23 42 / 0.04), 0 8px 16px -4px rgb(15 23 42 / 0.08);
+  --shadow-float: 0 4px 8px rgb(15 23 42 / 0.04), 0 16px 32px -8px rgb(15 23 42 / 0.12);
+  --shadow-brand: 0 1px 2px rgb(5 150 105 / 0.12), 0 8px 20px -6px rgb(5 150 105 / 0.35);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --surface-page: #0a0f1a;
+  --surface-card: #131b2b;
+  --surface-sunken: #0f1725;
+  --surface-inverse: #f8fafc;
+
+  --glass-bg: rgb(19 27 43 / 0.72);
+  --glass-border: rgb(255 255 255 / 0.10);
+  --glass-shadow: 0 8px 32px -8px rgb(0 0 0 / 0.6);
+
+  --border-subtle: #24304a;
+  --border-strong: #33415c;
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #b2c0d4;
+  --text-muted: #8b9bb4;
+  --text-inverse: #0f172a;
+
+  --accent: #10b981;
+  --accent-hover: #34d399;
+  --accent-soft: rgb(16 185 129 / 0.12);
+  --accent-border: rgb(16 185 129 / 0.3);
+  --accent-ink: #6ee7b7;
+
+  /* Low-alpha fills over the dark surface, with light ink. */
+  --tint-brand-bg: rgb(16 185 129 / 0.10);
+  --tint-brand-ink: #6ee7b7;
+  --tint-brand-border: rgb(16 185 129 / 0.28);
+
+  --tint-info-bg: rgb(59 130 246 / 0.12);
+  --tint-info-ink: #93c5fd;
+  --tint-info-border: rgb(59 130 246 / 0.3);
+
+  --tint-violet-bg: rgb(139 92 246 / 0.14);
+  --tint-violet-ink: #c4b5fd;
+  --tint-violet-border: rgb(139 92 246 / 0.32);
+
+  --tint-neutral-bg: rgb(148 163 184 / 0.10);
+  --tint-neutral-ink: #cbd5e1;
+  --tint-neutral-border: rgb(148 163 184 / 0.24);
+
+  --tint-caution-bg: rgb(251 191 36 / 0.12);
+  --tint-caution-ink: #fcd34d;
+  --tint-caution-border: rgb(251 191 36 / 0.3);
+
+  /* Chart palette — dark steps, SELECTED for the dark surface and validated
+     separately (never an automatic flip of the light values): all inside the
+     dark lightness band, adjacent CVD ΔE 19.5, normal-vision ΔE 21.0, ≥ 3:1. */
+  --viz-series-1: #059669;
+  --viz-series-2: #3987e5;
+  --viz-muted: #3a4a66;
+  --viz-grid: #1e293b;
+  --viz-axis: #33415c;
+  --viz-surface: #131b2b;
+
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 1px 3px rgb(0 0 0 / 0.4);
+  --shadow-raised: 0 2px 4px rgb(0 0 0 / 0.3), 0 8px 16px -4px rgb(0 0 0 / 0.45);
+  --shadow-float: 0 4px 8px rgb(0 0 0 / 0.3), 0 16px 32px -8px rgb(0 0 0 / 0.55);
+  --shadow-brand: 0 1px 2px rgb(5 150 105 / 0.2), 0 8px 20px -6px rgb(5 150 105 / 0.45);
+}
+
+@theme inline {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-arabic: 'Noto Sans Arabic', 'Segoe UI', ui-sans-serif, system-ui, sans-serif;
+
+  /* Semantic colours exposed as Tailwind utilities (bg-card, text-secondary…). */
+  --color-page: var(--surface-page);
+  --color-card: var(--surface-card);
+  --color-sunken: var(--surface-sunken);
+  --color-subtle: var(--border-subtle);
+  --color-strong: var(--border-strong);
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-muted: var(--text-muted);
+
+  /* The brand ramp stays fixed; semantic accent tokens above handle theming. */
+  --color-brand-50: #ecfdf5;
+  --color-brand-100: #d1fae5;
+  --color-brand-200: #a7f3d0;
+  --color-brand-300: #6ee7b7;
+  --color-brand-400: #34d399;
+  --color-brand-500: #10b981;
+  --color-brand-600: #059669;
+  --color-brand-700: #047857;
+  --color-brand-800: #065f46;
+  --color-brand-900: #064e3b;
+
+  --color-accent-50: #eff6ff;
+  --color-accent-100: #dbeafe;
+  --color-accent-200: #bfdbfe;
+  --color-accent-600: #2563eb;
+  --color-accent-700: #1d4ed8;
+
+  --color-caution-50: #fffbeb;
+  --color-caution-200: #fde68a;
+  --color-caution-400: #fbbf24;
+  --color-caution-700: #b45309;
+  --color-caution-800: #92400e;
+
+  --breakpoint-2xl: 1440px;
+}
+
+/* ===========================================================================
+   BASE
+   =========================================================================== */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Sticky header height, so in-page anchors don't land under it. */
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    background-color: var(--surface-page);
+    color: var(--text-primary);
+    @apply font-sans antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
+
+  [dir='rtl'] body {
+    font-family: var(--font-arabic);
+  }
+
+  [dir='rtl'] .prose {
+    text-align: right;
+  }
+
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: #ffffff;
+  }
+
+  /*
+   * Motion is opt-out at the source. Every reveal and transition below is
+   * written so that neutralising duration here leaves content fully visible —
+   * nothing is hidden by a transform that never runs.
+   */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    [data-reveal] {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+}
+
+/* ===========================================================================
+   COMPONENTS
+   =========================================================================== */
+@layer components {
+  /* --- Surfaces --------------------------------------------------------- */
+  .surface-card {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-card);
+    @apply rounded-2xl;
+  }
+
+  .surface-raised {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-raised);
+    @apply rounded-2xl;
+  }
+
+  .surface-card-interactive {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    box-shadow: var(--shadow-card);
+    @apply rounded-2xl;
+    transition:
+      transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.25s ease,
+      border-color 0.25s ease;
+  }
+
+  .surface-card-interactive:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-border);
+    box-shadow: var(--shadow-float);
+  }
+
+  /* Frosted panel. backdrop-filter is progressive — the alpha fill alone still
+     reads as a panel where it is unsupported. */
+  .glass {
+    background-color: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    @apply rounded-2xl;
+  }
+
+  /* --- Buttons ---------------------------------------------------------- */
+  .btn-primary {
+    background-color: var(--accent);
+    box-shadow: var(--shadow-brand);
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 font-semibold text-white;
+    transition:
+      transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .btn-secondary {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-strong);
+    color: var(--text-secondary);
+    box-shadow: var(--shadow-card);
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 font-semibold;
+    transition:
+      transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.2s ease;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+  }
+
+  .btn-ghost {
+    color: var(--text-secondary);
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .btn-ghost:hover {
+    background-color: var(--surface-sunken);
+    color: var(--text-primary);
+  }
+
+  /* --- Backdrops -------------------------------------------------------- */
+  /*
+   * Aurora mesh. Three offset radial gradients drifting slowly against each
+   * other — the interference between them is what reads as a mesh, at no asset
+   * cost. Pure CSS, GPU-composited, and paused under reduced motion.
+   */
+  .aurora {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .aurora::before,
+  .aurora::after {
+    content: '';
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(80px);
+    opacity: 0.5;
+  }
+
+  .aurora::before {
+    width: 55vw;
+    height: 55vw;
+    max-width: 760px;
+    max-height: 760px;
+    top: -22%;
+    left: -8%;
+    background: radial-gradient(circle, rgb(16 185 129 / 0.5), transparent 68%);
+    animation: aurora-drift-a 26s ease-in-out infinite alternate;
+  }
+
+  .aurora::after {
+    width: 48vw;
+    height: 48vw;
+    max-width: 660px;
+    max-height: 660px;
+    top: -14%;
+    right: -6%;
+    background: radial-gradient(circle, rgb(37 99 235 / 0.34), transparent 68%);
+    animation: aurora-drift-b 32s ease-in-out infinite alternate;
+  }
+
+  [data-theme='dark'] .aurora::before {
+    background: radial-gradient(circle, rgb(16 185 129 / 0.30), transparent 68%);
+  }
+
+  [data-theme='dark'] .aurora::after {
+    background: radial-gradient(circle, rgb(59 130 246 / 0.24), transparent 68%);
+  }
+
+  .grid-texture {
+    background-image:
+      linear-gradient(to right, var(--border-subtle) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--border-subtle) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 30%, transparent 75%);
+  }
+
+  .eyebrow {
+    color: var(--accent);
+    @apply text-xs font-semibold tracking-[0.16em] uppercase;
+  }
+
+  /* --- Prose tables ----------------------------------------------------- */
+  .prose table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 768px) {
+    .prose table {
+      display: table;
+      white-space: normal;
+    }
+  }
+}
+
+/* ===========================================================================
+   MOTION
+   Reveals are CSS transitions driven by a `data-revealed` stamp that an
+   IntersectionObserver applies. No animation library, no layout thrash, and
+   content stays readable if the script never runs (see the :not(.js) guard).
+   =========================================================================== */
+@keyframes aurora-drift-a {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(6vw, 4vh, 0) scale(1.12);
+  }
+}
+
+@keyframes aurora-drift-b {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(-5vw, 5vh, 0) scale(1);
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Only hide pre-reveal content once JS has confirmed it can reveal it again. */
+html.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+html.js [data-reveal][data-revealed] {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+/*
+ * Headline words rise in sequence; the delay is set inline per word.
+ *
+ * inline-block collapses the whitespace text nodes between spans, so the gap is
+ * restored as a margin rather than a space character — otherwise the heading
+ * renders as one run-together word.
+ */
+.reveal-word {
+  display: inline-block;
+  animation: rise-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--word-delay, 0ms);
+}
+
+/* Count-up and ring values must not wobble as digits change. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===========================================================================
+   PROSE
+   =========================================================================== */
+.prose {
+  --tw-prose-body: var(--text-secondary);
+  --tw-prose-headings: var(--text-primary);
+  --tw-prose-bold: var(--text-primary);
+  --tw-prose-links: var(--accent);
+  --tw-prose-counters: var(--accent);
+  --tw-prose-bullets: var(--border-strong);
+  --tw-prose-quotes: var(--text-primary);
+  --tw-prose-quote-borders: var(--accent);
+  --tw-prose-hr: var(--border-subtle);
+  --tw-prose-th-borders: var(--border-strong);
+  --tw-prose-td-borders: var(--border-subtle);
+  --tw-prose-code: var(--text-primary);
+  --tw-prose-pre-bg: var(--surface-inverse);
+  max-width: none;
+}
+
+.prose :where(blockquote):not(:where([class~='not-prose'] *)) {
+  background-color: var(--accent-soft);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-style: normal;
+}
+
+.prose :where(thead):not(:where([class~='not-prose'] *)) {
+  background-color: var(--surface-sunken);
+}
+
+.prose :where(code):not(:where([class~='not-prose'] *)) {
+  background-color: var(--surface-sunken);
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  font-weight: 500;
+}
+
+.prose :where(code):not(:where([class~='not-prose'] *))::before,
+.prose :where(code):not(:where([class~='not-prose'] *))::after {
+  content: '';
+}

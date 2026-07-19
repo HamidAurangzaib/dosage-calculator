@@ -1,0 +1,60 @@
+{
+  "nav": {
+    "home": "Calculadora",
+    "hcl": "Calculadora HCl",
+    "byWeight": "Dosis por Peso",
+    "guide": "Guía",
+    "research": "Investigación",
+    "blog": "Artículos",
+    "about": "Acerca de",
+    "contact": "Contacto"
+  },
+  "footer": {
+    "tagline": "Dosis de creatina basada en ciencia, gratis para todos.",
+    "disclaimer": "No es consejo médico. Siempre consulta a un profesional.",
+    "calculators": "Calculadoras",
+    "company": "Empresa",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos",
+    "sitemap": "Mapa del sitio",
+    "rights": "Todos los derechos reservados.",
+    "followUs": "Síguenos"
+  },
+  "pwa": {
+    "title": "Añade CreatineCalc a tu pantalla de inicio",
+    "body": "Instala la app para acceso instantáneo — sin tienda de aplicaciones, funciona sin conexión.",
+    "bodyIos": "Toca el botón Compartir y luego \"Añadir a pantalla de inicio\".",
+    "install": "Instalar app",
+    "dismiss": "Ahora no"
+  },
+  "push": {
+    "title": "¿Quieres avisos de nuevas guías de creatina?",
+    "body": "Novedades respaldadas por la ciencia, ~2–3 al mes. Sin spam — cancela cuando quieras.",
+    "accept": "Sí, avísame",
+    "dismiss": "No, gracias"
+  },
+  "common": {
+    "readArticle": "Leer artículo",
+    "readMore": "Leer",
+    "viewAll": "Ver todos los artículos",
+    "backToHome": "Volver a la calculadora",
+    "language": "Idioma",
+    "selectLanguage": "Seleccionar idioma",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "toggleTheme": "Cambiar modo oscuro",
+    "copyResults": "Copiar resultados",
+    "copied": "Copiado",
+    "download": "Descargar",
+    "share": "Compartir",
+    "skipToContent": "Saltar al contenido",
+    "published": "Publicado",
+    "updated": "Actualizado",
+    "minRead": "min de lectura",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "page": "Página",
+    "showingResults": "Mostrando {from}–{to} de {total} artículos",
+    "goToPage": "Ir a la página {page}"
+  }
+}

@@ -1,0 +1,38 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import { DEFAULT_LOCALE } from '@theme/i18n/config';
+import { localizedUrl, useTranslations } from '@theme/i18n/utils';
+
+// A single 404 lives at the root: the locale of an unmatched URL is by
+// definition unknown, so it renders in the default locale.
+const locale = DEFAULT_LOCALE;
+const t = useTranslations(locale);
+---
+
+<BaseLayout
+  locale={locale}
+  title={`404 — ${t('notFound.title')}`}
+  description={t('notFound.body')}
+  robots="noindex, follow"
+>
+  <div class="mx-auto max-w-lg py-16 text-center">
+    <p class="text-7xl font-extrabold text-[var(--accent)]">404</p>
+    <h1 class="mt-4 text-3xl font-extrabold text-[var(--text-primary)]">{t('notFound.title')}</h1>
+    <p class="mt-3 text-[var(--text-secondary)]">{t('notFound.body')}</p>
+
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a
+        href={localizedUrl(locale, '/')}
+        class="rounded-xl bg-brand-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-brand-700"
+      >
+        {t('notFound.cta')}
+      </a>
+      <a
+        href={localizedUrl(locale, '/sitemap')}
+        class="rounded-xl border border-[var(--border-strong)] px-6 py-3 font-semibold text-[var(--text-secondary)] transition-colors hover:border-[var(--accent)]"
+      >
+        {t('footer.sitemap')}
+      </a>
+    </div>
+  </div>
+</BaseLayout>

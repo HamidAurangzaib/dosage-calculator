@@ -1,0 +1,168 @@
+---
+import type { PaginateFunction, Page } from 'astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+import site from '@/config/site.json';
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import BlogCard from '@theme/components/BlogCard.astro';
+import Pagination from '@theme/components/Pagination.astro';
+import { BLOG_PAGE_SIZE } from '@/lib/blog';
+import { BLOG_LOCALES } from '@theme/i18n/config';
+import { absoluteUrl, localizedUrl, useTranslations, type Locale } from '@theme/i18n/utils';
+
+export async function getStaticPaths({ paginate }: { paginate: PaginateFunction }) {
+  const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+  );
+
+  // The blog is authored in English only; /es/blog and /ar/blog are redirected
+  // to /en/blog in astro.config.mjs, so only English pages are generated.
+  return BLOG_LOCALES.flatMap((locale) =>
+    paginate(posts, { params: { locale }, pageSize: BLOG_PAGE_SIZE }),
+  );
+}
+
+interface Props {
+  page: Page<CollectionEntry<'blog'>>;
+}
+
+const { page } = Astro.props;
+const locale = (Astro.params.locale ?? 'en') as Locale;
+const t = useTranslations(locale);
+
+const listPath = localizedUrl(locale, '/blog');
+const canonicalPath = page.currentPage === 1 ? listPath : `${listPath}/${page.currentPage}`;
+
+const postUrl = (post: CollectionEntry<'blog'>) => localizedUrl(locale, `/blog/${post.id}`);
+
+// Page 2+ are paginated slices of the same list; they carry a page-numbered
+// title so search engines don't see duplicate titles across the set.
+const title =
+  page.currentPage === 1
+    ? t('blog.metaTitle')
+    : `${t('blog.metaTitle')} — ${t('common.page')} ${page.currentPage}`;
+
+const blogSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: t('blog.title'),
+  description: t('blog.description'),
+  url: absoluteUrl(site.url, listPath),
+  inLanguage: locale,
+  publisher: {
+    '@type': 'Organization',
+    name: site.name,
+    url: site.url,
+  },
+};
+
+const itemListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: page.data.map((post, index) => ({
+    '@type': 'ListItem',
+    // Position is absolute across the whole list, not relative to this page.
+    position: (page.currentPage - 1) * page.size + index + 1,
+    url: absoluteUrl(site.url, postUrl(post)),
+    name: post.data.title,
+  })),
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: t('blog.breadcrumbHome'),
+      item: absoluteUrl(site.url, localizedUrl(locale, '/')),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: t('blog.breadcrumbBlog'),
+      item: absoluteUrl(site.url, listPath),
+    },
+  ],
+};
+
+const [featured, ...rest] = page.data;
+const showFeatured = page.currentPage === 1 && featured !== undefined;
+const cards = showFeatured ? rest : page.data;
+---
+
+<BaseLayout
+  locale={locale}
+  title={title}
+  description={t('blog.metaDescription')}
+  canonicalPath={canonicalPath}
+  schemas={[blogSchema, itemListSchema, breadcrumbSchema]}
+>
+  <div class="mb-10 max-w-2xl">
+    <h1 class="mb-3 text-4xl font-extrabold text-[var(--text-primary)]">{t('blog.title')}</h1>
+    <p class="text-lg text-[var(--text-secondary)]">{t('blog.description')}</p>
+  </div>
+
+  {
+    showFeatured && (
+      <div class="mb-10 rounded-2xl border border-[var(--tint-brand-border)] bg-[var(--tint-brand-bg)] p-8">
+        <span class="mb-3 block text-xs font-bold tracking-widest text-[var(--accent)] uppercase">
+          {t('blog.featured')}
+        </span>
+        <h2 class="mb-3 text-2xl leading-tight font-extrabold text-[var(--text-primary)] md:text-3xl">
+          <a href={postUrl(featured)} class="transition-colors hover:text-[var(--accent)]">
+            {featured.data.title}
+          </a>
+        </h2>
+        <p class="mb-5 max-w-2xl leading-relaxed text-[var(--text-secondary)]">{featured.data.description}</p>
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <time datetime={featured.data.date.toISOString()} class="text-sm text-[var(--text-muted)]">
+            {featured.data.date.toLocaleDateString(locale, {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </time>
+          <a
+            href={postUrl(featured)}
+            class="rounded-xl bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-700"
+          >
+            {t('common.readArticle')} →
+          </a>
+        </div>
+      </div>
+    )
+  }
+
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    {
+      cards.map((post, index) => (
+        <BlogCard
+          locale={locale}
+          href={postUrl(post)}
+          title={post.data.title}
+          description={post.data.description}
+          image={post.data.image}
+          imageAlt={post.data.imageAlt ?? post.data.title}
+          category={post.data.category}
+          date={post.data.date}
+          eager={index === 0}
+        />
+      ))
+    }
+  </div>
+
+  <Pagination locale={locale} page={page} basePath={listPath} />
+
+  <div class="mt-12 rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-8 text-center">
+    <p class="mb-2 text-xl font-bold text-[var(--text-primary)]">{t('blog.ctaTitle')}</p>
+    <p class="mb-5 text-[var(--text-secondary)]">{t('blog.ctaBody')}</p>
+    <a
+      href={localizedUrl(locale, '/')}
+      class="inline-block rounded-xl bg-brand-600 px-7 py-3 font-bold text-white transition-colors hover:bg-brand-700"
+    >
+      {t('blog.ctaButton')} →
+    </a>
+  </div>
+</BaseLayout>

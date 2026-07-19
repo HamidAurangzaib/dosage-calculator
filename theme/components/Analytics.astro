@@ -1,0 +1,23 @@
+---
+import site from '@/config/site.json';
+
+// GA4 only. The Ezoic CMP/header scripts and the AdSense slots that used to sit
+// here were removed when the site stopped running ads.
+const measurementId = site.analytics.gaMeasurementId;
+---
+
+{
+  measurementId && (
+    <>
+      <script async is:inline src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`} />
+      <script is:inline define:vars={{ measurementId }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', measurementId);
+      </script>
+    </>
+  )
+}

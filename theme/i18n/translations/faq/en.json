@@ -1,0 +1,42 @@
+{
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "items": [
+      {
+        "question": "How much creatine should I take?",
+        "answer": "Take 3–5 g of creatine monohydrate per day. The calculator sets the exact figure by multiplying body weight in kilograms by 0.03, then applying a 3 g floor. A 75 kg (165 lb) lifter takes 3 g/day, and a 115 kg (254 lb) lifter takes 3.5 g/day. Creatine HCl runs at half that figure, 1–2 g/day.",
+        "display": true
+      },
+      {
+        "question": "How much creatine per day per kg of body weight?",
+        "answer": "Take 0.03 g of creatine per kilogram of body weight per day for maintenance, and 0.3 g per kilogram per day for a 5–7 day loading phase. A 70 kg (154 lb) lifter calculates 2.1 g maintenance, raised to the 3 g ISSN floor, and 21 g for loading split into 4 servings of 5.3 g.",
+        "display": true
+      },
+      {
+        "question": "What does the creatine calculator measure?",
+        "answer": "The creatine calculator measures four outputs from your body weight, goal, activity level and creatine type: a daily maintenance dose in grams, an optional 7-day loading dose split into four servings, a daily water target in millilitres and litres, and a dosing schedule. All figures follow the ISSN position stand on creatine supplementation.",
+        "display": true
+      },
+      {
+        "question": "How much creatine HCl is equivalent to monohydrate?",
+        "answer": "1–2 g of creatine HCl is equivalent to 3–5 g of creatine monohydrate, roughly a 1:2 ratio. Creatine HCl dissolves more completely in water, so a smaller serving delivers a comparable amount of absorbed creatine. Creatine HCl needs no loading phase.",
+        "display": true
+      },
+      {
+        "question": "How much creatine per day to build muscle?",
+        "answer": "Take 5 g of creatine per day to build muscle, combined with resistance training. The ISSN reports the largest lean mass gains in the 3–5 g/day maintenance range, and setting the goal selector to Muscle Growth scales the calculated dose toward the upper end. An optional loading phase of 0.3 g/kg/day for 5–7 days reaches full muscle creatine saturation faster, though 3–5 g/day reaches the same saturation within 3–4 weeks.",
+        "display": true
+      },
+      {
+        "question": "Do I need a loading phase?",
+        "answer": "No, a loading phase is not required. Loading at 20–25 g/day for 5–7 days saturates muscle stores faster, and taking 3–5 g/day without loading reaches identical saturation in 3–4 weeks. Choose loading for faster results before a competition, and skip it to avoid 1–2 kg (2–4 lb) of temporary water weight.",
+        "display": true
+      },
+      {
+        "question": "Is creatine safe for long-term use?",
+        "answer": "Yes, creatine monohydrate is safe for long-term use in healthy adults at 3–5 g/day. Studies running up to 5 years report no adverse effects on kidney or liver function. Consult a doctor before supplementing with pre-existing kidney disease, and take creatine with 2.5–3 L (85–100 oz) of water per day.",
+        "display": true
+      }
+    ]
+  }
+}

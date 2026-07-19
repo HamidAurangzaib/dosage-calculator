@@ -1,0 +1,399 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+
+import site from '@/config/site.json';
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import Faq from '@theme/components/Faq.astro';
+import { BLOG_LOCALES } from '@theme/i18n/config';
+import { absoluteUrl, localizedUrl, useTranslations, type Locale } from '@theme/i18n/utils';
+import { RELATED_POSTS } from '@/lib/relatedPosts';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+
+  // English-only, matching the listing. Any slug not generated here 404s, which
+  // is the behaviour the Next.js `notFound()` call produced.
+  return BLOG_LOCALES.flatMap((locale) =>
+    posts.map((post) => ({
+      params: { locale, slug: post.id },
+      props: { post },
+    })),
+  );
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const locale = (Astro.params.locale ?? 'en') as Locale;
+const t = useTranslations(locale);
+
+const { Content } = await render(post);
+
+const path = localizedUrl(locale, `/blog/${post.id}`);
+const canonical = absoluteUrl(site.url, path);
+
+const allPosts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const sidebarPosts = allPosts.filter((entry) => entry.id !== post.id).slice(0, 5);
+
+// Topic-mapped related posts, so links stay relevant rather than merely recent.
+const relatedPosts = (RELATED_POSTS[post.id] ?? [])
+  .map((slug) => allPosts.find((entry) => entry.id === slug))
+  .filter((entry) => entry !== undefined)
+  .slice(0, 4);
+
+const faqItems = post.data.faq.filter((item) => item.display !== false);
+
+// 200 wpm, matching the estimate the Next.js page showed.
+const wordCount = (post.body ?? '').split(/\s+/).filter(Boolean).length;
+const readingTime = `${Math.max(1, Math.ceil(wordCount / 200))} ${t('common.minRead')}`;
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' });
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.data.title,
+  description: post.data.description,
+  image: absoluteUrl(site.url, post.data.image),
+  datePublished: post.data.date.toISOString(),
+  dateModified: (post.data.lastUpdated ?? post.data.date).toISOString(),
+  articleSection: post.data.category,
+  keywords: post.data.keywords.join(', '),
+  inLanguage: locale,
+  author: { '@type': 'Organization', name: post.data.author, url: site.url },
+  publisher: {
+    '@type': 'Organization',
+    name: site.name,
+    url: site.url,
+    logo: { '@type': 'ImageObject', url: absoluteUrl(site.url, site.logo) },
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: t('blog.breadcrumbHome'),
+      item: absoluteUrl(site.url, localizedUrl(locale, '/')),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: t('blog.breadcrumbBlog'),
+      item: absoluteUrl(site.url, localizedUrl(locale, '/blog')),
+    },
+    { '@type': 'ListItem', position: 3, name: post.data.title, item: canonical },
+  ],
+};
+
+const faqSchema =
+  faqItems.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqItems.map((item) => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: { '@type': 'Answer', text: item.answer },
+        })),
+      }
+    : null;
+
+const schemas = [articleSchema, breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])];
+---
+
+<BaseLayout
+  locale={locale}
+  title={post.data.title}
+  description={post.data.description}
+  canonicalPath={path}
+  ogType="article"
+  image={post.data.image}
+  imageAlt={post.data.imageAlt ?? post.data.title}
+  schemas={schemas}
+  fullWidth
+>
+  <div class="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8 2xl:max-w-7xl">
+    <nav aria-label="Breadcrumb" class="mb-6 text-sm text-[var(--text-muted)]">
+      <ol class="flex flex-wrap items-center gap-2">
+        <li>
+          <a
+            href={localizedUrl(locale, '/')}
+            class="transition-colors hover:text-[var(--accent)]">{t('blog.breadcrumbHome')}</a
+          >
+        </li>
+        <li aria-hidden="true">/</li>
+        <li>
+          <a
+            href={localizedUrl(locale, '/blog')}
+            class="transition-colors hover:text-[var(--accent)]">{t('blog.breadcrumbBlog')}</a
+          >
+        </li>
+        <li aria-hidden="true">/</li>
+        <li class="truncate text-[var(--text-secondary)]" aria-current="page">{post.data.title}</li>
+      </ol>
+    </nav>
+
+    <div class="flex flex-col gap-10 lg:flex-row">
+      <article class="min-w-0 flex-1">
+        <header class="mb-8">
+          <h1 class="mb-4 text-3xl leading-tight font-extrabold text-[var(--text-primary)] md:text-4xl">
+            {post.data.title}
+          </h1>
+          <p class="mb-4 text-lg leading-relaxed text-[var(--text-secondary)]">{post.data.description}</p>
+
+          <div
+            class="flex flex-wrap items-center gap-3 border-b border-[var(--border-subtle)] pb-4 text-sm text-[var(--text-muted)]"
+          >
+            <time datetime={post.data.date.toISOString()}>
+              {t('common.published')} {formatDate(post.data.date)}
+            </time>
+
+            {
+              post.data.lastUpdated &&
+                post.data.lastUpdated.valueOf() !== post.data.date.valueOf() && (
+                  <>
+                    <span aria-hidden="true">·</span>
+                    <span>
+                      {t('common.updated')} {formatDate(post.data.lastUpdated)}
+                    </span>
+                  </>
+                )
+            }
+
+            {
+              readingTime && (
+                <>
+                  <span aria-hidden="true">·</span>
+                  <span>{readingTime}</span>
+                </>
+              )
+            }
+
+            {
+              post.data.reviewedBy && (
+                <>
+                  <span aria-hidden="true">·</span>
+                  <span class="inline-flex items-center gap-1 font-medium text-[var(--accent)]">
+                    <svg
+                      class="h-3.5 w-3.5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    {t('blog.verifiedAgainst')} {post.data.reviewedBy}
+                  </span>
+                </>
+              )
+            }
+          </div>
+        </header>
+
+        <!-- E-E-A-T author box -->
+        <div class="mb-8 flex items-start gap-4 rounded-xl border border-[var(--tint-brand-border)] bg-[var(--tint-brand-bg)] p-4">
+          <span
+            class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-600 text-lg font-bold text-white"
+            aria-hidden="true">CC</span
+          >
+          <div>
+            <p class="text-sm font-semibold text-[var(--text-primary)]">{t('blog.authorBoxTitle')}</p>
+            <p class="mt-0.5 text-sm text-[var(--text-secondary)]" set:html={t('blog.authorBoxBody')} />
+          </div>
+        </div>
+
+        <!-- YMYL disclaimer, above the fold for health content -->
+        <div
+          class="mb-8 rounded-e-xl border-s-4 border-[var(--tint-caution-border)] bg-[var(--tint-caution-bg)] p-4 text-sm text-[var(--tint-caution-ink)]"
+        >
+          <p class="mb-1 font-semibold">{t('blog.healthDisclaimerTitle')}</p>
+          <p set:html={t('blog.healthDisclaimerBody')} />
+        </div>
+
+        <div
+          class="prose prose-lg prose-gray mt-8 max-w-none prose-a:no-underline hover:prose-a:underline"
+        >
+          <Content />
+        </div>
+
+        {faqItems.length > 0 && (
+          <div class="mt-12 border-t border-[var(--border-subtle)] pt-8">
+            <Faq title={t('faq.title')} items={faqItems} class="mb-0" />
+          </div>
+        )}
+
+        <div
+          class="mt-10 rounded-2xl border border-[var(--tint-brand-border)] bg-[var(--tint-brand-bg)] p-8 text-center"
+        >
+          <p class="mb-2 text-2xl font-extrabold text-[var(--text-primary)]">{t('blog.postCtaTitle')}</p>
+          <p class="mx-auto mb-5 max-w-md text-[var(--text-secondary)]">{t('blog.postCtaBody')}</p>
+          <div class="flex flex-col justify-center gap-3 sm:flex-row">
+            <a
+              href={localizedUrl(locale, '/')}
+              class="inline-block rounded-xl bg-brand-600 px-8 py-3 text-lg font-bold text-white shadow-sm transition-colors hover:bg-brand-700"
+            >
+              {t('blog.postCtaPrimary')} →
+            </a>
+            <a
+              href={localizedUrl(locale, '/creatine-hcl-calculator')}
+              class="inline-block rounded-xl border border-[var(--tint-brand-border)] bg-[var(--surface-card)] px-6 py-3 text-base font-bold text-[var(--accent)] shadow-sm transition-colors hover:bg-[var(--surface-sunken)]"
+            >
+              {t('blog.postCtaSecondary')} →
+            </a>
+          </div>
+        </div>
+
+        {
+          post.data.references.length > 0 && (
+            <section class="mt-12 border-t border-[var(--border-subtle)] pt-8">
+              <h2 class="mb-4 flex items-center gap-2 text-lg font-bold text-[var(--text-primary)]">
+                <svg
+                  class="h-5 w-5 text-[var(--accent)]"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  />
+                </svg>
+                {t('blog.referencesTitle')}
+              </h2>
+              <p class="mb-4 text-sm text-[var(--text-muted)]">{t('blog.referencesIntro')}</p>
+              <ol class="space-y-2">
+                {post.data.references.map((reference, index) => (
+                  <li class="flex gap-3 text-sm text-[var(--text-secondary)]">
+                    <span class="shrink-0 font-bold text-[var(--accent)]">[{index + 1}]</span>
+                    <span>{reference}</span>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )
+        }
+
+        {
+          relatedPosts.length > 0 && (
+            <section class="mt-12">
+              <h2 class="mb-6 text-2xl font-bold text-[var(--text-primary)]">{t('blog.relatedTitle')}</h2>
+              <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                {relatedPosts.map((related) => (
+                  <li>
+                    <a
+                      href={localizedUrl(locale, `/blog/${related.id}`)}
+                      class="group block h-full rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-5 transition-all hover:border-[var(--tint-brand-border)] hover:shadow-md"
+                    >
+                      <h3 class="mb-2 text-base font-bold text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent)]">
+                        {related.data.title}
+                      </h3>
+                      <p class="line-clamp-2 text-sm leading-relaxed text-[var(--text-secondary)]">
+                        {related.data.description}
+                      </p>
+                      <span class="mt-3 inline-block text-sm font-medium text-[var(--accent)]">
+                        {t('common.readArticle')} →
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+
+              <div class="mt-5 flex flex-wrap gap-4 text-sm">
+                <a
+                  href={localizedUrl(locale, '/blog')}
+                  class="font-semibold text-[var(--accent)] hover:text-[var(--accent)]"
+                >
+                  ← {t('common.viewAll')}
+                </a>
+                <a
+                  href={localizedUrl(locale, '/creatine-guide')}
+                  class="font-semibold text-[var(--accent)] hover:text-[var(--accent)]"
+                >
+                  {t('home.furtherReading.guideLink')} →
+                </a>
+              </div>
+            </section>
+          )
+        }
+      </article>
+
+      <aside class="shrink-0 lg:w-72">
+        <div class="sticky top-20 rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-5">
+          <p class="mb-4 text-base font-bold text-[var(--text-primary)]">{t('blog.sidebarCalculators')}</p>
+          <ul class="space-y-2 text-sm">
+            <li>
+              <a
+                href={localizedUrl(locale, '/')}
+                class="flex items-center gap-2 font-medium text-[var(--accent)] hover:text-[var(--tint-brand-ink)]"
+              >
+                <span aria-hidden="true">💊</span>
+                {t('calculator.title')}
+              </a>
+            </li>
+            <li>
+              <a
+                href={localizedUrl(locale, '/creatine-hcl-calculator')}
+                class="flex items-center gap-2 font-medium text-[var(--accent)] hover:text-[var(--tint-brand-ink)]"
+              >
+                <span aria-hidden="true">🔬</span>
+                {t('home.sidebar.hclLabel')}
+              </a>
+            </li>
+            <li>
+              <a
+                href={localizedUrl(locale, '/creatine-dosage-by-weight')}
+                class="flex items-center gap-2 font-medium text-[var(--accent)] hover:text-[var(--tint-brand-ink)]"
+              >
+                <span aria-hidden="true">⚖️</span>
+                {t('home.sidebar.byWeightLabel')}
+              </a>
+            </li>
+          </ul>
+
+          <hr class="my-4 border-[var(--border-subtle)]" />
+
+          <p class="mb-3 text-base font-bold text-[var(--text-primary)]">{t('blog.sidebarMoreArticles')}</p>
+          <ul class="space-y-3">
+            {
+              sidebarPosts.map((entry) => (
+                <li>
+                  <a
+                    href={localizedUrl(locale, `/blog/${entry.id}`)}
+                    class="block text-sm leading-snug text-[var(--text-secondary)] transition-colors hover:text-[var(--accent)]"
+                  >
+                    {entry.data.title}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+
+          <a
+            href={localizedUrl(locale, '/blog')}
+            class="mt-5 block text-sm font-semibold text-[var(--accent)] hover:text-[var(--accent)]"
+          >
+            ← {t('common.viewAll')}
+          </a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>

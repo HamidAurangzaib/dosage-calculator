@@ -1,0 +1,25 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import ContactForm from '@theme/components/ContactForm.astro';
+import { localeStaticPaths, localizedUrl, useTranslations, type Locale } from '@theme/i18n/utils';
+
+export const getStaticPaths = localeStaticPaths;
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+---
+
+<BaseLayout
+  locale={locale}
+  title={t('pages.contact.title')}
+  description={t('pages.contact.description')}
+  canonicalPath={localizedUrl(locale, '/contact')}
+  pageType="contact"
+>
+  <div class="mx-auto max-w-2xl">
+    <h1 class="mb-3 text-4xl font-extrabold text-[var(--text-primary)]">{t('contact.h1')}</h1>
+    <p class="mb-8 text-[var(--text-secondary)]">{t('contact.intro')}</p>
+
+    <ContactForm locale={locale} />
+  </div>
+</BaseLayout>

@@ -1,0 +1,327 @@
+---
+import { getCollection } from 'astro:content';
+
+import site from '@/config/site.json';
+import Calculator from '@/components/calculator/Calculator.astro';
+import Charts from '@/components/charts/Charts.astro';
+import HomeContent from '@/components/home/HomeContent.astro';
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import ChartSection from '@theme/components/ChartSection.astro';
+import Faq from '@theme/components/Faq.astro';
+import HomeSchema from '@theme/components/HomeSchema.astro';
+import HowItWorks from '@theme/components/HowItWorks.astro';
+import {
+  absoluteUrl,
+  getEntry,
+  getFaq,
+  localeStaticPaths,
+  localizedUrl,
+  useTranslations,
+  type Locale,
+} from '@theme/i18n/utils';
+
+export const getStaticPaths = localeStaticPaths;
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+
+const faqItems = getFaq(locale);
+const siteTitle = t('site.title');
+
+// The long-form SEO copy is authored in English only. Rendering it under a
+// Spanish or Arabic header would produce a mixed-language page — the exact
+// duplicate-content problem commit d92f78b fixed by cutting from 7 locales to
+// 3 — so es/ar keep their own fully translated sections instead.
+const hasLongFormContent = locale === 'en';
+
+/*
+ * Staggered headline reveal.
+ *
+ * Built as an HTML string joined on a real space so a genuine text node sits
+ * between the word spans. Templating the spans as siblings emits them adjacent
+ * (`</span><span`), and inline-block collapses the whitespace inside each one —
+ * which renders, and copies, as "CreatineDosageCalculator".
+ *
+ * Split on words, never characters: per-character spans shred the heading's
+ * accessible name.
+ */
+const escapeHtml = (value: string) =>
+  value.replace(/[&<>"]/g, (char) => `&#${char.charCodeAt(0)};`);
+
+const headlineHtml = t('home.h1')
+  .split(' ')
+  .map(
+    (word, index) =>
+      `<span class="reveal-word" style="--word-delay:${index * 80}ms">${escapeHtml(word)}</span>`,
+  )
+  .join(' ');
+
+const steps = getEntry<{ title: string; description: string }[]>(locale, 'home.howItWorks.steps') ?? [];
+const formulas = getEntry<string[]>(locale, 'home.sidebar.formulas') ?? [];
+const tableHeaders = getEntry<string[]>(locale, 'home.table.headers') ?? [];
+const tableRows = getEntry<string[][]>(locale, 'home.table.rows') ?? [];
+
+const path = localizedUrl(locale, '/');
+
+const badges = [
+  { key: 'issn', class: 'bg-[var(--tint-brand-bg)] text-[var(--accent)] border-[var(--tint-brand-border)]' },
+  { key: 'peerReviewed', class: 'bg-[var(--tint-info-bg)] text-[var(--tint-info-ink)] border-[var(--tint-info-border)]' },
+  { key: 'noAffiliates', class: 'bg-[var(--tint-violet-bg)] text-[var(--tint-violet-ink)] border-[var(--tint-violet-border)]' },
+  { key: 'free', class: 'bg-[var(--surface-sunken)] text-[var(--text-secondary)] border-[var(--border-subtle)]' },
+] as const;
+
+// Hand-picked entry points into the blog. Titles and descriptions come from the
+// posts themselves, so an edit to a post never leaves a stale card behind.
+const FURTHER_READING_SLUGS = [
+  'creatine-dosage-for-beginners',
+  'best-time-to-take-creatine',
+  'creatine-loading-phase-guide',
+  'creatine-hcl-vs-monohydrate',
+  'creatine-monohydrate-side-effects',
+  'how-much-creatine-per-day-by-weight',
+];
+
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+const furtherReading = FURTHER_READING_SLUGS.map((slug) =>
+  posts.find((post) => post.id === slug),
+).filter((post) => post !== undefined);
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: t('calculator.title'),
+      item: absoluteUrl(site.url, path),
+    },
+  ],
+};
+---
+
+<BaseLayout
+  locale={locale}
+  title={t('meta.title')}
+  description={t('meta.description')}
+  canonicalPath={path}
+  schemas={[breadcrumbSchema]}
+>
+  <HomeSchema slot="head" locale={locale} faqItems={faqItems} />
+
+  <section class="mb-10 text-center">
+    <p class="eyebrow mb-4">Based on ISSN guidelines</p>
+
+    <!--
+      Words rise in sequence. Each is a real text node inside the h1, so the
+      heading reads as one string to search engines and screen readers; only the
+      animation delay is per-word.
+    -->
+    <h1
+      class="mb-5 text-4xl font-extrabold tracking-tight text-balance text-[var(--text-primary)] md:text-5xl lg:text-6xl"
+      set:html={headlineHtml}
+    />
+
+    <p
+      class="mx-auto mb-7 max-w-2xl text-lg text-pretty text-[var(--text-secondary)] md:text-xl"
+      data-reveal
+      style="--reveal-delay:320ms"
+    >
+      {t('home.intro')}
+    </p>
+
+    <ul class="flex flex-wrap justify-center gap-2.5 text-sm" data-reveal-group>
+      {
+        badges.map((badge) => (
+          <li
+            data-reveal
+            class={`inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 font-medium backdrop-blur-sm ${badge.class}`}
+          >
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            {t(`home.badges.${badge.key}`)}
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <div class="mb-14 flex flex-col gap-6 lg:flex-row lg:gap-8">
+    <div class="surface-raised flex-1 p-6 md:p-8">
+      <Calculator locale={locale} />
+    </div>
+
+    <aside class="shrink-0 space-y-5 lg:w-80">
+      <div class="rounded-2xl border border-[var(--tint-brand-border)] bg-[var(--tint-brand-bg)] p-5">
+        <p class="mb-3 flex items-center gap-2 text-base font-bold text-[var(--tint-brand-ink)]">
+          <svg
+            class="h-4.5 w-4.5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3 3v18h18M7 15l3-4 3 3 5-7"></path>
+          </svg>
+          {t('home.sidebar.formulasTitle')}
+        </p>
+        <ul class="space-y-2 text-sm text-[var(--accent)]">
+          {
+            formulas.map((formula) => (
+              <li class="flex gap-2">
+                <svg
+                  class="mt-0.5 h-4 w-4 shrink-0 text-[var(--accent)]"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>{formula}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="surface-card p-5">
+        <p class="mb-3 text-base font-bold text-[var(--text-primary)]">
+          {t('home.sidebar.moreCalculatorsTitle')}
+        </p>
+        <ul class="space-y-3 text-sm">
+          <li>
+            <a
+              href={localizedUrl(locale, '/creatine-hcl-calculator')}
+              class="font-medium text-[var(--accent)] hover:underline"
+            >
+              {t('home.sidebar.hclLabel')} →
+            </a>
+            <p class="mt-0.5 text-xs text-[var(--text-muted)]">{t('home.sidebar.hclHint')}</p>
+          </li>
+          <li>
+            <a
+              href={localizedUrl(locale, '/creatine-dosage-by-weight')}
+              class="font-medium text-[var(--accent)] hover:underline"
+            >
+              {t('home.sidebar.byWeightLabel')} →
+            </a>
+            <p class="mt-0.5 text-xs text-[var(--text-muted)]">{t('home.sidebar.byWeightHint')}</p>
+          </li>
+        </ul>
+      </div>
+
+      <div class="rounded-2xl border border-[var(--tint-caution-border)] bg-[var(--tint-caution-bg)] p-5 text-sm text-[var(--tint-caution-ink)]">
+        <p class="mb-1 font-semibold">⚠️ {t('home.sidebar.disclaimerTitle')}</p>
+        <p>{t('home.sidebar.disclaimer')}</p>
+      </div>
+    </aside>
+  </div>
+
+  {
+    hasLongFormContent ? (
+      <HomeContent locale={locale} />
+    ) : (
+      <>
+        <HowItWorks title={t('home.howItWorks.title', { siteTitle })} steps={steps} />
+
+        <section class="mb-12">
+          <h2 class="mb-4 text-2xl font-bold text-[var(--text-primary)]">{t('home.rightDose.title')}</h2>
+          <div class="space-y-3 text-[var(--text-secondary)]">
+            <p set:html={t('home.rightDose.p1')} />
+            <p>
+              {t('home.rightDose.p2Before')}
+              <a
+                href={localizedUrl(locale, '/creatine-dosage-by-weight')}
+                class="font-medium text-[var(--accent)] hover:underline"
+              >
+                {t('home.rightDose.p2Link')}
+              </a>
+              {t('home.rightDose.p2After')}
+            </p>
+            <p>
+              {t('home.rightDose.p3Before')}
+              <a
+                href={localizedUrl(locale, '/blog/creatine-loading-phase-guide')}
+                class="font-medium text-[var(--accent)] hover:underline"
+              >
+                {t('home.rightDose.p3Link')}
+              </a>
+              {t('home.rightDose.p3Middle')}
+              <a
+                href={localizedUrl(locale, '/creatine-hcl-calculator')}
+                class="font-medium text-[var(--accent)] hover:underline"
+              >
+                {t('home.rightDose.p3Link2')}
+              </a>
+              {t('home.rightDose.p3After')}
+            </p>
+            <p>{t('home.rightDose.p4')}</p>
+          </div>
+        </section>
+
+        <ChartSection
+          title={t('home.table.title')}
+          caption={t('home.table.caption')}
+          headers={tableHeaders}
+          rows={tableRows}
+        />
+      </>
+    )
+  }
+
+  <Faq title={t('faq.title')} items={faqItems} />
+
+  <section>
+    <h2 class="mb-6 text-2xl font-bold text-[var(--text-primary)]">{t('home.furtherReading.title')}</h2>
+    <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        furtherReading.map((post) => (
+          <li>
+            <a
+              href={localizedUrl(locale, `/blog/${post.id}`)}
+              class="group block h-full rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-5 transition-all hover:border-[var(--tint-brand-border)] hover:shadow-md"
+            >
+              <h3 class="mb-2 text-base font-bold text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent)]">
+                {post.data.title}
+              </h3>
+              <p class="line-clamp-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+                {post.data.description}
+              </p>
+              <span class="mt-3 inline-block text-sm font-medium text-[var(--accent)]">
+                {t('common.readArticle')} →
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-5 flex flex-wrap gap-4 text-sm">
+      <a
+        href={localizedUrl(locale, '/blog')}
+        class="font-semibold text-[var(--accent)] hover:text-[var(--accent)]"
+      >
+        {t('common.viewAll')} →
+      </a>
+      <a
+        href={localizedUrl(locale, '/creatine-guide')}
+        class="font-semibold text-[var(--accent)] hover:text-[var(--accent)]"
+      >
+        {t('home.furtherReading.guideLink')} →
+      </a>
+    </div>
+  </section>
+</BaseLayout>

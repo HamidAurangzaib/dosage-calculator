@@ -1,0 +1,235 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import site from '@/config/site.json';
+import { absoluteUrl, localeStaticPaths, localizedUrl, useTranslations, type Locale } from '@theme/i18n/utils';
+
+export const getStaticPaths = localeStaticPaths;
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+
+const path = localizedUrl(locale, '/privacy-policy');
+const lastUpdated = 'May 17, 2026';
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: t('nav.home'),
+      item: absoluteUrl(site.url, localizedUrl(locale, '/')),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: t('footer.privacy'),
+      item: absoluteUrl(site.url, path),
+    },
+  ],
+};
+---
+
+<BaseLayout
+  locale={locale}
+  title={t('pages.privacy.title')}
+  description={t('pages.privacy.description')}
+  canonicalPath={path}
+  schemas={[breadcrumbSchema]}
+>
+  <div class="mx-auto max-w-4xl">
+    <h1 class="mb-2 text-4xl font-extrabold text-[var(--text-primary)]">Privacy Policy</h1>
+    <p class="mb-8 text-sm text-[var(--text-muted)]">Last updated: {lastUpdated}</p>
+
+    <div class="prose prose-gray max-w-none space-y-8 text-[var(--text-secondary)]">
+      <section>
+        <h2 class="text-xl font-bold text-[var(--text-primary)]">1. Introduction</h2>
+        <p>
+          {site.name} ("we", "us", or "our") operates {site.url}. This Privacy Policy explains what
+          information we collect when you use this website, why we collect it, and the choices you
+          have.
+        </p>
+        <p class="mt-2">
+          We run no advertising on this site and we have no affiliate links. We do not sell, rent or
+          share your personal information with third parties for marketing purposes.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-[var(--text-primary)]">2. Data We Collect</h2>
+        <ul class="mt-2 list-inside list-disc space-y-2">
+          <li>
+            <strong>Contact form submissions:</strong> when you send us a message we receive the name,
+            email address and message you type into the form.
+          </li>
+          <li>
+            <strong>Anonymous usage data:</strong> aggregated analytics about how the site is used —
+            pages viewed, approximate location at country/region level, device and browser type, and
+            the referring site.
+          </li>
+          <li>
+            <strong>Calculator inputs:</strong> none. Your body weight and any other value you enter
+            into a calculator is processed entirely in your browser. It is never transmitted to us and
+            never stored.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-[var(--text-primary)]">3. How We Use Your Information</h2>
+        <ul class="mt-2 list-inside list-disc space-y-2">
+          <li>To reply to questions, feedback and corrections you send us through the contact form.</li>
+          <li>
+            To understand which pages and calculators people find useful, so we can improve and
+            prioritise them.
+          </li>
+          <li>To keep the site secure and diagnose technical problems.</li>
+        </ul>
+        <p class="mt-2">
+          We do not use your information for profiling, automated decision-making, or advertising.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-[var(--text-primary)]">4. Analytics</h2>
+        <p>
+          We use <strong>Google Analytics 4</strong> (measurement ID
+          <code>{site.analytics.gaMeasurementId}</code>) to measure anonymous, aggregated traffic.
+          Google Analytics collects information such as your IP address (anonymised by Google before
+          storage), browser and device type, the pages you visit and how long you spend on them. This
+          data is reported to us in aggregate and does not identify you personally. We do not enable
+          Google Signals, advertising features, or ad personalisation on our property.
+        </p>
+        <p class="mt-2">
+          You can opt out of Google Analytics on every site you visit by installing the
+          <a
+            href="https://tools.google.com/dlpage/gaoptout"
+            class="text-[var(--accent)] hover:underline"
+            target="_blank"
+            rel="noopener noreferrer">Google Analytics Opt-out Browser Add-on</a
+          >, or by blocking analytics scripts in your browser or with a content blocker. The
+          calculators and every other feature of this site work normally with analytics blocked.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-[var(--text-primary)]">5. Contact Form Data</h2>
+        <p>
+          The contact form sends your name, email address and message to the site operator by email
+          over SMTP. Those messages are <strong>not written to any database</strong> and are not added
+          to a mailing list — they simply arrive in our inbox, where we read and answer them. We use
+          your email address only to reply to you.
+        </p>
+        <p class="mt-2">
+          Please do not send us sensitive personal or medical information through the contact form. It
+          is an ordinary email channel and is not intended for confidential health data.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-[var(--text-primary)]">6. Cookies</h2>
+        <p>
+          The only cookies this site sets are <strong>analytics cookies</strong>, placed by Google
+          Analytics to distinguish one visit from another and to measure how the site is used. We do
+          not set advertising cookies, and we do not work with ad networks or ad partners.
+        </p>
+        <p class="mt-2">
+          You can block or delete cookies at any time in your browser settings. Doing so does not
+          affect the calculators or any other functionality on this site.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-[var(--text-primary)]">7. Third-Party Services</h2>
+        <p>
+          <strong>Google Analytics</strong> (Google LLC) is the only third-party service that receives
+          data about your visit. Its handling of that data is governed by
+          <a
+            href="https://policies.google.com/privacy"
+            class="text-[var(--accent)] hover:underline"
+            target="_blank"
+            rel="noopener noreferrer">Google's Privacy Policy</a
+          >.
+        </p>
+        <p class="mt-2">
+          This site also links out to third-party websites, such as journal articles and research
+          databases. We are not responsible for the privacy practices of those sites, and we encourage
+          you to read their policies before sharing information with them.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-[var(--text-primary)]">8. Data Retention</h2>
+        <ul class="mt-2 list-inside list-disc space-y-2">
+          <li>
+            <strong>Analytics data</strong> is retained by Google Analytics for the standard retention
+            period configured on our property and is only ever available to us in aggregate form.
+          </li>
+          <li>
+            <strong>Contact emails</strong> are kept in our inbox only as long as needed to handle your
+            enquiry and to keep a record of correspondence, and are deleted when no longer needed.
+          </li>
+          <li>
+            <strong>Calculator inputs</strong> are never retained, because they never leave your
+            browser.
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-[var(--text-primary)]">9. Your Rights</h2>
+        <p>
+          Depending on where you live — including under the GDPR in the European Economic Area and the
+          UK, and under the CCPA/CPRA in California — you may have the right to:
+        </p>
+        <ul class="mt-2 list-inside list-disc space-y-2">
+          <li>Access the personal data we hold about you, and receive a copy of it</li>
+          <li>Have inaccurate data corrected</li>
+          <li>Request the deletion of your data</li>
+          <li>Object to or restrict our processing of your data</li>
+          <li>Opt out of analytics measurement</li>
+          <li>Not be discriminated against for exercising any of these rights</li>
+        </ul>
+        <p class="mt-2">
+          <strong>We do not sell or share your personal information</strong>, and we do not run
+          targeted advertising, so there is no ad-targeting opt-out to exercise. In practice the only
+          personal data we hold is any email correspondence you have started with us. To exercise any
+          of these rights, email us at the address below and we will respond within the timeframe
+          required by the applicable law (45 days under the CCPA, one month under the GDPR).
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-[var(--text-primary)]">10. Children's Privacy</h2>
+        <p>
+          This site is not directed at children under 13, and we do not knowingly collect personal
+          information from them. If you believe a child has sent us personal information through the
+          contact form, please contact us and we will delete it.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-[var(--text-primary)]">11. Changes to This Policy</h2>
+        <p>
+          We may update this Privacy Policy from time to time. Any changes will be posted on this page
+          with a revised "Last updated" date. Material changes will be reflected here before they take
+          effect.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-[var(--text-primary)]">12. How to Contact Us</h2>
+        <p>
+          For any privacy-related request or question, email us at
+          <a href={`mailto:${site.contactEmail}`} class="font-semibold text-[var(--accent)] hover:underline"
+            >{site.contactEmail}</a
+          >, or use our
+          <a href={localizedUrl(locale, '/contact')} class="font-semibold text-[var(--accent)] hover:underline"
+            >contact form</a
+          >.
+        </p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

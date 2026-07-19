@@ -1,0 +1,29 @@
+---
+import CreatineCalculator from './CreatineCalculator';
+import { buildCalculatorMessages } from './messages';
+import type { CreatineType } from '@/lib/creatineFormulas';
+import type { Locale } from '@theme/i18n/utils';
+
+interface Props {
+  locale: Locale;
+  defaultCreatineType?: CreatineType;
+  focusWeight?: boolean;
+}
+
+const { locale, defaultCreatineType = 'monohydrate', focusWeight = false } = Astro.props;
+
+// Strings are resolved on the server and serialised into the island, so the
+// client bundle carries no translation machinery.
+const messages = buildCalculatorMessages(locale);
+---
+
+<!--
+  client:load, not client:idle: the calculator is the page's primary call to
+  action and sits above the fold, so it must be interactive on first paint.
+-->
+<CreatineCalculator
+  client:load
+  messages={messages}
+  defaultCreatineType={defaultCreatineType}
+  focusWeight={focusWeight}
+/>

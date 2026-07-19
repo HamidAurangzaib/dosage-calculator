@@ -1,0 +1,60 @@
+{
+  "nav": {
+    "home": "Calculator",
+    "hcl": "HCl Calculator",
+    "byWeight": "Dose by Weight",
+    "guide": "Guide",
+    "research": "Research",
+    "blog": "Articles",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "footer": {
+    "tagline": "Science-based creatine dosage, free for everyone.",
+    "disclaimer": "Not medical advice. Always consult a qualified professional.",
+    "calculators": "Calculators",
+    "company": "Company",
+    "privacy": "Privacy Policy",
+    "terms": "Terms",
+    "sitemap": "Sitemap",
+    "rights": "All rights reserved.",
+    "followUs": "Follow us"
+  },
+  "pwa": {
+    "title": "Add CreatineCalc to your home screen",
+    "body": "Install the app for instant access — no app store, works offline.",
+    "bodyIos": "Tap the Share button, then \"Add to Home Screen\" for one-tap access.",
+    "install": "Install app",
+    "dismiss": "Not now"
+  },
+  "push": {
+    "title": "Get notified of new creatine guides?",
+    "body": "Science-backed updates, ~2–3 per month. No spam — unsubscribe anytime.",
+    "accept": "Yes, notify me",
+    "dismiss": "No thanks"
+  },
+  "common": {
+    "readArticle": "Read article",
+    "readMore": "Read",
+    "viewAll": "View all creatine articles",
+    "backToHome": "Back to the calculator",
+    "language": "Language",
+    "selectLanguage": "Select language",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "toggleTheme": "Toggle dark mode",
+    "copyResults": "Copy results",
+    "copied": "Copied",
+    "download": "Download",
+    "share": "Share",
+    "skipToContent": "Skip to content",
+    "published": "Published",
+    "updated": "Updated",
+    "minRead": "min read",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "showingResults": "Showing {from}–{to} of {total} articles",
+    "goToPage": "Go to page {page}"
+  }
+}
