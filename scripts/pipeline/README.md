@@ -131,7 +131,7 @@ $env:GEMINI_API_KEY = "AIzaSy..."
 python -m scripts.pipeline.runner
 ```
 
-If a viable article is generated, you'll find it in `content/blog/<slug>.mdx` and metadata at `scripts/pipeline/output/metadata.json`.
+If a viable article is generated, you'll find it in `src/blog/<slug>.mdx` and metadata at `scripts/pipeline/output/metadata.json`.
 
 You can also test individual stages:
 

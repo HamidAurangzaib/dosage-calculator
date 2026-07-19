@@ -4,7 +4,10 @@ from pathlib import Path
 
 # ──── Paths ────────────────────────────────────────────────────────────
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
-BLOG_DIR = PROJECT_ROOT / 'content' / 'blog'
+# Posts live in the Astro content collection (src/blog), not the old Next.js
+# content/ directory. Frontmatter must satisfy src/content.config.ts, which
+# requires title, description, date, author, category and image.
+BLOG_DIR = PROJECT_ROOT / 'src' / 'blog'
 OUTPUT_DIR = Path(__file__).resolve().parent / 'output'
 
 # ──── Trend detection ──────────────────────────────────────────────────

@@ -1,0 +1,40 @@
+---
+interface Step {
+  title: string;
+  description: string;
+}
+
+interface Props {
+  title: string;
+  steps: Step[];
+  class?: string;
+}
+
+const { title, steps, class: className = '' } = Astro.props;
+---
+
+<section class={`mb-12 ${className}`} aria-labelledby="how-it-works-heading">
+  <h2 id="how-it-works-heading" class="mb-6 text-2xl font-bold text-[var(--text-primary)]">
+    {title}
+  </h2>
+
+  <ol class="grid grid-cols-1 gap-6 md:grid-cols-3">
+    {
+      steps.map((step, index) => (
+        <li class="surface-card relative p-6">
+          <span
+            class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-base font-bold text-white shadow-[0_4px_10px_-2px_rgb(5_150_105/0.45)]"
+            aria-hidden="true"
+          >
+            {index + 1}
+          </span>
+          <h3 class="mb-1.5 font-semibold text-[var(--text-primary)]">{step.title}</h3>
+          <p class="text-sm leading-relaxed text-[var(--text-secondary)]">{step.description}</p>
+        </li>
+      ))
+    }
+  </ol>
+
+  <!-- Optional trailing content (extra copy, a CTA) supplied by the page. -->
+  <slot />
+</section>

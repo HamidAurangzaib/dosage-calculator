@@ -1,0 +1,17 @@
+---
+/**
+ * Serialises a JSON-LD graph into a script tag.
+ *
+ * `set:html` with JSON.stringify is safe here: JSON.stringify escapes the quote
+ * characters that could otherwise break out of the script element, and the
+ * closing-tag sequence is neutralised explicitly below.
+ */
+interface Props {
+  schema: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { schema } = Astro.props;
+const json = JSON.stringify(schema).replace(/</g, '\\u003c');
+---
+
+<script type="application/ld+json" is:inline set:html={json} />

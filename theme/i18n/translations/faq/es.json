@@ -1,0 +1,42 @@
+{
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "items": [
+      {
+        "question": "¿Cuánta creatina debo tomar al día?",
+        "answer": "La mayoría de los adultos se benefician de 3–5 g de creatina monohidrato al día durante la fase de mantenimiento. Para una dosis basada en el peso, multiplica tu peso en kg por 0,03. Por ejemplo, una persona de 75 kg debería tomar aproximadamente 2,25–3 g/día, aunque la recomendación estándar es de 3–5 g en cualquier caso.",
+        "display": true
+      },
+      {
+        "question": "¿Necesito una fase de carga?",
+        "answer": "No. La fase de carga (20–25 g/día durante 5–7 días) satura los músculos más rápido, pero tomar 3–5 g/día sin carga alcanza la misma saturación en 3–4 semanas. Elige la carga si quieres resultados más rápidos; omítela si prefieres evitar la retención temporal de agua.",
+        "display": true
+      },
+      {
+        "question": "¿Cómo se dosifica la creatina HCl?",
+        "answer": "La creatina HCl tiene mayor solubilidad, por lo que el cuerpo la absorbe de forma más eficiente. Como resultado, normalmente solo necesitas 1–2 g de HCl al día frente a 3–5 g de monohidrato. Con HCl no se requiere fase de carga.",
+        "display": true
+      },
+      {
+        "question": "¿Cuánta agua debo beber al tomar creatina?",
+        "answer": "Bebe al menos 2,5–3 litros de agua al día mientras tomas creatina. La creatina atrae agua hacia las células musculares, así que mantenerte bien hidratado previene la deshidratación y reduce el riesgo de calambres.",
+        "display": true
+      },
+      {
+        "question": "¿Cuál es el mejor momento para tomar creatina?",
+        "answer": "La investigación muestra que tomar creatina después del entrenamiento puede ofrecer una ligera ventaja para las ganancias musculares. Sin embargo, la constancia importa más que el momento. Toma tu dosis diaria cuando sea más probable que la recuerdes — con una comida es lo ideal.",
+        "display": true
+      },
+      {
+        "question": "¿Es segura la creatina a largo plazo?",
+        "answer": "Sí. La creatina monohidrato es uno de los suplementos más investigados en nutrición deportiva. Estudios de varios años no muestran efectos adversos en adultos sanos con las dosis recomendadas de 3–5 g/día. Consulta siempre a un médico si tienes problemas renales.",
+        "display": true
+      },
+      {
+        "question": "¿Cuánta creatina debo tomar para ganar músculo?",
+        "answer": "Para el crecimiento muscular, la ISSN recomienda una dosis de mantenimiento de 3–5 g/día combinada con entrenamiento de fuerza. Opcionalmente, comienza con una fase de carga de 0,3 g por kg de peso corporal al día durante 5–7 días para saturar los músculos más rápido.",
+        "display": true
+      }
+    ]
+  }
+}

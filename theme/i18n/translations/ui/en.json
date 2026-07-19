@@ -1,0 +1,242 @@
+{
+  "site": {
+    "title": "CreatineCalc",
+    "description": "Science-based creatine dosage calculator and educational resource based on ISSN guidelines."
+  },
+  "meta": {
+    "title": "Creatine Dosage Calculator — Free, Science-Backed & Accurate",
+    "description": "How much creatine should you take? Get your exact daily dose in seconds — personalized by weight, goal & activity level. Based on ISSN research. Free."
+  },
+  "calculator": {
+    "title": "Creatine Dosage Calculator",
+    "subtitle": "Get your personalized daily creatine dose — science-backed, free.",
+    "fields": {
+      "weight": "Body Weight",
+      "weightPlaceholder": "Enter your weight",
+      "weightUnit": "Unit",
+      "goal": "Your Goal",
+      "activityLevel": "Activity Level",
+      "creatineType": "Creatine Type",
+      "loadingPhase": "Include Loading Phase?"
+    },
+    "goals": {
+      "muscle_growth": "Muscle Growth",
+      "performance": "Athletic Performance",
+      "endurance": "Endurance",
+      "general_health": "General Health"
+    },
+    "activity": {
+      "sedentary": "Sedentary (little/no exercise)",
+      "light": "Lightly Active (1–3 days/week)",
+      "moderate": "Moderately Active (3–5 days/week)",
+      "very_active": "Very Active (6–7 days/week)",
+      "athlete": "Elite Athlete (2x/day training)"
+    },
+    "creatineTypes": {
+      "monohydrate": "Monohydrate (Recommended)",
+      "hcl": "Creatine HCl",
+      "micronized": "Micronized Creatine"
+    },
+    "button": "Calculate My Dose",
+    "invalidWeight": "Please enter a valid body weight.",
+    "labels": {
+      "type": "Type",
+      "goal": "Goal",
+      "bodyWeight": "Body Weight",
+      "day": "Day",
+      "time": "Time",
+      "dose": "Dose",
+      "perDay": "per day",
+      "dailySchedule": "Daily Dose Schedule",
+      "totalPerDay": "Total per day (× 7 days)",
+      "afterLoading": "After loading (Day 8+):"
+    },
+    "times": {
+      "morning": "Morning (with breakfast)",
+      "midday": "Midday (with lunch)",
+      "preWorkout": "Pre-workout",
+      "evening": "Evening (with dinner)"
+    },
+    "results": {
+      "title": "Your Creatine Plan",
+      "maintenanceDose": "Daily Maintenance Dose",
+      "loadingDose": "Loading Phase Dose",
+      "loadingSchedule": "Loading Schedule (Days 1–7)",
+      "loadingInstruction": "Take {dose}g, split into 4 servings of {serving}g throughout the day",
+      "maintenanceInstruction": "After loading: take {dose}g once daily",
+      "noLoadingInstruction": "Take {dose}g once daily (no loading phase)",
+      "hydration": "Recommended Water Intake",
+      "hydrationValue": "At least {amount}ml ({liters}L) per day",
+      "timing": "Best Time to Take",
+      "timingValue": "Post-workout or with a meal",
+      "disclaimer": "⚠️ This calculator is for informational purposes only. Consult a healthcare professional before starting any supplement."
+    }
+  },
+  "home": {
+    "h1": "Creatine Dosage Calculator",
+    "intro": "Get your personalized daily creatine dose based on body weight, goal, and activity level — backed by ISSN science.",
+    "badges": {
+      "issn": "ISSN-Based Formulas",
+      "peerReviewed": "Peer-Reviewed Research",
+      "noAffiliates": "No Supplement Affiliates",
+      "free": "Free — No Sign-up"
+    },
+    "sidebar": {
+      "formulasTitle": "ISSN-Based Formulas",
+      "formulas": [
+        "Maintenance: 0.03 g/kg/day",
+        "Loading: 0.3 g/kg/day × 7 days",
+        "HCl: 1–2g/day (no loading)",
+        "Water: 2.5–3L/day minimum"
+      ],
+      "moreCalculatorsTitle": "More Calculators",
+      "hclLabel": "Creatine HCl Dosage Calculator",
+      "hclHint": "Lower dose, better solubility",
+      "byWeightLabel": "Dose by Body Weight",
+      "byWeightHint": "Quick reference for all weights",
+      "disclaimerTitle": "Disclaimer",
+      "disclaimer": "This calculator is for informational purposes only. Consult a healthcare professional before starting any supplement."
+    },
+    "howItWorks": {
+      "title": "How {siteTitle} works",
+      "steps": [
+        {
+          "title": "Enter Your Weight",
+          "description": "Input your body weight in kg or lbs. The calculator uses the ISSN-recommended 0.03 g/kg formula."
+        },
+        {
+          "title": "Select Your Goal & Activity",
+          "description": "Choose your fitness goal and activity level. These factors adjust your optimal dose."
+        },
+        {
+          "title": "Get Your Plan",
+          "description": "Receive your exact daily dose, optional loading schedule, and hydration recommendations."
+        }
+      ]
+    },
+    "rightDose": {
+      "title": "What Is the Right Creatine Dose?",
+      "p1": "The International Society of Sports Nutrition (ISSN) recommends a maintenance dose of approximately <strong>0.03 grams per kilogram of body weight per day</strong>, which translates to 3–5g for most adults. This is the most evidence-backed approach to creatine supplementation.",
+      "p2Before": "Your dose isn't one-size-fits-all. Heavier individuals with higher muscle mass may benefit from the upper end of the range, while lighter individuals may only need 3g/day. See our ",
+      "p2Link": "creatine dosage by body weight",
+      "p2After": " reference for an exact dose chart from 50kg to 120kg. Elite athletes and those pursuing rapid muscle growth can adjust upward based on activity multipliers.",
+      "p3Before": "Creatine HCl is a notable exception — due to its superior solubility and bioavailability, an effective dose is typically only 1–2g/day, and no ",
+      "p3Link": "loading phase",
+      "p3Middle": " is required. Use our dedicated ",
+      "p3Link2": "Creatine HCl dosage calculator",
+      "p3After": " to get your exact HCl dose by body weight.",
+      "p4": "Always pair creatine with adequate hydration. Because creatine pulls water into muscle cells, drinking at least 2.5–3 liters of water daily helps prevent cramps and supports optimal muscle function."
+    },
+    "table": {
+      "title": "Loading Phase vs. No Loading Phase",
+      "caption": "How the two creatine protocols compare across saturation speed, dosing and water retention.",
+      "headers": ["Factor", "With Loading", "Without Loading"],
+      "rows": [
+        ["Protocol", "0.3g/kg/day × 7 days, then 0.03g/kg/day", "0.03g/kg/day from day 1"],
+        ["Time to full saturation", "5–7 days", "3–4 weeks"],
+        ["Daily dose during protocol", "20–25g (split × 4)", "3–5g (once daily)"],
+        ["Water retention risk", "Higher initially", "Minimal"],
+        ["Long-term result", "Same as no-load", "Same as load"],
+        ["Best for", "Faster results before competition", "Gradual, comfortable approach"]
+      ]
+    },
+    "furtherReading": {
+      "title": "Further Reading",
+      "guideLink": "Complete Creatine Guide"
+    }
+  },
+  "blog": {
+    "title": "Creatine Articles & Guides",
+    "description": "Science-based guides on creatine supplementation — dosage, timing, types, and who benefits most.",
+    "metaTitle": "Creatine Guides & Dosage Tips — Expert Articles",
+    "metaDescription": "Learn exactly how to take creatine — dosage by weight, loading phase, HCl vs monohydrate, creatine for women, and muscle growth. Free guides.",
+    "featured": "Featured",
+    "ctaTitle": "Ready to find your ideal dose?",
+    "ctaBody": "Use our free calculator — takes 30 seconds.",
+    "ctaButton": "Use the Calculator",
+    "breadcrumbHome": "Home",
+    "breadcrumbBlog": "Articles",
+    "authorBoxTitle": "Written by the CreatineCalc Research Team",
+    "authorBoxBody": "Our content is based on peer-reviewed sports nutrition research and the <strong>ISSN Position Stand on Creatine Supplementation</strong> — the gold standard reference in the field. Formulas and dosage guidance are cross-referenced against primary literature before publication.",
+    "healthDisclaimerTitle": "Important — Health Disclaimer",
+    "healthDisclaimerBody": "This article is for <strong>educational purposes only</strong> and does not constitute medical advice. Creatine supplementation affects individuals differently. Consult a qualified healthcare professional before starting any supplement, especially if you have pre-existing health conditions, kidney concerns, or are pregnant.",
+    "verifiedAgainst": "Verified against",
+    "referencesTitle": "Scientific References",
+    "referencesIntro": "All claims in this article are supported by peer-reviewed research. Key sources:",
+    "relatedTitle": "Related Articles",
+    "sidebarCalculators": "Free Calculators",
+    "sidebarMoreArticles": "More Articles",
+    "postCtaTitle": "Calculate Your Exact Creatine Dose",
+    "postCtaBody": "Free calculator — personalized by body weight, goal, and activity level. Based on ISSN guidelines.",
+    "postCtaPrimary": "Use the Free Creatine Dosage Calculator",
+    "postCtaSecondary": "Creatine HCl Calculator"
+  },
+  "contact": {
+    "h1": "Contact Us",
+    "intro": "Have a question, spotted an error, or want to suggest an improvement? We'd love to hear from you.",
+    "name": "Name",
+    "namePlaceholder": "Your name",
+    "email": "Email",
+    "emailPlaceholder": "you@example.com",
+    "message": "Message",
+    "messagePlaceholder": "Write your message here...",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "successTitle": "Message Sent!",
+    "successBody": "Thank you for reaching out. We'll get back to you soon.",
+    "genericError": "Something went wrong.",
+    "networkError": "Network error. Please try again.",
+    "orEmailUs": "Prefer email? Write to us directly at"
+  },
+  "sitemapPage": {
+    "title": "Sitemap",
+    "intro": "Every page on {siteTitle}, in one place.",
+    "pages": "Pages",
+    "languages": "Languages",
+    "articles": "Articles",
+    "blogPages": "Article Pages"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "The page you're looking for doesn't exist or has moved.",
+    "cta": "Back to the calculator"
+  },
+  "pages": {
+    "hcl": {
+      "title": "Creatine HCl Dosage Calculator — Exact Dose by Body Weight",
+      "description": "Creatine HCl needs 40–50% less than monohydrate. Enter your weight and get your exact HCl dose instantly. Free, science-backed calculator."
+    },
+    "byWeight": {
+      "title": "Creatine Dosage by Weight — How Many Grams Per Kg or Lbs?",
+      "description": "Not sure how much creatine to take for your weight? Enter your kg or lbs and get your exact daily dose + loading phase in seconds. Free tool."
+    },
+    "guide": {
+      "title": "Complete Creatine Guide — Dosage, Loading, Types & Safety",
+      "description": "Everything you need to know about creatine: how much to take, loading phase, HCl vs monohydrate, side effects, timing, and dosage by weight. Free calculator included."
+    },
+    "about": {
+      "title": "About CreatineCalc — Science-Based Creatine Dosage",
+      "description": "Learn about CreatineCalc, our editorial standards, scientific methodology, and commitment to unbiased, ISSN-backed creatine dosage information."
+    },
+    "privacy": {
+      "title": "Privacy Policy — CreatineCalc",
+      "description": "Privacy policy for CreatineCalc. Learn what data we collect, how analytics is used, and the choices available to you."
+    },
+    "terms": {
+      "title": "Terms of Use — CreatineCalc",
+      "description": "The terms governing use of CreatineCalc, including our health disclaimer, acceptable use, and limitation of liability."
+    },
+    "contact": {
+      "title": "Contact Us — CreatineCalc",
+      "description": "Get in touch with the CreatineCalc team. Questions, feedback, or corrections welcome."
+    },
+    "research": {
+      "title": "Creatine Research & Stats — Key Facts from 30 Years of Science",
+      "description": "Key creatine statistics, dosage formulas, and research findings compiled from ISSN guidelines and peer-reviewed studies. Free to reference and share."
+    },
+    "sitemap": {
+      "title": "Sitemap — CreatineCalc",
+      "description": "A complete index of every page, calculator, and article on CreatineCalc."
+    }
+  }
+}

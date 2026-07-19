@@ -1,0 +1,241 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import site from '@/config/site.json';
+import { absoluteUrl, localeStaticPaths, localizedUrl, useTranslations, type Locale } from '@theme/i18n/utils';
+
+export const getStaticPaths = localeStaticPaths;
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+
+const path = localizedUrl(locale, '/terms');
+const lastUpdated = 'May 17, 2026';
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: t('nav.home'),
+      item: absoluteUrl(site.url, localizedUrl(locale, '/')),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: t('footer.terms'),
+      item: absoluteUrl(site.url, path),
+    },
+  ],
+};
+---
+
+<BaseLayout
+  locale={locale}
+  title={t('pages.terms.title')}
+  description={t('pages.terms.description')}
+  canonicalPath={path}
+  schemas={[breadcrumbSchema]}
+>
+  <div class="mx-auto max-w-4xl">
+    <h1 class="mb-2 text-4xl font-extrabold text-[var(--text-primary)]">Terms of Use</h1>
+    <p class="mb-8 text-sm text-[var(--text-muted)]">Last updated: {lastUpdated}</p>
+
+    <div class="prose prose-gray max-w-none space-y-8 text-[var(--text-secondary)]">
+      <section>
+        <h2 class="text-xl font-bold text-[var(--text-primary)]">1. Acceptance of Terms</h2>
+        <p>
+          These Terms of Use govern your access to and use of {site.name} at {site.url} (the "Site"),
+          including its creatine dosage calculators, articles and reference material. By using the
+          Site you agree to these terms. If you do not agree with them, please do not use the Site.
+        </p>
+        <p class="mt-2">
+          The Site is provided free of charge, without registration, and without advertising or
+          affiliate links.
+        </p>
+      </section>
+
+      <section>
+        <div class="not-prose rounded-2xl border border-[var(--tint-caution-border)] bg-[var(--tint-caution-bg)] p-6">
+          <h2 class="mb-3 flex items-center gap-2 text-xl font-bold text-[var(--tint-caution-ink)]">
+            <span aria-hidden="true">⚠️</span>
+            2. Health Disclaimer — Not Medical Advice
+          </h2>
+          <div class="space-y-3 text-sm leading-relaxed text-[var(--tint-caution-ink)]">
+            <p>
+              <strong
+                >{site.name} is an educational tool. It does not provide medical advice, diagnosis or
+                treatment, and nothing on this Site is a substitute for the judgment of a qualified
+                healthcare professional.</strong
+              >
+            </p>
+            <p>
+              The dosage figures produced by our calculators are general estimates derived from
+              published guidance from the International Society of Sports Nutrition (ISSN) and related
+              peer-reviewed literature. They are population-level estimates. They are not personalised
+              to your medical history, medication, diet, training, or laboratory results.
+            </p>
+            <p>
+              <strong
+                >Consult a physician, pharmacist or registered dietitian before starting creatine
+                supplementation</strong
+              > — and especially before doing so if you have or suspect any pre-existing condition, if
+              you have kidney or liver disease or reduced renal function, if you take prescription medication,
+              if you are under 18, or if you are pregnant or breastfeeding.
+            </p>
+            <p>
+              Never disregard professional medical advice, or delay seeking it, because of something
+              you have read on this Site. If you think you may have a medical emergency, contact your
+              doctor or emergency services immediately.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-[var(--text-primary)]">3. Accuracy of Information &amp; No Warranty</h2>
+        <p>
+          We work hard to keep the Site accurate and aligned with current published research, but we
+          make no warranty — express or implied — that its content, formulas or calculator output are
+          accurate, complete, current, or fit for any particular purpose. The Site is provided "as is"
+          and "as available".
+        </p>
+        <p class="mt-2">
+          Individual response to creatine varies. Body composition, baseline muscle creatine stores,
+          diet, training status, hydration and genetics all affect what an appropriate dose looks like
+          for a specific person, and no calculator can account for all of them. Treat every figure the
+          Site produces as a starting estimate to discuss with a professional, not a prescription.
+        </p>
+        <p class="mt-2">
+          Scientific consensus changes. We may revise guidance, formulas or article content at any
+          time, without notice, as the literature develops.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-[var(--text-primary)]">4. Acceptable Use</h2>
+        <p>You agree that you will not:</p>
+        <ul class="mt-2 list-inside list-disc space-y-2">
+          <li>
+            Scrape, crawl, harvest or bulk-download the Site's content by automated means, or place an
+            unreasonable load on our infrastructure;
+          </li>
+          <li>
+            Reverse engineer, decompile or attempt to derive the source of the Site or its calculators
+            beyond what is exposed in the browser;
+          </li>
+          <li>
+            Attempt to gain unauthorised access to the Site, its hosting, or any system connected to
+            it, or interfere with its normal operation;
+          </li>
+          <li>
+            Use the contact form to send spam, malware, or abusive, unlawful or misleading messages;
+          </li>
+          <li>
+            Republish, redistribute or resell substantial portions of the Site's content without
+            written permission and clear attribution with a link back to the source page;
+          </li>
+          <li>
+            Use the Site or its content in any way that breaks applicable law, or that presents our
+            estimates to others as personalised medical advice.
+          </li>
+        </ul>
+        <p class="mt-2">
+          Short quotations, brief excerpts and screenshots are welcome for commentary, teaching and
+          reporting, provided you credit {site.name} and link to the page you took them from.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-[var(--text-primary)]">5. Intellectual Property</h2>
+        <p>
+          The Site's original content — its written articles, page copy, layout, design, graphics and
+          the software implementation of its calculators — is owned by the operator of {site.name} and
+          is protected by copyright and other intellectual property laws.
+        </p>
+        <p class="mt-2">
+          The underlying dosing <em>formulas</em> are not ours and we claim no ownership of them: they
+          derive from published ISSN position stands and other peer-reviewed scientific literature,
+          which we cite. Scientific facts and formulas are free for anyone to use. Our particular
+          expression, presentation and implementation of them is not.
+        </p>
+        <p class="mt-2">
+          Third-party trademarks, product names and study citations referenced on the Site remain the
+          property of their respective owners, and their use here does not imply any endorsement.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-[var(--text-primary)]">6. Third-Party Links</h2>
+        <p>
+          The Site links to third-party websites, including journals, research databases and health
+          organisations. Those links are provided for reference only. We do not control those sites,
+          are not responsible for their content, accuracy or privacy practices, and a link is not an
+          endorsement. Your use of a third-party site is governed by that site's own terms.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-[var(--text-primary)]">7. Limitation of Liability</h2>
+        <p>
+          To the fullest extent permitted by law, the operator of {site.name} and its contributors will
+          not be liable for any direct, indirect, incidental, consequential or special loss or damage —
+          including personal injury, adverse health outcomes, loss of data, or lost profits — arising
+          out of or in connection with your use of, or inability to use, the Site, its calculators or
+          its content, whether the claim is based in contract, tort, negligence or any other theory.
+        </p>
+        <p class="mt-2">
+          <strong
+            >You use the Site's dosage estimates entirely at your own risk, and you are responsible for
+            any decision you make about supplementation.</strong
+          >
+        </p>
+        <p class="mt-2">
+          Some jurisdictions do not allow the exclusion of certain warranties or the limitation of
+          liability for personal injury or for death caused by negligence. Where that is the case,
+          those exclusions do not apply to you, and our liability is limited to the minimum extent the
+          law permits.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-[var(--text-primary)]">8. Changes to These Terms</h2>
+        <p>
+          We may amend these Terms of Use at any time. The revised terms take effect when posted on
+          this page with an updated "Last updated" date. Your continued use of the Site after that date
+          means you accept the revised terms. Please check back periodically.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-[var(--text-primary)]">9. Governing Law</h2>
+        <p>
+          These Terms of Use are governed by the laws of the jurisdiction in which the operator of
+          {site.name} is established, without regard to its conflict-of-law rules, and any dispute
+          arising from them is subject to the courts of that jurisdiction. Nothing in this clause
+          removes any mandatory protection you have under the consumer law of your own country of
+          residence.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-[var(--text-primary)]">10. Contact</h2>
+        <p>
+          Questions about these terms, permission requests, or corrections to our content are welcome.
+          Email us at
+          <a href={`mailto:${site.contactEmail}`} class="font-semibold text-[var(--accent)] hover:underline"
+            >{site.contactEmail}</a
+          >, or use our
+          <a href={localizedUrl(locale, '/contact')} class="font-semibold text-[var(--accent)] hover:underline"
+            >contact form</a
+          >. See also our
+          <a
+            href={localizedUrl(locale, '/privacy-policy')}
+            class="font-semibold text-[var(--accent)] hover:underline">Privacy Policy</a
+          >.
+        </p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

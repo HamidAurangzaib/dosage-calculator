@@ -1,0 +1,126 @@
+---
+import { getCollection } from 'astro:content';
+import { localizedUrl, type Locale } from '@theme/i18n/utils';
+
+/**
+ * Bento grid of trust signals.
+ *
+ * This is where a testimonials carousel, logo marquee and pricing cards would
+ * normally sit. This site has no testimonials, no media partnerships and no
+ * prices, so every tile below states something verifiable instead — the ISSN
+ * source, the published article count, the editorial policy, the fact that the
+ * tool is free and unmonetised.
+ */
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const url = (path: string) => localizedUrl(locale, path);
+
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+const articleCount = posts.length;
+---
+
+<section class="mb-14" aria-labelledby="trust-heading">
+  <p class="eyebrow mb-2">Why trust these numbers</p>
+  <h2 id="trust-heading" class="mb-3 text-2xl font-bold text-[var(--text-primary)]">
+    Built on published research, not marketing
+  </h2>
+  <p class="mb-8 max-w-2xl text-[var(--text-secondary)]">
+    Every figure this calculator returns traces back to a citable source. Nothing here is sponsored,
+    and no supplement brand pays for placement.
+  </p>
+
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" data-reveal-group>
+    <!-- Primary tile — the source the formulas come from. -->
+    <article
+      data-reveal
+      class="surface-card relative overflow-hidden p-6 sm:col-span-2 lg:row-span-2"
+    >
+      <div aria-hidden="true" class="aurora absolute inset-0 opacity-40"></div>
+      <div class="relative">
+        <p class="eyebrow mb-3">Primary source</p>
+        <h3 class="mb-3 text-xl font-bold text-[var(--text-primary)]">
+          ISSN Position Stand on Creatine Supplementation
+        </h3>
+        <p class="mb-5 max-w-lg text-sm leading-relaxed text-[var(--text-secondary)]">
+          The maintenance formula (0.03 g/kg/day), the loading protocol (0.3 g/kg/day for 5–7 days)
+          and the 25 g ceiling all come from the International Society of Sports Nutrition position
+          stand — the most cited document in the field.
+        </p>
+        <p class="rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-sunken)] p-4 text-xs leading-relaxed text-[var(--text-secondary)]">
+          Kreider RB, et al. <em>ISSN position stand: safety and efficacy of creatine
+          supplementation in exercise, sport, and medicine.</em> Journal of the International Society
+          of Sports Nutrition. 2017;14:18.
+        </p>
+        <a href={url('/creatine-research')} class="btn-ghost mt-4 -ms-3">
+          Read the research summary
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"></path>
+          </svg>
+        </a>
+      </div>
+    </article>
+
+    <article data-reveal class="surface-card p-6">
+      <p class="text-4xl leading-none font-extrabold tracking-tight text-[var(--accent)]">
+        {articleCount}
+      </p>
+      <h3 class="mt-3 font-semibold text-[var(--text-primary)]">Cited guides published</h3>
+      <p class="mt-1 text-sm text-[var(--text-secondary)]">
+        Each article lists its own reference list and the date it was last reviewed.
+      </p>
+      <a href={url('/blog')} class="btn-ghost mt-3 -ms-3">Browse the guides</a>
+    </article>
+
+    <article data-reveal class="surface-card p-6">
+      <span
+        aria-hidden="true"
+        class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-soft)] text-[var(--accent)]"
+      >
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 4v5c0 4.4-3 8.3-7 9-4-0.7-7-4.6-7-9V7l7-4z"></path>
+        </svg>
+      </span>
+      <h3 class="font-semibold text-[var(--text-primary)]">No ads, no affiliate links</h3>
+      <p class="mt-1 text-sm text-[var(--text-secondary)]">
+        The site sells nothing and earns no commission on any supplement. The dose is the only
+        product.
+      </p>
+    </article>
+
+    <article data-reveal class="surface-card p-6">
+      <span
+        aria-hidden="true"
+        class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-soft)] text-[var(--accent)]"
+      >
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.6a1 1 0 01.7.3l5.4 5.4a1 1 0 01.3.7V19a2 2 0 01-2 2z"></path>
+        </svg>
+      </span>
+      <h3 class="font-semibold text-[var(--text-primary)]">Editorial standards</h3>
+      <p class="mt-1 text-sm text-[var(--text-secondary)]">
+        Health claims are cited, corrections are logged, and every page shows its publication date.
+      </p>
+      <a href={url('/about')} class="btn-ghost mt-3 -ms-3">How we work</a>
+    </article>
+
+    <article data-reveal class="surface-card p-6">
+      <span
+        aria-hidden="true"
+        class="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-soft)] text-[var(--accent)]"
+      >
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path stroke-linecap="round" d="M12 7v5l3 2"></path>
+        </svg>
+      </span>
+      <h3 class="font-semibold text-[var(--text-primary)]">Free, and no sign-up</h3>
+      <p class="mt-1 text-sm text-[var(--text-secondary)]">
+        No account, no email wall, no stored personal data. Calculator inputs never leave your
+        browser.
+      </p>
+    </article>
+  </div>
+</section>

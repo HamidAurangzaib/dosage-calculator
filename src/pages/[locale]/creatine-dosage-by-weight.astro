@@ -1,0 +1,199 @@
+---
+import site from '@/config/site.json';
+import Calculator from '@/components/calculator/Calculator.astro';
+import { calcLoadingDose, calcMaintenanceDose } from '@/lib/creatineFormulas';
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import {
+  absoluteUrl,
+  localeStaticPaths,
+  localizedUrl,
+  useTranslations,
+  type Locale,
+} from '@theme/i18n/utils';
+
+export const getStaticPaths = localeStaticPaths;
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+
+const path = localizedUrl(locale, '/creatine-dosage-by-weight');
+const pageUrl = absoluteUrl(site.url, path);
+const pageName = 'Creatine Dosage by Weight';
+
+// The reference table is rendered from the same formulas the calculator island
+// uses, so the static copy can never drift from the live result.
+const referenceWeights = [50, 60, 70, 75, 80, 90, 100, 110];
+
+const referenceRows = referenceWeights.map((kg) => ({
+  kg,
+  lbs: Math.round(kg * 2.2046),
+  maintenance: calcMaintenanceDose(kg, 'muscle_growth', 'moderate', 'monohydrate'),
+  loading: calcLoadingDose(kg, 'monohydrate'),
+}));
+
+const furtherReading = [
+  {
+    slug: 'how-much-creatine-per-day-by-weight',
+    title: 'Exact Dosage Tables by Weight',
+    desc: 'Ready-to-use dosage tables from 50kg to 120kg — daily and loading phase amounts.',
+  },
+  {
+    slug: 'creatine-loading-phase-guide',
+    title: 'Creatine Loading Phase Guide',
+    desc: 'Should you do a loading phase? What doses, timing, and duration work best.',
+  },
+  {
+    slug: 'creatine-dosage-for-beginners',
+    title: 'Creatine Dosage for Beginners',
+    desc: 'New to creatine? Everything you need to know to start correctly and safely.',
+  },
+];
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: t('calculator.title'),
+      item: absoluteUrl(site.url, localizedUrl(locale, '/')),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: pageName,
+      item: pageUrl,
+    },
+  ],
+};
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: t('pages.byWeight.title'),
+  applicationCategory: 'HealthApplication',
+  operatingSystem: 'Web',
+  url: pageUrl,
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  description: t('pages.byWeight.description'),
+};
+
+// No FAQPage graph here: the source page carries no FAQ block, and an FAQPage
+// with an empty mainEntity is a schema validation error.
+const schemas = [breadcrumbSchema, softwareSchema];
+---
+
+<BaseLayout
+  locale={locale}
+  title={t('pages.byWeight.title')}
+  description={t('pages.byWeight.description')}
+  canonicalPath={path}
+  schemas={schemas}
+>
+  <section class="mb-10 text-center">
+    <h1 class="mb-4 text-4xl font-extrabold text-[var(--text-primary)] md:text-5xl">
+      Creatine Dosage by Weight Calculator
+    </h1>
+    <p class="mx-auto max-w-2xl text-lg text-[var(--text-secondary)]">
+      Your body weight is the primary factor in determining your creatine dose. Enter your exact
+      weight below for a personalized recommendation in grams.
+    </p>
+  </section>
+
+  <div class="mb-8 rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-6 shadow-sm md:p-8">
+    <Calculator locale={locale} focusWeight />
+  </div>
+
+  <section class="mb-12">
+    <h2 class="mb-4 text-2xl font-bold text-[var(--text-primary)]">Creatine Dose Reference Table by Weight</h2>
+    <p class="mb-4 text-[var(--text-secondary)]">
+      Use this quick-reference table to see standard maintenance and loading doses for common body
+      weights (assuming Creatine Monohydrate, Muscle Growth goal, Moderate activity).
+    </p>
+    <div class="overflow-x-auto rounded-xl border border-[var(--border-subtle)]">
+      <table class="w-full border-collapse text-sm">
+        <thead>
+          <tr class="bg-brand-600 text-white">
+            <th scope="col" class="p-3 text-start font-semibold">Body Weight (kg)</th>
+            <th scope="col" class="p-3 text-start font-semibold">Body Weight (lbs)</th>
+            <th scope="col" class="p-3 text-start font-semibold">Maintenance Dose</th>
+            <th scope="col" class="p-3 text-start font-semibold">Loading Dose (×7 days)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            referenceRows.map((row, i) => (
+              <tr class:list={[i % 2 === 0 ? 'bg-[var(--surface-card)]' : 'bg-[var(--surface-sunken)]']}>
+                <th
+                  scope="row"
+                  class="border-b border-[var(--border-subtle)] p-3 text-start font-medium text-[var(--text-secondary)]"
+                >
+                  {row.kg} kg
+                </th>
+                <td class="border-b border-[var(--border-subtle)] p-3 text-[var(--text-secondary)]">{row.lbs} lbs</td>
+                <td class="border-b border-[var(--border-subtle)] p-3 font-semibold text-[var(--accent)]">
+                  {row.maintenance}g/day
+                </td>
+                <td class="border-b border-[var(--border-subtle)] p-3 text-[var(--text-secondary)]">
+                  {row.loading}g/day (×4 doses)
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="mb-12">
+    <h2 class="mb-4 text-2xl font-bold text-[var(--text-primary)]">
+      Why Body Weight Determines Your Creatine Dose
+    </h2>
+    <p class="mb-3 text-[var(--text-secondary)]">
+      Creatine is stored in muscle tissue as phosphocreatine. The more muscle mass you have — which
+      generally correlates with body weight — the larger your total creatine pool needs to be for
+      full saturation. This is why the ISSN recommends dosing based on body weight rather than a
+      flat dose for everyone.
+    </p>
+    <p class="mb-3 text-[var(--text-secondary)]">
+      The maintenance formula is <strong>0.03 grams per kilogram of body weight per day</strong>.
+      For a 70kg person, that&apos;s 2.1g — but because the practical minimum effective dose is 3g,
+      the calculator floors the recommendation there. For a 100kg person, the formula yields 3g,
+      adjusted upward by goal and activity multipliers.
+    </p>
+    <p class="mb-3 text-[var(--text-secondary)]">
+      The loading formula is even more weight-sensitive: <strong>0.3g/kg/day for 5–7 days</strong>.
+      A 100kg athlete would take 30g/day during loading, though the ISSN caps this recommendation at
+      25g to minimize GI stress.
+    </p>
+    <p class="text-[var(--text-secondary)]">
+      Beyond weight, your goal (muscle growth vs general health) and activity level further fine-tune
+      the recommendation — which is why our calculator accounts for all three factors.
+    </p>
+  </section>
+
+  <section class="mt-8">
+    <h2 class="mb-6 text-2xl font-bold text-[var(--text-primary)]">Further Reading</h2>
+    <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        furtherReading.map((article) => (
+          <li>
+            <a
+              href={localizedUrl(locale, `/blog/${article.slug}`)}
+              class="group block h-full rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-5 transition-all hover:border-[var(--tint-brand-border)] hover:shadow-md"
+            >
+              <h3 class="mb-2 font-bold text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent)]">
+                {article.title}
+              </h3>
+              <p class="text-sm leading-relaxed text-[var(--text-secondary)]">{article.desc}</p>
+              <span class="mt-3 inline-block text-sm font-medium text-[var(--accent)]">
+                {t('common.readArticle')} →
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>

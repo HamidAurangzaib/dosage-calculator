@@ -1,0 +1,260 @@
+---
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import { localeStaticPaths, localizedUrl, useTranslations, type Locale } from '@theme/i18n/utils';
+import site from '@/config/site.json';
+import { absoluteUrl } from '@theme/i18n/utils';
+
+export const getStaticPaths = localeStaticPaths;
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+
+const path = localizedUrl(locale, '/about');
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: absoluteUrl(site.url, localizedUrl(locale, '/')),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'About',
+      item: absoluteUrl(site.url, path),
+    },
+  ],
+};
+
+const editorialStandards = [
+  {
+    icon: '📖',
+    title: 'Evidence-Based',
+    body: 'Every dosage claim, formula, and health statement is backed by a cited, peer-reviewed study. We do not publish claims that lack scientific support.',
+  },
+  {
+    icon: '🔄',
+    title: 'Regularly Updated',
+    body: 'Articles are reviewed when new research is published. Each page shows its publication and last-updated date so you know how current the information is.',
+  },
+  {
+    icon: '⚖️',
+    title: 'No Conflicts of Interest',
+    body: 'We have no financial relationships with supplement brands. We receive no affiliate commissions. Our recommendations are entirely independent.',
+  },
+  {
+    icon: '🛡️',
+    title: 'YMYL Responsibility',
+    body: 'Supplement dosage is a health topic. We treat it with the same care as medical content — with clear disclaimers, cited sources, and conservative recommendations.',
+  },
+  {
+    icon: '✅',
+    title: 'Formula Verification',
+    body: 'Calculator formulas are verified against the primary ISSN literature. Any goal or activity adjustments are documented in our methodology and cross-checked.',
+  },
+  {
+    icon: '🔍',
+    title: 'Transparent Corrections',
+    body: 'If an error is identified, we correct it promptly and note the change. Accuracy takes priority over preserving existing content.',
+  },
+];
+
+const formulas = [
+  {
+    title: 'Maintenance Dose',
+    formula: '0.03g × bodyweight (kg)',
+    note: 'Minimum 3g/day floor',
+  },
+  {
+    title: 'Loading Phase',
+    formula: '0.3g × bodyweight (kg)',
+    note: 'Capped at 25g/day, 7 days',
+  },
+  {
+    title: 'Creatine HCl',
+    formula: '0.5× monohydrate dose',
+    note: 'Based on absorption ratio',
+  },
+  {
+    title: 'Water Intake',
+    formula: '2500ml + 500ml per 5g',
+    note: 'Adjusted for dose size',
+  },
+];
+
+const coverage = [
+  'Creatine Monohydrate — the gold-standard, most researched form',
+  'Creatine HCl — smaller dose, better solubility, no loading needed',
+  'Micronized Creatine — same formula as monohydrate, finer particle size',
+  'Loading phase vs. no-load protocols',
+  'Goal-based and activity-level dosage adjustments',
+  'Hydration recommendations based on dose size',
+  'Safety, side effects, and common myths — with cited evidence',
+];
+---
+
+<BaseLayout
+  locale={locale}
+  title={t('pages.about.title')}
+  description={t('pages.about.description')}
+  canonicalPath={path}
+  pageType="about"
+  schemas={[breadcrumbSchema]}
+>
+  <div class="mx-auto max-w-4xl">
+    <h1 class="mb-3 text-4xl font-extrabold text-[var(--text-primary)]">About CreatineCalc</h1>
+    <p class="mb-10 text-lg leading-relaxed text-[var(--text-secondary)]">
+      CreatineCalc is an independent, free tool built for athletes, gym-goers, and fitness
+      enthusiasts who want accurate, science-based creatine dosage guidance — without being sold to.
+    </p>
+
+    <section class="mb-10">
+      <h2 class="mb-4 text-2xl font-bold text-[var(--text-primary)]">Our Mission</h2>
+      <p class="mb-3 leading-relaxed text-[var(--text-secondary)]">
+        Supplement dosage information online is often vague, inconsistent, or written to push product
+        sales. We built CreatineCalc to provide a single, trustworthy resource where anyone can get a
+        personalized creatine dose grounded entirely in peer-reviewed sports nutrition research.
+      </p>
+      <p class="leading-relaxed text-[var(--text-secondary)]">
+        We do not sell supplements. We do not accept affiliate commissions from supplement brands.
+        Our only interest is accuracy.
+      </p>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="mb-4 text-2xl font-bold text-[var(--text-primary)]">Our Scientific Basis</h2>
+      <p class="mb-4 leading-relaxed text-[var(--text-secondary)]">
+        All calculator formulas are derived from the <strong
+          >International Society of Sports Nutrition (ISSN) Position Stand on Creatine
+          Supplementation</strong
+        > — the most comprehensive and widely cited document in sports nutrition science on this topic.
+      </p>
+      <div class="space-y-3 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-sunken)] p-5 text-sm text-[var(--text-secondary)]">
+        <p class="font-semibold text-[var(--text-primary)]">Primary reference:</p>
+        <p class="leading-relaxed">
+          Kreider RB, et al. <em
+            >International Society of Sports Nutrition position stand: safety and efficacy of
+            creatine supplementation in exercise, sport, and medicine.</em
+          > Journal of the International Society of Sports Nutrition. 2017;14:18.
+        </p>
+        <p class="pt-2 font-semibold text-[var(--text-primary)]">Supporting references include:</p>
+        <ul class="list-inside list-disc space-y-2">
+          <li>
+            Buford TW, et al. ISSN position stand: creatine supplementation and exercise. JISSN.
+            2007;4:6.
+          </li>
+          <li>Hultman E, et al. Muscle creatine loading in men. J Appl Physiol. 1996;81(1):232-237.</li>
+          <li>Antonio J, Ciccone V. Pre vs post workout creatine supplementation. JISSN. 2013;10:36.</li>
+          <li>
+            Rawson ES, Volek JS. Creatine and resistance training on muscle strength. JSCR.
+            2003;17(4):822-831.
+          </li>
+          <li>
+            Poortmans JR, Francaux M. Long-term creatine does not impair renal function. MSSE.
+            1999;31(8):1108-1110.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="mb-4 text-2xl font-bold text-[var(--text-primary)]">Editorial Standards</h2>
+      <p class="mb-5 leading-relaxed text-[var(--text-secondary)]">
+        This site deals with health supplement information — a category where accuracy matters. We
+        hold our content to the following standards:
+      </p>
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {
+          editorialStandards.map((item) => (
+            <div class="rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-5">
+              <p class="mb-2 text-2xl" aria-hidden="true">
+                {item.icon}
+              </p>
+              <p class="mb-1 font-semibold text-[var(--text-primary)]">{item.title}</p>
+              <p class="text-sm leading-relaxed text-[var(--text-secondary)]">{item.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="mb-4 text-2xl font-bold text-[var(--text-primary)]">Calculator Methodology</h2>
+      <p class="mb-4 leading-relaxed text-[var(--text-secondary)]">
+        Our creatine dosage calculations use the following ISSN-based formulas:
+      </p>
+      <div class="space-y-3 rounded-xl border border-[var(--tint-brand-border)] bg-[var(--tint-brand-bg)] p-5 text-sm">
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {
+            formulas.map((item) => (
+              <div class="rounded-lg border border-[var(--tint-brand-border)] bg-[var(--surface-card)] p-4">
+                <p class="mb-1 font-semibold text-[var(--text-primary)]">{item.title}</p>
+                <p class="font-mono text-base text-[var(--accent)]">{item.formula}</p>
+                <p class="mt-1 text-xs text-[var(--text-muted)]">{item.note}</p>
+              </div>
+            ))
+          }
+        </div>
+        <p class="text-[var(--text-muted)]">
+          Goal and activity level multipliers apply a documented adjustment range of ±15% based on
+          energy expenditure and muscle creatine demand.
+        </p>
+      </div>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="mb-4 text-2xl font-bold text-[var(--text-primary)]">What We Cover</h2>
+      <ul class="space-y-2 text-[var(--text-secondary)]">
+        {
+          coverage.map((item) => (
+            <li class="flex gap-2">
+              <span class="mt-0.5 font-bold text-[var(--accent)]" aria-hidden="true">
+                ✓
+              </span>
+              <span>{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="mb-10">
+      <h2 class="mb-4 text-2xl font-bold text-[var(--text-primary)]">Multilingual Access</h2>
+      <p class="leading-relaxed text-[var(--text-secondary)]">
+        CreatineCalc is available in 3 languages: English, Spanish, and Arabic — with full RTL
+        support for Arabic. Accurate health information should be accessible regardless of language
+        or geography.
+      </p>
+    </section>
+
+    <div class="mb-8 rounded-xl border border-[var(--tint-caution-border)] bg-[var(--tint-caution-bg)] p-5">
+      <p class="mb-2 font-semibold text-[var(--tint-caution-ink)]">Medical Disclaimer</p>
+      <p class="text-sm leading-relaxed text-[var(--tint-caution-ink)]">
+        Nothing on this website constitutes medical advice. Creatine supplementation affects
+        individuals differently. Always consult a qualified healthcare professional before starting
+        any supplement program, particularly if you have pre-existing health conditions, kidney
+        disease, or are pregnant or breastfeeding. This site is for informational and educational
+        purposes only.
+      </p>
+    </div>
+
+    <div class="flex flex-wrap gap-4">
+      <a
+        href={localizedUrl(locale, '/')}
+        class="rounded-xl bg-brand-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-brand-700"
+      >
+        Use the Free Calculator
+      </a>
+      <a
+        href={localizedUrl(locale, '/contact')}
+        class="rounded-xl border border-[var(--border-strong)] px-6 py-3 font-semibold text-[var(--text-secondary)] transition-colors hover:border-[var(--accent)]"
+      >
+        Contact Us
+      </a>
+    </div>
+  </div>
+</BaseLayout>

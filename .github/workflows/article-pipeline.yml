@@ -96,4 +96,4 @@ jobs:
           base: main
           delete-branch: true
           add-paths: |
-            content/blog/*.mdx
+            src/blog/*.mdx

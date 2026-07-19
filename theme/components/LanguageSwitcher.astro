@@ -1,0 +1,48 @@
+---
+import { ACTIVE_LOCALES, LOCALE_META, localizedUrl, useTranslations, type Locale } from '@theme/i18n/utils';
+
+interface Props {
+  locale: Locale;
+  class?: string;
+}
+
+const { locale, class: className = '' } = Astro.props;
+const t = useTranslations(locale);
+
+// Switching language returns to that locale's home rather than trying to map the
+// current path across locales: not every page exists in every locale (the blog
+// is English-only), so a naive segment swap would land on 404s.
+const options = ACTIVE_LOCALES.map((code) => ({
+  code,
+  href: localizedUrl(code, '/'),
+  label: LOCALE_META[code].label,
+  short: LOCALE_META[code].short,
+}));
+---
+
+<div class={`relative ${className}`}>
+  <label for="language-switcher" class="sr-only">{t('common.selectLanguage')}</label>
+  <select
+    id="language-switcher"
+    class="cursor-pointer rounded-lg border border-[var(--border-strong)] bg-[var(--surface-card)] px-2 py-1.5 text-xs font-medium text-[var(--text-secondary)] transition-colors hover:border-[var(--accent)] focus:border-[var(--accent)] focus:outline-none"
+    data-language-switcher
+  >
+    {
+      options.map((option) => (
+        <option value={option.href} selected={option.code === locale}>
+          {option.short} — {option.label}
+        </option>
+      ))
+    }
+  </select>
+</div>
+
+<script>
+  // Progressive enhancement: the <select> is a real form control, and each
+  // option carries the destination URL so navigation is a single assignment.
+  document.querySelectorAll<HTMLSelectElement>('[data-language-switcher]').forEach((select) => {
+    select.addEventListener('change', () => {
+      if (select.value) window.location.href = select.value;
+    });
+  });
+</script>

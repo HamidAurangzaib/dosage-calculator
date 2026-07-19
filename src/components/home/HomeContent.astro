@@ -1,0 +1,366 @@
+---
+/**
+ * Long-form English homepage copy.
+ *
+ * Prose lives here as markup rather than in the i18n JSON: translation files
+ * hold interface strings, and multi-paragraph article copy is far easier to
+ * edit and review as HTML. Rendered on the English homepage only — see the
+ * locale check in src/pages/[locale]/index.astro.
+ */
+import Charts from '@/components/charts/Charts.astro';
+import TrustBento from '@/components/home/TrustBento.astro';
+import HowItWorks from '@theme/components/HowItWorks.astro';
+import { localizedUrl, type Locale } from '@theme/i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const url = (path: string) => localizedUrl(locale, path);
+
+const link = 'font-medium text-[var(--accent)] hover:underline';
+
+const dosageChart = {
+  headers: ['Body weight', 'Loading dose (days 1–7)', 'Maintenance dose', 'Daily water target'],
+  rows: [
+    ['50 kg (110 lb)', '15 g/day — 4 × 3.8 g', '3 g/day', '2.8 L (2,800 ml)'],
+    ['60 kg (132 lb)', '18 g/day — 4 × 4.5 g', '3 g/day', '2.8 L (2,800 ml)'],
+    ['70 kg (154 lb)', '21 g/day — 4 × 5.3 g', '3 g/day', '2.8 L (2,800 ml)'],
+    ['80 kg (176 lb)', '24 g/day — 4 × 6 g', '3 g/day', '2.8 L (2,800 ml)'],
+    ['90 kg (198 lb)', '25 g/day — 4 × 6.3 g', '3 g/day', '2.8 L (2,800 ml)'],
+    ['100 kg (220 lb)', '25 g/day — 4 × 6.3 g', '3 g/day', '2.8 L (2,800 ml)'],
+    ['110 kg (243 lb)', '25 g/day — 4 × 6.3 g', '3.3 g/day', '2.8 L (2,800 ml)'],
+    ['120 kg (265 lb)', '25 g/day — 4 × 6.3 g', '3.6 g/day', '2.9 L (2,900 ml)'],
+  ],
+};
+
+const calculationSteps = [
+  {
+    title: 'Weigh yourself and pick a unit',
+    description:
+      'Enter body weight in kilograms or pounds. Weight drives every figure the calculator returns, so use a morning weight taken before food.',
+  },
+  {
+    title: 'Multiply by 0.03 for maintenance',
+    description:
+      'A 70 kg (154 lb) lifter calculates 70 × 0.03 = 2.1 g. The ISSN floor of 3 g applies below that figure, and the calculator applies it automatically.',
+  },
+  {
+    title: 'Multiply by 0.3 for loading',
+    description:
+      'The same 70 kg lifter calculates 70 × 0.3 = 21 g/day for 5–7 days, split into 4 servings of 5.3 g. Loading caps at 25 g/day.',
+  },
+];
+
+const hclComparison = {
+  headers: ['Factor', 'Creatine monohydrate', 'Creatine HCl'],
+  rows: [
+    ['Maintenance dose', '3–5 g/day', '1–2 g/day'],
+    ['Loading phase', '0.3 g/kg/day for 5–7 days', 'Not required'],
+    ['Solubility in water', 'Moderate — may settle', 'High — dissolves fully'],
+    ['Published human studies', '500+', 'Fewer than 20'],
+    ['Cost per effective dose', 'Lowest', '3–5× higher'],
+    ['Stomach comfort at full dose', 'Bloating reported by some users', 'Smaller volume, fewer reports'],
+  ],
+};
+---
+
+<section class="mb-12 max-w-3xl space-y-4 text-[var(--text-secondary)]">
+  <p>
+    A creatine dosage calculator converts body weight, training goal, and activity level into an
+    exact daily creatine dose in grams. <strong
+      >The calculator above applies the 0.03 g per kilogram maintenance formula published in the
+      International Society of Sports Nutrition (ISSN) position stand</strong
+    >, then scales that figure for muscle growth, athletic performance, endurance, or general
+    health.
+  </p>
+  <p>
+    Calculating a dose instead of guessing solves three problems: underdosing at low body weights,
+    wasted powder above the muscle creatine saturation point, and loading protocols that hand a
+    55 kg (121 lb) beginner the same 20 g as a 110 kg (243 lb) powerlifter.
+  </p>
+  <p>
+    The creatine intake calculator runs on four inputs — body weight in kilograms or pounds, training
+    goal, weekly activity level, and creatine type — and returns a maintenance phase protocol, an
+    optional 7-day loading phase protocol split into four servings, and a daily water target in
+    millilitres and litres.
+  </p>
+</section>
+
+<section class="mb-12 max-w-3xl">
+  <h2 class="mb-4 text-2xl font-bold text-[var(--text-primary)]">
+    What Makes the Best Creatine Dosage Calculator
+  </h2>
+  <p class="mb-4 text-[var(--text-secondary)]">
+    <strong>The best creatine dosage calculator uses body weight as its primary variable</strong> and
+    returns the loading phase and maintenance phase as separate figures. Five features separate an accurate
+    creatine dosing tool from a generic one:
+  </p>
+  <ol class="mb-4 space-y-3 text-[var(--text-secondary)]">
+    <li class="flex gap-3">
+      <span class="font-bold text-[var(--accent)]" aria-hidden="true">1.</span>
+      <span
+        ><strong>Weight-based dosing.</strong> Muscle creatine storage capacity tracks lean body mass,
+        so a fixed 5 g output ignores the 60 kg (132 lb) spread between the lightest and heaviest lifters.</span
+      >
+    </li>
+    <li class="flex gap-3">
+      <span class="font-bold text-[var(--accent)]" aria-hidden="true">2.</span>
+      <span
+        ><strong>Separate loading and maintenance outputs.</strong> The two phases differ by a factor
+        of 10 — 0.3 g/kg against 0.03 g/kg.</span
+      >
+    </li>
+    <li class="flex gap-3">
+      <span class="font-bold text-[var(--accent)]" aria-hidden="true">3.</span>
+      <span
+        ><strong>Creatine type adjustment.</strong> Creatine hydrochloride (HCl) needs roughly half the
+        monohydrate dose, and a calculator that ignores the form overdoses HCl users.</span
+      >
+    </li>
+    <li class="flex gap-3">
+      <span class="font-bold text-[var(--accent)]" aria-hidden="true">4.</span>
+      <span
+        ><strong>Goal and activity scaling.</strong> Training volume raises creatine turnover, which
+        moves the maintenance dose within the 3–5 g band.</span
+      >
+    </li>
+    <li class="flex gap-3">
+      <span class="font-bold text-[var(--accent)]" aria-hidden="true">5.</span>
+      <span
+        ><strong>A hydration output.</strong> Creatine pulls water into muscle cells, so the dose and
+        the daily fluid target belong in the same result.</span
+      >
+    </li>
+  </ol>
+</section>
+
+<section class="mb-12 max-w-3xl">
+  <h2 class="mb-4 text-2xl font-bold text-[var(--text-primary)]">
+    Optimal Creatine Dosage Calculator Settings by Phase
+  </h2>
+  <p class="mb-4 text-[var(--text-secondary)]">
+    <strong
+      >The optimal creatine dose is 3–5 g per day for maintenance and 0.3 g per kilogram of body
+      weight per day for loading.</strong
+    > Creatine supplementation runs in two phases, and the calculator outputs both.
+  </p>
+
+  <h3 class="mt-6 mb-2 text-lg font-semibold text-[var(--text-primary)]">Loading protocol phase</h3>
+  <p class="mb-4 text-[var(--text-secondary)]">
+    The loading protocol phase runs 0.3 g/kg/day for 5–7 days, split into 4 servings taken with
+    meals. An 80 kg (176 lb) lifter takes 24 g/day as 4 × 6 g. Loading raises muscle creatine stores
+    20–40% above baseline within one week. Splitting the dose across four servings of 5–6 g each
+    reduces the stomach discomfort and bloating that a single 20 g serving produces.
+  </p>
+
+  <h3 class="mt-6 mb-2 text-lg font-semibold text-[var(--text-primary)]">Maintenance phase protocol</h3>
+  <p class="mb-4 text-[var(--text-secondary)]">
+    The maintenance phase protocol runs 3–5 g/day for as long as supplementation continues, taken as
+    one serving. Maintenance holds the saturation that loading builds. Skipping the loading phase
+    entirely reaches identical saturation in 3–4 weeks on 3–5 g/day, which suits anyone who wants to
+    avoid the temporary water weight of a loading week. Read the full
+    <a href={url('/blog/creatine-loading-phase-guide')} class={link}>creatine loading phase guide</a> for
+    the week-by-week protocol.
+  </p>
+</section>
+
+<TrustBento locale={locale} />
+
+<Charts />
+
+<section class="mb-12">
+  <h3 class="mb-3 text-lg font-semibold text-[var(--text-primary)]">Full creatine dosage chart</h3>
+  <p class="mb-4 max-w-3xl text-[var(--text-secondary)]">
+    Loading figures apply 0.3 g/kg/day and cap at 25 g/day, the ceiling above which absorption
+    plateaus and excess creatine is excreted. Maintenance figures apply 0.03 g/kg/day against a 3 g
+    floor. Lifters carrying high lean body mass often run the upper end of the 3–5 g range.
+  </p>
+
+  <div class="overflow-x-auto rounded-xl border border-[var(--border-subtle)]">
+    <table class="w-full border-collapse text-sm">
+      <caption class="sr-only">
+        Creatine loading dose, maintenance dose and daily water target for body weights from 50 kg
+        to 120 kg.
+      </caption>
+      <thead>
+        <tr class="bg-[var(--surface-sunken)] text-[var(--text-secondary)]">
+          {
+            dosageChart.headers.map((header) => (
+              <th scope="col" class="border-b border-[var(--border-subtle)] p-3 text-start font-semibold">
+                {header}
+              </th>
+            ))
+          }
+        </tr>
+      </thead>
+      <tbody class="tabular-nums">
+        {
+          dosageChart.rows.map((row) => (
+            <tr class="even:bg-[var(--surface-sunken)]">
+              <th scope="row" class="border-b border-[var(--border-subtle)] p-3 text-start font-medium text-[var(--text-secondary)]">
+                {row[0]}
+              </th>
+              {row.slice(1).map((cell) => (
+                <td class="border-b border-[var(--border-subtle)] p-3 text-[var(--text-secondary)]">{cell}</td>
+              ))}
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <p class="mt-4 max-w-3xl text-sm text-[var(--text-secondary)]">
+    For a dose calculated to your exact weight rather than the nearest row, use the
+    <a href={url('/creatine-dosage-by-weight')} class={link}>creatine dosage by weight calculator</a>.
+  </p>
+</section>
+
+<section class="mb-12 max-w-3xl">
+  <h2 class="mb-4 text-2xl font-bold text-[var(--text-primary)]">Creatine Monohydrate Dosage Calculator</h2>
+  <p class="mb-4 text-[var(--text-secondary)]">
+    <strong>Creatine monohydrate is dosed at 3–5 g per day for maintenance</strong> and 0.3 g/kg/day
+    for a 5–7 day loading phase. Monohydrate carries more than 500 published human studies, which makes
+    it the reference form against which every other type is measured.
+  </p>
+  <p class="mb-4 text-[var(--text-secondary)]">
+    Micronized creatine and Creapure carry the same dosing. Micronization grinds the same molecule
+    into smaller particles for easier mixing, and Creapure names a German-manufactured monohydrate
+    held to a stated purity standard. Neither changes the gram figure the calculator returns.
+    Kre-Alkalyn and creatine ethyl ester market themselves on absorption claims that published
+    research has not supported against monohydrate.
+  </p>
+  <p class="text-[var(--text-secondary)]">
+    Take monohydrate with 300–500 ml (10–17 oz) of water or juice, and stir until the powder no
+    longer settles at the bottom of the glass.
+  </p>
+</section>
+
+<section class="mb-12 max-w-3xl">
+  <h2 class="mb-4 text-2xl font-bold text-[var(--text-primary)]">Creatine HCl vs Monohydrate Dosage</h2>
+  <p class="mb-4 text-[var(--text-secondary)]">
+    <strong>Creatine HCl is dosed at 1–2 g per day against 3–5 g of monohydrate</strong> — roughly half
+    the gram figure. The hydrochloride salt dissolves more completely in water, so a smaller serving
+    delivers a comparable amount of absorbed creatine.
+  </p>
+  <div class="mb-4 overflow-x-auto rounded-xl border border-[var(--border-subtle)]">
+    <table class="w-full border-collapse text-sm">
+      <caption class="sr-only">
+        Creatine HCl compared against creatine monohydrate across dosing, solubility, research volume
+        and cost.
+      </caption>
+      <thead>
+        <tr class="bg-brand-600 text-white">
+          {hclComparison.headers.map((header) => (
+            <th scope="col" class="p-3 text-start font-semibold">{header}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {
+          hclComparison.rows.map((row, index) => (
+            <tr class={index % 2 === 0 ? 'bg-[var(--surface-card)]' : 'bg-[var(--surface-sunken)]'}>
+              <th scope="row" class="border-b border-[var(--border-subtle)] p-3 text-start font-medium text-[var(--text-secondary)]">
+                {row[0]}
+              </th>
+              <td class="border-b border-[var(--border-subtle)] p-3 text-[var(--text-secondary)]">{row[1]}</td>
+              <td class="border-b border-[var(--border-subtle)] p-3 text-[var(--text-secondary)]">{row[2]}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+  <p class="text-[var(--text-secondary)]">
+    Monohydrate remains the better value for most lifters. HCl earns its price for anyone who
+    reports bloating or stomach discomfort on a full monohydrate dose. Set the creatine type to HCl
+    in the calculator above, or open the dedicated
+    <a href={url('/creatine-hcl-calculator')} class={link}>creatine HCl dosage calculator</a>.
+  </p>
+</section>
+
+<HowItWorks title="How to Calculate Creatine Dosage" steps={calculationSteps}>
+  <p class="mt-6 max-w-3xl text-[var(--text-secondary)]">
+    To calculate creatine dosage by hand, multiply body weight in kilograms by 0.03 for the daily
+    maintenance dose and by 0.3 for the daily loading dose. Working in pounds, divide by 2.2 first: a
+    185 lb lifter weighs 84 kg, which gives 2.5 g maintenance (raised to the 3 g floor) and 25 g
+    loading. The calculator applies the floor, the 25 g loading cap, and the HCl adjustment in one
+    step.
+  </p>
+</HowItWorks>
+
+<section class="mb-12 max-w-3xl">
+  <h2 class="mb-4 text-2xl font-bold text-[var(--text-primary)]">Creatine Dosage Calculator by Weight</h2>
+  <p class="mb-6 text-[var(--text-secondary)]">
+    <strong>Body weight sets the creatine dose, not sex or age.</strong> A 65 kg (143 lb) woman and a
+    65 kg man calculate the same 3 g maintenance dose and the same 19.5 g loading dose. Four groups
+    have body weight considerations worth stating directly.
+  </p>
+
+  <h3 class="mt-6 mb-2 text-lg font-semibold text-[var(--text-primary)]">Creatine dosage for men</h3>
+  <p class="mb-4 text-[var(--text-secondary)]">
+    Men calculate 0.03 g/kg/day for maintenance. Higher average lean body mass places most men in the
+    4–5 g range rather than the 3 g floor, and a 90 kg (198 lb) man running a loading phase takes
+    25 g/day for one week.
+  </p>
+
+  <h3 class="mt-6 mb-2 text-lg font-semibold text-[var(--text-primary)]">Creatine dosage for women</h3>
+  <p class="mb-4 text-[var(--text-secondary)]">
+    Women calculate the same 0.03 g/kg/day formula, which lands most women at 3 g/day. Women carry
+    roughly 70–80% of the baseline muscle creatine stores that men carry, so the relative gain from
+    supplementation is often larger. No separate women's formula exists — products marketed that way
+    contain the same monohydrate. Our guide to
+    <a href={url('/blog/creatine-for-women')} class={link}>creatine for women</a> covers the research on
+    strength, body composition, and menstrual cycle timing.
+  </p>
+
+  <h3 class="mt-6 mb-2 text-lg font-semibold text-[var(--text-primary)]">Creatine for teenagers</h3>
+  <p class="mb-4 text-[var(--text-secondary)]">
+    Teenagers under 18 need clearance from a physician or registered dietitian before starting
+    creatine. The ISSN reports no adverse effects in supervised adolescent athletes at standard
+    doses, and this site does not calculate doses for anyone under 18 without that supervision.
+  </p>
+
+  <h3 class="mt-6 mb-2 text-lg font-semibold text-[var(--text-primary)]">
+    Creatine dosage for vegetarians and vegans
+  </h3>
+  <p class="mb-4 text-[var(--text-secondary)]">
+    Vegetarians and vegans start from a lower vegetarian baseline supplementation point, since
+    dietary creatine comes from red meat and fish. Baseline muscle creatine runs 20–30% below that of
+    omnivores, which produces a larger measured response to the same 3–5 g/day. The gram figure does
+    not change.
+  </p>
+</section>
+
+<section class="mb-12 max-w-3xl rounded-2xl border border-[var(--tint-caution-border)] bg-[var(--tint-caution-bg)] p-6">
+  <h3 class="mb-3 text-lg font-bold text-[var(--tint-caution-ink)]">Safety and side effects</h3>
+  <ul class="space-y-2 text-sm text-[var(--tint-caution-ink)]">
+    <li>
+      <strong>Creatine does not harm the kidneys in healthy adults.</strong> Studies running up to 5 years
+      at 3–5 g/day report no change in renal function. Anyone with existing kidney disease needs medical
+      clearance first.
+    </li>
+    <li>
+      <strong>Creatine is not a steroid.</strong> Creatine is an amino acid derivative the liver and kidneys
+      already produce at roughly 1–2 g per day.
+    </li>
+    <li>
+      <strong>Loading phase side effects are stomach-related.</strong> Bloating, cramping and 1–2 kg
+      (2–4 lb) of water weight appear during loading and resolve on the maintenance dose.
+    </li>
+    <li>
+      <strong>Cycling creatine is not required.</strong> No published evidence shows receptor
+      downregulation or a need for time off.
+    </li>
+    <li>
+      <strong>Take creatine on rest days.</strong> Saturation depends on daily intake, not training days.
+    </li>
+  </ul>
+  <p class="mt-4 text-sm text-[var(--tint-caution-ink)]">
+    This calculator provides educational information and does not constitute medical advice. Consult
+    a qualified healthcare professional before starting any supplement, particularly with
+    pre-existing conditions, kidney disease, pregnancy or breastfeeding.
+  </p>
+</section>

@@ -1,0 +1,150 @@
+---
+import site from '@/config/site.json';
+import { useTranslations, type Locale } from '@theme/i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const { appId, safariWebId } = site.push;
+const enabled = Boolean(appId);
+---
+
+{
+  enabled && (
+    <>
+      <script
+        is:inline
+        defer
+        src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
+      />
+      <script is:inline define:vars={{ appId, safariWebId }}>
+        window.OneSignalDeferred = window.OneSignalDeferred || [];
+        window.OneSignalDeferred.push(async (OneSignal) => {
+          await OneSignal.init({
+            appId,
+            safari_web_id: safariWebId,
+            serviceWorkerPath: '/OneSignalSDKWorker.js',
+            notifyButton: { enable: false },
+            autoResubscribe: true,
+          });
+        });
+      </script>
+
+      <div
+        id="push-prompt"
+        role="dialog"
+        aria-labelledby="push-prompt-title"
+        aria-hidden="true"
+        class="fixed inset-x-4 bottom-4 z-50 hidden transition-all duration-200 sm:inset-x-auto sm:end-4 sm:max-w-sm"
+      >
+        <div class="rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-5 shadow-lg">
+          <div class="mb-3 flex items-start gap-3">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-100 text-[var(--accent)]">
+              <svg
+                class="h-5 w-5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                />
+              </svg>
+            </span>
+            <div class="min-w-0 flex-1">
+              <p id="push-prompt-title" class="text-sm font-semibold text-[var(--text-primary)]">
+                {t('push.title')}
+              </p>
+              <p class="mt-1 text-sm leading-snug text-[var(--text-secondary)]">{t('push.body')}</p>
+            </div>
+          </div>
+
+          <div class="flex justify-end gap-2">
+            <button
+              type="button"
+              id="push-prompt-dismiss"
+              class="px-3 py-1.5 text-sm font-medium text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
+            >
+              {t('push.dismiss')}
+            </button>
+            <button
+              type="button"
+              id="push-prompt-accept"
+              class="rounded-lg bg-brand-600 px-4 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-brand-700"
+            >
+              {t('push.accept')}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <script is:inline>
+        (() => {
+          const STORAGE_KEY = 'cc-push-prompt-dismissed';
+          const DISMISS_DAYS = 30;
+          const SHOW_DELAY_MS = 30_000;
+
+          const root = document.getElementById('push-prompt');
+          const accept = document.getElementById('push-prompt-accept');
+          const dismiss = document.getElementById('push-prompt-dismiss');
+          if (!root || !accept || !dismiss) return;
+
+          const dismissedAt = Number(localStorage.getItem(STORAGE_KEY) || 0);
+          if (dismissedAt && Date.now() - dismissedAt < DISMISS_DAYS * 86_400_000) return;
+
+          const hide = () => {
+            root.classList.add('opacity-0');
+            setTimeout(() => root.classList.add('hidden'), 200);
+            root.setAttribute('aria-hidden', 'true');
+          };
+
+          setTimeout(() => {
+            window.OneSignalDeferred = window.OneSignalDeferred || [];
+            window.OneSignalDeferred.push((OneSignal) => {
+              try {
+                if (OneSignal.Notifications?.isPushSupported?.() === false) return;
+                // Already subscribed, or permission already granted at the
+                // browser level — nothing to ask for.
+                if (OneSignal.User?.PushSubscription?.optedIn) return;
+                const permission = OneSignal.Notifications?.permission;
+                if (permission === true || permission === 'granted') return;
+
+                root.classList.remove('hidden');
+                root.setAttribute('aria-hidden', 'false');
+              } catch {
+                /* SDK unavailable or unsupported — skip silently. */
+              }
+            });
+          }, SHOW_DELAY_MS);
+
+          accept.addEventListener('click', () => {
+            window.OneSignalDeferred = window.OneSignalDeferred || [];
+            window.OneSignalDeferred.push(async (OneSignal) => {
+              try {
+                // optIn() drives the whole v16 flow: permission prompt, service
+                // worker registration, subscription creation and sync.
+                await OneSignal.User?.PushSubscription?.optIn();
+              } catch (error) {
+                console.error('[CreatineCalc] Push subscription failed:', error);
+              }
+            });
+            hide();
+          });
+
+          dismiss.addEventListener('click', () => {
+            localStorage.setItem(STORAGE_KEY, String(Date.now()));
+            hide();
+          });
+        })();
+      </script>
+    </>
+  )
+}

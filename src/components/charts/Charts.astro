@@ -1,0 +1,27 @@
+---
+import SaturationChart from './SaturationChart';
+import DoseByWeightChart from './DoseByWeightChart';
+
+/**
+ * Both charts sit well below the fold, so they hydrate on visibility rather
+ * than on load — the calculator keeps the main thread to itself during the
+ * initial paint.
+ */
+---
+
+<section class="mb-14" aria-labelledby="charts-heading">
+  <p class="eyebrow mb-2">Visualised</p>
+  <h2 id="charts-heading" class="mb-3 text-2xl font-bold text-[var(--text-primary)]">
+    Creatine Dosage Chart by Body Weight
+  </h2>
+  <p class="mb-8 max-w-2xl text-[var(--text-secondary)]">
+    Two figures decide a creatine protocol: how much per day, and how long until muscle stores are
+    full. Both charts are interactive — drag the slider to set your body weight, or move across the
+    saturation curve to compare any day.
+  </p>
+
+  <div class="space-y-8">
+    <DoseByWeightChart client:visible />
+    <SaturationChart client:visible />
+  </div>
+</section>

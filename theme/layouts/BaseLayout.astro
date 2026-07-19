@@ -1,0 +1,219 @@
+---
+import '@/styles/global.css';
+
+import site from '@/config/site.json';
+import Header from '@theme/components/Header.astro';
+import Footer from '@theme/components/Footer.astro';
+import Analytics from '@theme/components/Analytics.astro';
+import JsonLd from '@theme/components/JsonLd.astro';
+import Motion from '@theme/components/Motion.astro';
+import PushNotifications from '@theme/components/PushNotifications.astro';
+import PwaInstallPrompt from '@theme/components/PwaInstallPrompt.astro';
+import {
+  absoluteUrl,
+  localizedUrl,
+  useTranslations,
+  type Locale,
+} from '@theme/i18n/utils';
+import { getDir, getOgLocale } from '@theme/i18n/config';
+
+export interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+  /** Locale-prefixed path, e.g. "/en/contact". Defaults to the current URL. */
+  canonicalPath?: string;
+  robots?: string;
+  ogType?: 'website' | 'article';
+  image?: string;
+  imageAlt?: string;
+  /** Drives the conditional AboutPage / ContactPage schema. */
+  pageType?: 'about' | 'contact' | 'generic';
+  /** Extra JSON-LD graphs injected into <head> by the page. */
+  schemas?: Record<string, unknown>[];
+  /** Wide pages (blog post, landing pages) manage their own container. */
+  fullWidth?: boolean;
+}
+
+const {
+  locale,
+  title,
+  description,
+  canonicalPath,
+  robots = 'index, follow',
+  ogType = 'website',
+  image = site.metaImage,
+  imageAlt = site.metaImageAlt,
+  pageType = 'generic',
+  schemas = [],
+  fullWidth = false,
+} = Astro.props;
+
+const t = useTranslations(locale);
+const dir = getDir(locale);
+const siteTitle = t('site.title');
+
+const path = canonicalPath ?? Astro.url.pathname;
+const canonical = absoluteUrl(site.url, path);
+const ogImage = absoluteUrl(site.url, image);
+
+const sameAs = Object.values(site.social).filter((url): url is string => Boolean(url));
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: siteTitle,
+  legalName: site.legalName,
+  url: site.url,
+  description: t('site.description'),
+  logo: {
+    '@type': 'ImageObject',
+    url: absoluteUrl(site.url, site.logo),
+  },
+  ...(sameAs.length > 0 ? { sameAs } : {}),
+};
+
+// SiteNavigationElement graph, built from the same config the header renders.
+const navigationSchema = {
+  '@context': 'https://schema.org',
+  '@graph': site.header.nav.map((item, index) => ({
+    '@type': 'SiteNavigationElement',
+    position: index + 1,
+    name: t(item.key),
+    url: absoluteUrl(site.url, localizedUrl(locale, item.href)),
+  })),
+};
+
+const aboutSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: title,
+  description,
+  url: canonical,
+  isPartOf: { '@type': 'WebSite', name: siteTitle, url: site.url },
+};
+
+const contactSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: title,
+  description,
+  url: canonical,
+  isPartOf: { '@type': 'WebSite', name: siteTitle, url: site.url },
+};
+
+const headSchemas: Record<string, unknown>[] = [
+  organizationSchema,
+  navigationSchema,
+  ...(pageType === 'about' ? [aboutSchema] : []),
+  ...(pageType === 'contact' ? [contactSchema] : []),
+  ...schemas,
+];
+---
+
+<!doctype html>
+<html lang={locale} dir={dir}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!--
+      Theme is resolved before first paint — render-blocking on purpose. Any
+      deferral here shows a flash of the wrong theme on every navigation.
+    -->
+    <script is:inline>
+      (() => {
+        try {
+          const stored = localStorage.getItem('cc-theme');
+          const theme =
+            stored ??
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.style.colorScheme = theme;
+        } catch {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content={robots} />
+    <meta name="googlebot" content={robots} />
+
+    <link rel="icon" href={site.favicon} sizes="any" />
+    <link rel="icon" href="/icon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content={site.themeColor} />
+
+    {site.webmaster.google && (
+      <meta name="google-site-verification" content={site.webmaster.google} />
+    )}
+    {site.webmaster.bing && <meta name="msvalidate.01" content={site.webmaster.bing} />}
+    {site.webmaster.yandex && <meta name="yandex-verification" content={site.webmaster.yandex} />}
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={siteTitle} />
+    <meta property="og:locale" content={getOgLocale(locale)} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content={String(site.metaImageWidth)} />
+    <meta property="og:image:height" content={String(site.metaImageHeight)} />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:type" content={ogType} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {headSchemas.map((schema) => <JsonLd schema={schema} />)}
+
+    <!-- Page-supplied head content (extra schema, preloads). -->
+    <slot name="head" />
+
+    <Analytics />
+  </head>
+
+  <body class="relative flex min-h-screen flex-col overflow-x-hidden">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:start-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-[var(--surface-card)] focus:px-4 focus:py-2 focus:font-semibold focus:text-[var(--accent)] focus:shadow-lg"
+    >
+      {t('common.skipToContent')}
+    </a>
+
+    <Motion />
+    <Header locale={locale} />
+
+    <!--
+      Aurora backdrop behind the fold. Fixed height, -z-10 and no pointer
+      events, so it never intercepts clicks or affects layout.
+    -->
+    <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[620px]">
+      <div class="aurora"></div>
+      <div class="grid-texture absolute inset-0 opacity-60"></div>
+    </div>
+
+    <main id="main" class="relative flex-1">
+      {
+        fullWidth ? (
+          <slot />
+        ) : (
+          <div class="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:px-8 2xl:max-w-7xl">
+            <slot />
+          </div>
+        )
+      }
+    </main>
+
+    <Footer locale={locale} />
+
+    <PwaInstallPrompt locale={locale} />
+    <PushNotifications locale={locale} />
+  </body>
+</html>

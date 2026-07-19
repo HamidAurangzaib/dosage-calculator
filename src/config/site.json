@@ -1,0 +1,67 @@
+{
+  "name": "CreatineCalc",
+  "legalName": "CreatineCalc",
+  "url": "https://www.creatinedosagecalculator.com",
+  "logo": "/dosagelogo.png",
+  "favicon": "/favicon.ico",
+  "metaImage": "/og-image.png",
+  "metaImageWidth": 1200,
+  "metaImageHeight": 630,
+  "metaImageAlt": "CreatineCalc — Science-Based Creatine Dosage Calculator",
+  "author": "CreatineCalc Research Team",
+  "contactEmail": "hello@creatinedosagecalculator.com",
+  "themeColor": "#059669",
+  "analytics": {
+    "gaMeasurementId": "G-JY12RDBN3D"
+  },
+  "push": {
+    "appId": "6a2e9401-d0a5-48e1-bd4d-15b1609367c5",
+    "safariWebId": "web.onesignal.auto.283a79e5-74a1-4b9f-8067-e75dbf426ba4"
+  },
+  "webmaster": {
+    "google": "",
+    "bing": "",
+    "yandex": ""
+  },
+  "social": {
+    "facebook": "",
+    "twitter": "",
+    "linkedin": "",
+    "pinterest": ""
+  },
+  "header": {
+    "nav": [
+      { "key": "nav.home", "href": "/" },
+      { "key": "nav.hcl", "href": "/creatine-hcl-calculator" },
+      { "key": "nav.byWeight", "href": "/creatine-dosage-by-weight" },
+      { "key": "nav.guide", "href": "/creatine-guide" },
+      { "key": "nav.blog", "href": "/blog" },
+      { "key": "nav.about", "href": "/about" },
+      { "key": "nav.contact", "href": "/contact" }
+    ]
+  },
+  "footer": {
+    "columns": [
+      {
+        "titleKey": "footer.calculators",
+        "links": [
+          { "key": "nav.home", "href": "/" },
+          { "key": "nav.hcl", "href": "/creatine-hcl-calculator" },
+          { "key": "nav.byWeight", "href": "/creatine-dosage-by-weight" },
+          { "key": "nav.research", "href": "/creatine-research" },
+          { "key": "nav.blog", "href": "/blog" }
+        ]
+      },
+      {
+        "titleKey": "footer.company",
+        "links": [
+          { "key": "nav.about", "href": "/about" },
+          { "key": "nav.contact", "href": "/contact" },
+          { "key": "footer.privacy", "href": "/privacy-policy" },
+          { "key": "footer.terms", "href": "/terms" },
+          { "key": "footer.sitemap", "href": "/sitemap" }
+        ]
+      }
+    ]
+  }
+}
