@@ -10,7 +10,16 @@ import tailwindcss from '@tailwindcss/vite';
 import remarkGfm from 'remark-gfm';
 
 import { ACTIVE_LOCALES, DEFAULT_LOCALE } from './theme/i18n/config.ts';
-import site from './src/config/site.json' with { type: 'json' };
+
+/*
+ * Read rather than `import ... with { type: 'json' }`.
+ *
+ * Import attributes need Node >= 20.10 / >= 18.20. A Vercel project carried
+ * over from Next.js is often still pinned to an older Node, where that syntax
+ * is a SyntaxError at config load — the config never parses, so the build dies
+ * before Astro prints anything useful. readFileSync works on every version.
+ */
+const site = JSON.parse(fs.readFileSync(new URL('./src/config/site.json', import.meta.url), 'utf8'));
 
 /*
  * Legacy 301s carried over from next.config.mjs.
