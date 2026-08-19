@@ -12,7 +12,7 @@
   "contactEmail": "hello@creatinedosagecalculator.com",
   "themeColor": "#059669",
   "analytics": {
-    "gaMeasurementId": "G-JY12RDBN3D"
+    "gaMeasurementId": "G-DKF13YZ9HK"
   },
   "push": {
     "appId": "6a2e9401-d0a5-48e1-bd4d-15b1609367c5",
@@ -56,6 +56,7 @@
         "titleKey": "footer.company",
         "links": [
           { "key": "nav.about", "href": "/about" },
+          { "key": "footer.editorialTeam", "href": "/editorial-team" },
           { "key": "nav.contact", "href": "/contact" },
           { "key": "footer.privacy", "href": "/privacy-policy" },
           { "key": "footer.terms", "href": "/terms" },

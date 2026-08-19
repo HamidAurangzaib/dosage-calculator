@@ -16,6 +16,29 @@
 >
 </div>
 
+<!--
+  Back to top. A real <button> so it is keyboard reachable, hidden from the
+  tab order until it is actually on screen.
+-->
+<button
+  type="button"
+  data-back-to-top
+  hidden
+  class="glass fixed bottom-6 end-6 z-40 flex h-11 w-11 items-center justify-center rounded-full text-[var(--text-primary)] opacity-0 transition-opacity duration-300 hover:text-[var(--accent)]"
+  aria-label="Back to top"
+>
+  <svg
+    class="h-5 w-5"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+  >
+    <path stroke-linecap="round" stroke-linejoin="round" d="M12 19V5M5 12l7-7 7 7"></path>
+  </svg>
+</button>
+
 <script>
   // Marking the document as JS-capable is what allows CSS to hide pre-reveal
   // content. Without it, everything stays visible — no blank page if this fails.
@@ -53,16 +76,32 @@
     targets.forEach((el) => observer.observe(el));
   }
 
-  // Scroll progress
+  // Scroll progress + back-to-top share one passive, rAF-throttled listener.
   const bar = document.querySelector<HTMLElement>('[data-scroll-progress]');
-  if (bar && !reduceMotion) {
+  const toTop = document.querySelector<HTMLElement>('[data-back-to-top]');
+
+  if (bar || toTop) {
     let ticking = false;
+
     const update = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       const ratio = max > 0 ? window.scrollY / max : 0;
-      bar.style.transform = `scaleX(${Math.min(1, Math.max(0, ratio))})`;
+
+      if (bar && !reduceMotion) {
+        bar.style.transform = `scaleX(${Math.min(1, Math.max(0, ratio))})`;
+      }
+
+      if (toTop) {
+        // `hidden` keeps it out of the tab order while off screen; opacity
+        // handles the fade once it is focusable again.
+        const show = window.scrollY > window.innerHeight;
+        toTop.hidden = !show;
+        toTop.style.opacity = show ? '1' : '0';
+      }
+
       ticking = false;
     };
+
     window.addEventListener(
       'scroll',
       () => {
@@ -74,6 +113,10 @@
     );
     update();
   }
+
+  toTop?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+  });
 
   // Magnetic buttons — the cursor tugs the label a few pixels. Pointer-type
   // guarded so it never fires on touch, and skipped under reduced motion.
