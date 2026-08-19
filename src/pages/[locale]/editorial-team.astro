@@ -26,18 +26,9 @@ const title = 'Editorial Team & Review Process — CreatineCalc';
 const description =
   'Who writes CreatineCalc, how every dosage figure is sourced and checked, and how to report a correction.';
 
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'AboutPage',
-  name: title,
-  description,
-  url: absoluteUrl(site.url, path),
-  publisher: {
-    '@type': 'Organization',
-    name: site.name,
-    url: site.url,
-  },
-};
+// The AboutPage node comes from `pageType="about"` below — SeoHead builds it
+// once with a stable @id and a reference to the shared Organization, so a
+// second copy here would be a conflicting definition of the same page entity.
 
 const principles = [
   {
@@ -65,7 +56,6 @@ const principles = [
   description={description}
   canonicalPath={path}
   pageType="about"
-  schemas={[schema]}
 >
   <div class="mx-auto max-w-4xl">
     <h1 class="mb-3 text-4xl font-extrabold text-[var(--text-primary)]">

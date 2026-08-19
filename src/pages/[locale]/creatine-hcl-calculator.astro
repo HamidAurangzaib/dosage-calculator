@@ -98,12 +98,15 @@ const breadcrumbSchema = {
   ],
 };
 
-const softwareSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'SoftwareApplication',
+// WebApplication, not SoftwareApplication: nothing is installed and it runs in
+// the browser, so the narrower type is the accurate one.
+const appSchema = {
+  '@type': 'WebApplication',
   name: t('pages.hcl.title'),
   applicationCategory: 'HealthApplication',
-  operatingSystem: 'Web',
+  operatingSystem: 'Any (web browser)',
+  browserRequirements: 'Requires JavaScript',
+  isAccessibleForFree: true,
   url: pageUrl,
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
   description: t('pages.hcl.description'),
@@ -123,7 +126,7 @@ const faqSchema =
       }
     : null;
 
-const schemas = [breadcrumbSchema, softwareSchema, ...(faqSchema ? [faqSchema] : [])];
+const schemas = [breadcrumbSchema, appSchema, ...(faqSchema ? [faqSchema] : [])];
 ---
 
 <BaseLayout
