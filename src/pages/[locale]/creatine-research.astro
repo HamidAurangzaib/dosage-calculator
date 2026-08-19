@@ -212,32 +212,16 @@ const breadcrumbSchema = {
   ],
 };
 
-const articleSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: pageTitle,
-  description: pageDescription,
-  mainEntityOfPage: {
-    '@type': 'WebPage',
-    '@id': absoluteUrl(site.url, path),
-  },
-  url: absoluteUrl(site.url, path),
-  inLanguage: locale,
-  author: {
-    '@type': 'Organization',
-    name: site.name,
-    url: site.url,
-  },
-  publisher: {
-    '@type': 'Organization',
-    name: site.name,
-    url: site.url,
-    logo: {
-      '@type': 'ImageObject',
-      url: absoluteUrl(site.url, site.logo),
-    },
-  },
-};
+/*
+ * No Article node here.
+ *
+ * This is a curated evidence summary, not a dated article: nothing in the
+ * codebase carries a publish or modified date for it, and Article without
+ * datePublished/dateModified is an incomplete entity. Inventing the dates to
+ * satisfy the shape is exactly the fabricated-signal problem the editorial
+ * policy forbids, so the page is described by the WebPage + BreadcrumbList
+ * nodes SeoHead already emits.
+ */
 ---
 
 <BaseLayout
@@ -246,7 +230,7 @@ const articleSchema = {
   description={pageDescription}
   canonicalPath={path}
   ogType="article"
-  schemas={[breadcrumbSchema, articleSchema]}
+  schemas={[breadcrumbSchema]}
 >
   <nav aria-label="Breadcrumb" class="mb-6 flex items-center gap-2 text-sm text-[var(--text-muted)]">
     <a href={localizedUrl(locale, '/')} class="transition-colors hover:text-[var(--accent)]">Home</a>

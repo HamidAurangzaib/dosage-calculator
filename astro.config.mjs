@@ -9,7 +9,7 @@ import vercel from '@astrojs/vercel';
 import tailwindcss from '@tailwindcss/vite';
 import remarkGfm from 'remark-gfm';
 
-import { ACTIVE_LOCALES, DEFAULT_LOCALE } from './theme/i18n/config.ts';
+import { DEFAULT_LOCALE } from './theme/i18n/config.ts';
 
 /*
  * Read rather than `import ... with { type: 'json' }`.
@@ -120,11 +120,17 @@ export default defineConfig({
   integrations: [
     mdx(),
     react(),
+    /*
+     * No `i18n` block on purpose.
+     *
+     * hreflang is emitted once, in <head>, by theme/components/SeoHead.astro.
+     * The sitemap integration derives its alternates from URL prefixes alone,
+     * so it cannot know that the blog is English-only and would advertise
+     * /es/blog/... URLs that only 301 back to /en. Two sources also drift the
+     * moment a route stops existing in one locale — head links are the single
+     * source of truth.
+     */
     sitemap({
-      i18n: {
-        defaultLocale: DEFAULT_LOCALE,
-        locales: Object.fromEntries(ACTIVE_LOCALES.map((l) => [l, l])),
-      },
       filter: (page) => !page.includes('/sitemap'),
     }),
   ],

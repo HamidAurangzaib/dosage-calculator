@@ -5,17 +5,18 @@ import site from '@/config/site.json';
 import Header from '@theme/components/Header.astro';
 import Footer from '@theme/components/Footer.astro';
 import Analytics from '@theme/components/Analytics.astro';
-import JsonLd from '@theme/components/JsonLd.astro';
 import Motion from '@theme/components/Motion.astro';
 import PushNotifications from '@theme/components/PushNotifications.astro';
 import PwaInstallPrompt from '@theme/components/PwaInstallPrompt.astro';
+import SeoHead from '@theme/components/SeoHead.astro';
 import {
   absoluteUrl,
   localizedUrl,
   useTranslations,
   type Locale,
 } from '@theme/i18n/utils';
-import { getDir, getOgLocale } from '@theme/i18n/config';
+import { ACTIVE_LOCALES, getDir, getOgLocale } from '@theme/i18n/config';
+import type { SchemaNode } from '@theme/lib/schema';
 
 export interface Props {
   locale: Locale;
@@ -29,8 +30,14 @@ export interface Props {
   imageAlt?: string;
   /** Drives the conditional AboutPage / ContactPage schema. */
   pageType?: 'about' | 'contact' | 'generic';
-  /** Extra JSON-LD graphs injected into <head> by the page. */
-  schemas?: Record<string, unknown>[];
+  /** Extra JSON-LD nodes merged into this page's @graph. */
+  schemas?: SchemaNode[];
+  /**
+   * Locales this exact route exists in. Defaults to every active locale, which
+   * is right for the shared pages; the English-only blog passes BLOG_LOCALES so
+   * hreflang never points at a /es or /ar blog URL that only 301s back to /en.
+   */
+  alternateLocales?: Locale[];
   /** Wide pages (blog post, landing pages) manage their own container. */
   fullWidth?: boolean;
 }
@@ -46,6 +53,7 @@ const {
   imageAlt = site.metaImageAlt,
   pageType = 'generic',
   schemas = [],
+  alternateLocales = ACTIVE_LOCALES,
   fullWidth = false,
 } = Astro.props;
 
@@ -57,58 +65,27 @@ const path = canonicalPath ?? Astro.url.pathname;
 const canonical = absoluteUrl(site.url, path);
 const ogImage = absoluteUrl(site.url, image);
 
-const sameAs = Object.values(site.social).filter((url): url is string => Boolean(url));
+/*
+ * Nav links as SiteNavigationElement nodes, built from the same config the
+ * header renders so the two cannot drift.
+ *
+ * These are flat nodes rather than a nested `@graph`: they are merged into the
+ * page's single graph by SeoHead, and a graph inside a graph does not resolve.
+ */
+const navigationNodes: SchemaNode[] = site.header.nav.map((item, index) => ({
+  '@type': 'SiteNavigationElement',
+  position: index + 1,
+  name: t(item.key),
+  url: absoluteUrl(site.url, localizedUrl(locale, item.href)),
+}));
 
-const organizationSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: siteTitle,
-  legalName: site.legalName,
-  url: site.url,
-  description: t('site.description'),
-  logo: {
-    '@type': 'ImageObject',
-    url: absoluteUrl(site.url, site.logo),
-  },
-  ...(sameAs.length > 0 ? { sameAs } : {}),
-};
+// Organization, WebSite and the WebPage/AboutPage/ContactPage node are owned by
+// SeoHead — defined once with a stable @id and referenced, never re-inlined.
+const schemaNodes: SchemaNode[] = [...navigationNodes, ...schemas];
 
-// SiteNavigationElement graph, built from the same config the header renders.
-const navigationSchema = {
-  '@context': 'https://schema.org',
-  '@graph': site.header.nav.map((item, index) => ({
-    '@type': 'SiteNavigationElement',
-    position: index + 1,
-    name: t(item.key),
-    url: absoluteUrl(site.url, localizedUrl(locale, item.href)),
-  })),
-};
-
-const aboutSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'AboutPage',
-  name: title,
-  description,
-  url: canonical,
-  isPartOf: { '@type': 'WebSite', name: siteTitle, url: site.url },
-};
-
-const contactSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'ContactPage',
-  name: title,
-  description,
-  url: canonical,
-  isPartOf: { '@type': 'WebSite', name: siteTitle, url: site.url },
-};
-
-const headSchemas: Record<string, unknown>[] = [
-  organizationSchema,
-  navigationSchema,
-  ...(pageType === 'about' ? [aboutSchema] : []),
-  ...(pageType === 'contact' ? [contactSchema] : []),
-  ...schemas,
-];
+// A noindex page must not advertise alternates: hreflang may only point at
+// indexable URLs, and the 404 has no per-locale counterpart to point at.
+const indexable = !/noindex/i.test(robots);
 ---
 
 <!doctype html>
@@ -139,7 +116,19 @@ const headSchemas: Record<string, unknown>[] = [
 
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+
+    <SeoHead
+      locale={locale}
+      path={path}
+      canonical={canonical}
+      title={title}
+      description={description}
+      pageType={pageType}
+      alternateLocales={alternateLocales}
+      indexable={indexable}
+      nodes={schemaNodes}
+    />
+
     <meta name="robots" content={robots} />
     <meta name="googlebot" content={robots} />
 
@@ -171,9 +160,7 @@ const headSchemas: Record<string, unknown>[] = [
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    {headSchemas.map((schema) => <JsonLd schema={schema} />)}
-
-    <!-- Page-supplied head content (extra schema, preloads). -->
+    <!-- Page-supplied head content (preloads). -->
     <slot name="head" />
 
     <Analytics />

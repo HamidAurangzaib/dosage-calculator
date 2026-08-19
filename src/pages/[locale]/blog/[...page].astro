@@ -97,6 +97,7 @@ const cards = showFeatured ? rest : page.data;
   title={title}
   description={t('blog.metaDescription')}
   canonicalPath={canonicalPath}
+  alternateLocales={BLOG_LOCALES}
   schemas={[blogSchema, itemListSchema, breadcrumbSchema]}
 >
   <div class="mb-10 max-w-2xl">

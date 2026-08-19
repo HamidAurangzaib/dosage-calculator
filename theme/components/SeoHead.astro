@@ -1,0 +1,103 @@
+---
+/**
+ * Single source of truth for canonical, hreflang and JSON-LD.
+ *
+ * These three have to agree with each other — an hreflang URL that is not the
+ * target page's own canonical nullifies the whole alternate set — so they are
+ * derived from one `path` here rather than assembled separately per page.
+ */
+import site from '@/config/site.json';
+import JsonLd from '@theme/components/JsonLd.astro';
+import { DEFAULT_LOCALE } from '@theme/i18n/config';
+import { absoluteUrl, localizedUrl, useTranslations, type Locale } from '@theme/i18n/utils';
+import {
+  hasType,
+  normalizeNodes,
+  organizationNode,
+  webPageNode,
+  webSiteNode,
+  type PageKind,
+  type SchemaNode,
+} from '@theme/lib/schema';
+
+interface Props {
+  locale: Locale;
+  /** Locale-prefixed path for this page, e.g. "/es/about". */
+  path: string;
+  canonical: string;
+  title: string;
+  description: string;
+  pageType: PageKind;
+  /**
+   * Locales in which THIS route actually exists. Not every route exists in
+   * every active locale — the blog is English-only — and pointing hreflang at
+   * a URL that 301s or 404s invalidates the set.
+   */
+  alternateLocales: Locale[];
+  /** Non-indexable pages (404) must not advertise alternates. */
+  indexable: boolean;
+  nodes: SchemaNode[];
+}
+
+const {
+  locale,
+  path,
+  canonical,
+  title,
+  description,
+  pageType,
+  alternateLocales,
+  indexable,
+  nodes,
+} = Astro.props;
+
+/*
+ * Route identity, minus the locale segment.
+ *
+ * "/es/about" -> "/about", "/en" -> "/". The lookahead keeps a locale code from
+ * matching a path that merely starts with those letters, and anything without a
+ * locale prefix (the root-level 404) is left alone — it is noindex, so it never
+ * reaches the alternate list anyway.
+ */
+const routeSuffix = path.replace(new RegExp(`^/${locale}(?=/|$)`), '') || '/';
+
+const alternates = indexable
+  ? alternateLocales.map((code) => ({
+      lang: code,
+      href: absoluteUrl(site.url, localizedUrl(code, routeSuffix)),
+    }))
+  : [];
+
+// x-default points at English, which is the default locale and the only one
+// every route is guaranteed to exist in.
+const xDefault =
+  indexable && alternateLocales.includes(DEFAULT_LOCALE)
+    ? absoluteUrl(site.url, localizedUrl(DEFAULT_LOCALE, routeSuffix))
+    : null;
+
+const tDefault = useTranslations(DEFAULT_LOCALE);
+
+const pageNodes = normalizeNodes(nodes, canonical, locale);
+const hasBreadcrumb = pageNodes.some((node) => hasType(node, 'BreadcrumbList'));
+
+const graph = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    organizationNode(),
+    webSiteNode(tDefault('site.description')),
+    webPageNode({ canonical, title, description, locale, pageType, hasBreadcrumb }),
+    ...pageNodes,
+  ],
+};
+---
+
+<link rel="canonical" href={canonical} />
+
+{
+  alternates.map((alternate) => (
+    <link rel="alternate" hreflang={alternate.lang} href={alternate.href} />
+  ))
+}
+{xDefault && <link rel="alternate" hreflang="x-default" href={xDefault} />}
+
+<JsonLd schema={graph} />
