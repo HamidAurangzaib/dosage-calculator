@@ -95,7 +95,9 @@
       "byWeightLabel": "Dose by Body Weight",
       "byWeightHint": "Quick reference for all weights",
       "disclaimerTitle": "Disclaimer",
-      "disclaimer": "This calculator is for informational purposes only. Consult a healthcare professional before starting any supplement."
+      "disclaimer": "This calculator is for informational purposes only. Consult a healthcare professional before starting any supplement.",
+      "waterLabel": "Water Intake Calculator",
+      "waterHint": "Daily hydration target by weight and phase"
     },
     "howItWorks": {
       "title": "How {siteTitle} works",
@@ -130,14 +132,42 @@
     "table": {
       "title": "Loading Phase vs. No Loading Phase",
       "caption": "How the two creatine protocols compare across saturation speed, dosing and water retention.",
-      "headers": ["Factor", "With Loading", "Without Loading"],
+      "headers": [
+        "Factor",
+        "With Loading",
+        "Without Loading"
+      ],
       "rows": [
-        ["Protocol", "0.3g/kg/day × 7 days, then 0.03g/kg/day", "0.03g/kg/day from day 1"],
-        ["Time to full saturation", "5–7 days", "3–4 weeks"],
-        ["Daily dose during protocol", "20–25g (split × 4)", "3–5g (once daily)"],
-        ["Water retention risk", "Higher initially", "Minimal"],
-        ["Long-term result", "Same as no-load", "Same as load"],
-        ["Best for", "Faster results before competition", "Gradual, comfortable approach"]
+        [
+          "Protocol",
+          "0.3g/kg/day × 7 days, then 0.03g/kg/day",
+          "0.03g/kg/day from day 1"
+        ],
+        [
+          "Time to full saturation",
+          "5–7 days",
+          "3–4 weeks"
+        ],
+        [
+          "Daily dose during protocol",
+          "20–25g (split × 4)",
+          "3–5g (once daily)"
+        ],
+        [
+          "Water retention risk",
+          "Higher initially",
+          "Minimal"
+        ],
+        [
+          "Long-term result",
+          "Same as no-load",
+          "Same as load"
+        ],
+        [
+          "Best for",
+          "Faster results before competition",
+          "Gradual, comfortable approach"
+        ]
       ]
     },
     "furtherReading": {
@@ -210,6 +240,10 @@
       "title": "Creatine Dosage by Weight — How Many Grams Per Kg or Lbs?",
       "description": "Not sure how much creatine to take for your weight? Enter your kg or lbs and get your exact daily dose + loading phase in seconds. Free tool."
     },
+    "water": {
+      "title": "Creatine Water Intake Calculator — Daily ml, oz & Cups",
+      "description": "How much water should you drink on creatine? Get a personalised daily target in litres, ml, fl oz and glasses — scaled by your body weight, activity level and loading phase."
+    },
     "guide": {
       "title": "Complete Creatine Guide — Dosage, Loading, Types & Safety",
       "description": "Everything you need to know about creatine: how much to take, loading phase, HCl vs monohydrate, side effects, timing, and dosage by weight. Free calculator included."
@@ -237,6 +271,36 @@
     "sitemap": {
       "title": "Sitemap — CreatineCalc",
       "description": "A complete index of every page, calculator, and article on CreatineCalc."
+    }
+  },
+  "waterCalculator": {
+    "fields": {
+      "phase": "Creatine phase",
+      "climate": "Climate"
+    },
+    "phases": {
+      "maintenance": "Maintenance (3–5 g/day)",
+      "loading": "Loading (20–25 g/day)"
+    },
+    "climates": {
+      "temperate": "Temperate",
+      "hot": "Hot / humid"
+    },
+    "button": "Calculate My Water Intake",
+    "results": {
+      "title": "Your daily water estimate",
+      "perDay": "per day",
+      "glasses": "≈ {glasses} glasses (250 ml each)",
+      "breakdown": "How this figure is built",
+      "baseline": "Baseline (35 ml/kg × {weight} kg)",
+      "activity": "Activity level",
+      "loadingExtra": "Loading phase",
+      "climateExtra": "Climate",
+      "subtotal": "Subtotal",
+      "floorNote": "Raised to the 2,500 ml minimum. Anyone training and supplementing should not sit below roughly 2.5 L a day.",
+      "capNote": "Capped at 4,500 ml. Your inputs computed {raw} ml, but more is not better — drinking far past thirst risks hyponatremia (low blood sodium).",
+      "timing": "Spread it across the day",
+      "timingValue": "Sip steadily rather than in bulk, add roughly 500 ml around training, and expect the higher end during a loading week."
     }
   }
 }

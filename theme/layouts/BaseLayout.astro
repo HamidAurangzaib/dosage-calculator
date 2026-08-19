@@ -38,6 +38,9 @@ export interface Props {
    * hreflang never points at a /es or /ar blog URL that only 301s back to /en.
    */
   alternateLocales?: Locale[];
+  /** ISO dates for the WebPage node. Pass only real ones. */
+  datePublished?: string;
+  dateModified?: string;
   /** Wide pages (blog post, landing pages) manage their own container. */
   fullWidth?: boolean;
 }
@@ -54,6 +57,8 @@ const {
   pageType = 'generic',
   schemas = [],
   alternateLocales = ACTIVE_LOCALES,
+  datePublished,
+  dateModified,
   fullWidth = false,
 } = Astro.props;
 
@@ -126,6 +131,8 @@ const indexable = !/noindex/i.test(robots);
       pageType={pageType}
       alternateLocales={alternateLocales}
       indexable={indexable}
+      datePublished={datePublished}
+      dateModified={dateModified}
       nodes={schemaNodes}
     />
 
