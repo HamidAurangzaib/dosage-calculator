@@ -1,0 +1,22 @@
+---
+import WaterCalculator from './WaterCalculator';
+import { buildWaterMessages } from './waterMessages';
+import type { Locale } from '@theme/i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+// Strings resolve on the server and are serialised into the island, so the
+// client bundle carries no translation machinery.
+const messages = buildWaterMessages(locale);
+---
+
+<!--
+  client:load, matching the other calculators: the widget is the page's primary
+  call to action and sits above the fold, so it must be interactive on first
+  paint. All arithmetic runs in the browser — no input leaves the device.
+-->
+<WaterCalculator client:load messages={messages} />

@@ -70,10 +70,11 @@ const PAGE_TYPE: Record<PageKind, string> = {
 /**
  * The page entity the rest of the graph hangs off.
  *
- * Carries no datePublished/dateModified: the static pages hold no real
- * published or modified date anywhere in the codebase, and inventing one on a
- * health site is the same fabricated-signal problem the editorial policy exists
- * to prevent. Articles supply their own dates from frontmatter instead.
+ * Dates are opt-in. Most static pages hold no real published or modified date
+ * anywhere in the codebase, and inventing one on a health site is the same
+ * fabricated-signal problem the editorial policy exists to prevent — so a page
+ * emits them only when it can pass real ones. Articles supply their own from
+ * frontmatter instead.
  */
 export function webPageNode(options: {
   canonical: string;
@@ -82,8 +83,19 @@ export function webPageNode(options: {
   locale: Locale;
   pageType: PageKind;
   hasBreadcrumb: boolean;
+  datePublished?: string;
+  dateModified?: string;
 }): SchemaNode {
-  const { canonical, title, description, locale, pageType, hasBreadcrumb } = options;
+  const {
+    canonical,
+    title,
+    description,
+    locale,
+    pageType,
+    hasBreadcrumb,
+    datePublished,
+    dateModified,
+  } = options;
 
   return {
     '@type': PAGE_TYPE[pageType],
@@ -93,6 +105,8 @@ export function webPageNode(options: {
     description,
     isPartOf: { '@id': WEBSITE_ID },
     inLanguage: locale,
+    ...(datePublished ? { datePublished } : {}),
+    ...(dateModified ? { dateModified } : {}),
     ...(hasBreadcrumb ? { breadcrumb: { '@id': `${canonical}#breadcrumb` } } : {}),
   };
 }

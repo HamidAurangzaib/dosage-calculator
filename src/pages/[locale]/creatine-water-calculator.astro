@@ -1,0 +1,370 @@
+---
+import site from '@/config/site.json';
+import WaterCalculator from '@/components/calculator/WaterCalculator.astro';
+import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import Faq from '@theme/components/Faq.astro';
+import {
+  absoluteUrl,
+  localeStaticPaths,
+  localizedUrl,
+  useTranslations,
+  type Locale,
+} from '@theme/i18n/utils';
+import {
+  ACTIVITY_ML,
+  BASELINE_ML_PER_KG,
+  CAP_ML,
+  FLOOR_ML,
+  calculateWater,
+  formatMl,
+} from '@/lib/waterFormulas';
+import type { ActivityLevel } from '@/lib/creatineFormulas';
+
+// Same locale coverage as the sibling calculators, so the hreflang set for this
+// route matches theirs exactly and stays reciprocal.
+export const getStaticPaths = localeStaticPaths;
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+
+const path = localizedUrl(locale, '/creatine-water-calculator');
+const pageUrl = absoluteUrl(site.url, path);
+const pageName = 'Creatine Water Intake Calculator';
+
+// Real dates: the day this page was authored. Nothing is back-dated.
+const PUBLISHED = '2026-08-19';
+const MODIFIED = '2026-08-19';
+
+/*
+ * Reference table, computed from the shipped formula rather than typed by hand,
+ * so the table and the widget can never disagree. Maintenance phase, temperate
+ * climate — the row the copy describes.
+ */
+const TABLE_WEIGHTS = [50, 60, 70, 80, 90, 100, 110, 120];
+const TABLE_ACTIVITY: ActivityLevel[] = ['sedentary', 'moderate', 'athlete'];
+
+const tableRows = TABLE_WEIGHTS.map((weight) => ({
+  weight,
+  cells: TABLE_ACTIVITY.map((activityLevel) => {
+    const result = calculateWater({
+      weight,
+      weightUnit: 'kg',
+      activityLevel,
+      phase: 'maintenance',
+      climate: 'temperate',
+    });
+    return { liters: result.liters.toFixed(1), ml: formatMl(result.totalMl) };
+  }),
+}));
+
+// Page-specific English copy lives with the page, matching the other calculator
+// landing pages. Answers here are the ones rendered below, so the FAQPage nodes
+// mirror visible text verbatim.
+const faqItems = [
+  {
+    question: 'Does creatine dehydrate you?',
+    answer:
+      'No. Creatine does not dehydrate you — it does the opposite at the cellular level, drawing water into muscle cells. The older dehydration and cramping warnings were not borne out by research; the ISSN position stand (Kreider et al., 2017) reports no evidence that creatine causes dehydration or muscle cramping. What changes is where your body water sits, which is why a modestly higher daily intake is sensible.',
+  },
+  {
+    question: 'How much water should I drink with creatine?',
+    answer:
+      'Most people supplementing with creatine land between 2.5 and 4 litres a day once body weight and training load are accounted for. The calculator above starts from roughly 35 ml per kilogram of body weight, adds for activity level and for a loading phase, and never returns less than 2.5 litres or more than 4.5 litres.',
+  },
+  {
+    question: 'Do I need more water during creatine loading?',
+    answer:
+      'Yes, modestly. A loading phase of 20–25 g per day saturates muscle stores faster and pulls more water into the muscle along with it, so the calculator adds roughly 500 ml per day for the loading week. Once you drop to a 3–5 g maintenance dose, your requirement returns to the maintenance figure.',
+  },
+  {
+    question: 'Can you drink too much water on creatine?',
+    answer:
+      'Yes. Drinking far beyond thirst and these targets can dilute blood sodium and cause hyponatremia, which is rare but serious. This is why the calculator caps its recommendation at 4.5 litres per day rather than scaling upward without limit. Use thirst and pale-yellow urine as your everyday guide, and do not force fluid to hit a number.',
+  },
+];
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: t('calculator.title'),
+      item: absoluteUrl(site.url, localizedUrl(locale, '/')),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: pageName,
+      item: pageUrl,
+    },
+  ],
+};
+
+// WebApplication, not SoftwareApplication: nothing is installed and it runs in
+// the browser. No aggregateRating — no ratings are collected or displayed.
+const appSchema = {
+  '@type': 'WebApplication',
+  name: pageName,
+  applicationCategory: 'HealthApplication',
+  operatingSystem: 'Any (web browser)',
+  browserRequirements: 'Requires JavaScript',
+  isAccessibleForFree: true,
+  url: pageUrl,
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  description: t('pages.water.description'),
+};
+
+const faqSchema = {
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: { '@type': 'Answer', text: item.answer },
+  })),
+};
+
+const schemas = [breadcrumbSchema, appSchema, faqSchema];
+
+const sectionClass = 'mb-12';
+const h2Class = 'mb-4 text-2xl font-bold text-[var(--text-primary)]';
+const pClass = 'mb-3 text-[var(--text-secondary)]';
+---
+
+<BaseLayout
+  locale={locale}
+  title={t('pages.water.title')}
+  description={t('pages.water.description')}
+  canonicalPath={path}
+  datePublished={PUBLISHED}
+  dateModified={MODIFIED}
+  schemas={schemas}
+>
+  <section class="mb-10 text-center">
+    <h1 class="mb-4 text-4xl font-extrabold text-[var(--text-primary)] md:text-5xl">
+      Creatine Water Intake Calculator
+    </h1>
+    <p class="mx-auto max-w-2xl text-lg text-[var(--text-secondary)]">
+      Work out how much water to drink while supplementing with creatine. Your target scales with
+      body weight, training load and whether you are loading or maintaining.
+    </p>
+  </section>
+
+  <div class="mb-8 flex flex-col gap-8 lg:flex-row">
+    <div
+      class="flex-1 rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-6 shadow-sm md:p-8"
+    >
+      <WaterCalculator locale={locale} />
+    </div>
+
+    <aside class="shrink-0 space-y-5 lg:w-72">
+      <div class="rounded-2xl border border-[var(--tint-brand-border)] bg-[var(--tint-brand-bg)] p-5">
+        <p class="mb-3 font-bold text-[var(--tint-brand-ink)]">💧 Hydration Key Facts</p>
+        <ul class="space-y-2 text-sm text-[var(--accent)]">
+          <li class="flex gap-2"><span aria-hidden="true">✓</span><span>Baseline ≈ 35 ml per kg of body weight</span></li>
+          <li class="flex gap-2"><span aria-hidden="true">✓</span><span>Add ~500 ml during a loading week</span></li>
+          <li class="flex gap-2"><span aria-hidden="true">✓</span><span>Creatine does not dehydrate you</span></li>
+          <li class="flex gap-2"><span aria-hidden="true">✓</span><span>More is not better — 4.5 L/day cap</span></li>
+        </ul>
+      </div>
+
+      <div class="rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-5 text-sm">
+        <p class="mb-3 font-bold text-[var(--text-primary)]">Related Tools</p>
+        <a
+          href={localizedUrl(locale, '/')}
+          class="mb-2 block font-medium text-[var(--accent)] hover:underline"
+        >
+          ← Back to Main Calculator
+        </a>
+        <a
+          href={localizedUrl(locale, '/creatine-dosage-by-weight')}
+          class="mb-2 block font-medium text-[var(--accent)] hover:underline"
+        >
+          Dose by Weight →
+        </a>
+        <a
+          href={localizedUrl(locale, '/creatine-hcl-calculator')}
+          class="block font-medium text-[var(--accent)] hover:underline"
+        >
+          HCl Calculator →
+        </a>
+      </div>
+    </aside>
+  </div>
+
+  <section class={sectionClass}>
+    <h2 class={h2Class}>How much water should you drink on creatine?</h2>
+    <p class={pClass}>
+      For most people the answer lands between <strong>2.5 and 4 litres a day</strong>, and the
+      figure moves with your body weight and how hard you train rather than being a single number
+      that suits everyone. A sedentary 60 kg person sits at the lower bound; a 90 kg athlete
+      training twice a day sits near the top.
+    </p>
+    <p class={pClass}>
+      The calculator above turns that range into one target for your inputs. If you want the
+      reasoning rather than the number, the{' '}
+      <a
+        href={localizedUrl(locale, '/blog/how-much-water-on-creatine')}
+        class="font-medium text-[var(--accent)] hover:underline"
+      >
+        full hydration guide
+      </a>{' '}
+      covers the research and the practical habits in depth.
+    </p>
+  </section>
+
+  <section class={sectionClass}>
+    <h2 class={h2Class}>Why creatine increases your water needs</h2>
+    <p class={pClass}>
+      Creatine is stored in muscle as phosphocreatine, and it is osmotically active — it pulls water
+      into the muscle cell with it. This is <strong>cell volumisation</strong>, and it is part of
+      how creatine works rather than a side effect to avoid. It is also why the scale often moves up
+      1–2 kg in the first week: that is intracellular water, not fat.
+    </p>
+    <p class={pClass}>
+      Because more of your total body water is now held inside muscle, keeping overall intake a
+      little higher is sensible. Worth being clear about what the evidence does <em>not</em> say:
+      the ISSN position stand (Kreider et al., 2017) found no evidence that creatine causes
+      dehydration or cramping. Higher intake is about supporting the shift, not correcting a deficit
+      creatine created.
+    </p>
+  </section>
+
+  <section class={sectionClass}>
+    <h2 class={h2Class}>Loading vs maintenance hydration</h2>
+    <p class={pClass}>
+      A loading phase runs 20–25 g per day for 5–7 days to saturate muscle stores quickly. More
+      creatine entering muscle over that week means more water drawn in with it, so the calculator
+      adds <strong>500 ml per day</strong> while you are loading.
+    </p>
+    <p class={pClass}>
+      On a 3–5 g maintenance dose that extra allowance disappears and your target returns to the
+      baseline figure. If you skip loading entirely — which reaches the same saturation in 3–4 weeks
+      — you never need the loading-week increase at all.
+    </p>
+  </section>
+
+  <section class={sectionClass}>
+    <h2 class={h2Class}>How this calculation works</h2>
+    <p class={pClass}>
+      There is no official hydration equation the way there is an ISSN dosing guideline, so rather
+      than present a formula as settled science, here is exactly what the tool adds up:
+    </p>
+    <ul class="mb-3 ms-5 list-disc space-y-2 text-[var(--text-secondary)]">
+      <li>
+        <strong>Baseline — {BASELINE_ML_PER_KG} ml per kg of body weight.</strong> A standard adult
+        total-water estimate, consistent with the National Academies adequate-intake figures.
+      </li>
+      <li>
+        <strong>Activity — 0 to {formatMl(ACTIVITY_ML.athlete)} ml.</strong> Approximates ACSM
+        fluid-replacement guidance; sweat losses scale with training volume.
+      </li>
+      <li>
+        <strong>Loading — {formatMl(500)} ml.</strong> Applied only during a loading week.
+      </li>
+      <li><strong>Hot or humid climate — {formatMl(500)} ml.</strong> Optional, off by default.</li>
+      <li>
+        <strong>Floor {formatMl(FLOOR_ML)} ml, cap {formatMl(CAP_ML)} ml.</strong> The floor matches
+        the minimum used across this site. The cap exists because over-hydration carries real risk,
+        so the tool stops rather than scaling without limit.
+      </li>
+    </ul>
+    <p class={pClass}>
+      The result panel shows each component separately, so you can see how your number was built and
+      judge whether the assumptions fit you.
+    </p>
+  </section>
+
+  <section class={sectionClass}>
+    <h2 class={h2Class}>Daily water target by body weight</h2>
+    <p class={pClass}>
+      Maintenance phase, temperate climate. Every figure below is produced by the same formula the
+      calculator uses.
+    </p>
+    <div class="overflow-x-auto rounded-xl border border-[var(--border-subtle)]">
+      <table class="w-full border-collapse text-sm">
+        <thead>
+          <tr class="bg-brand-600 text-white">
+            <th scope="col" class="p-3 text-start font-semibold">Body weight</th>
+            <th scope="col" class="p-3 text-start font-semibold">Sedentary</th>
+            <th scope="col" class="p-3 text-start font-semibold">Moderately active</th>
+            <th scope="col" class="p-3 text-start font-semibold">Elite athlete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            tableRows.map((row, i) => (
+              <tr
+                class:list={[
+                  i % 2 === 0 ? 'bg-[var(--surface-card)]' : 'bg-[var(--surface-sunken)]',
+                ]}
+              >
+                <th
+                  scope="row"
+                  class="border-b border-[var(--border-subtle)] p-3 text-start font-medium text-[var(--text-secondary)]"
+                >
+                  {row.weight} kg ({Math.round(row.weight * 2.2046)} lbs)
+                </th>
+                {row.cells.map((cell) => (
+                  <td class="border-b border-[var(--border-subtle)] p-3 text-[var(--text-secondary)]">
+                    <strong class="text-[var(--text-primary)]">{cell.liters} L</strong>
+                    <span class="ms-1 text-xs">({cell.ml} ml)</span>
+                  </td>
+                ))}
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <Faq title={t('faq.title')} items={faqItems} />
+
+  <section class={sectionClass}>
+    <h2 class={h2Class}>Safety note</h2>
+    <div
+      class="rounded-2xl border border-amber-300/60 bg-amber-50 p-5 text-sm leading-relaxed text-amber-900 dark:border-amber-500/40 dark:bg-amber-950/40 dark:text-amber-200"
+    >
+      <p>
+        Individual needs vary with climate, sweat rate, diet, and health status. These figures are
+        general estimates, not medical advice. Drinking far beyond your thirst and these targets can
+        cause hyponatremia (low blood sodium). Anyone with kidney or heart conditions, or who is
+        pregnant or breastfeeding, should consult a qualified professional.
+      </p>
+    </div>
+  </section>
+
+  <section class="mt-8">
+    <h2 class="mb-6 text-2xl font-bold text-[var(--text-primary)]">Further Reading</h2>
+    <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        [
+          {
+            slug: 'how-much-water-on-creatine',
+            title: 'How Much Water Should You Drink on Creatine?',
+            desc: 'The full hydration guide — the research, the habits, and what the cramping myth got wrong.',
+          },
+          {
+            slug: 'creatine-loading-phase-guide',
+            title: 'Creatine Loading Phase Guide',
+            desc: 'Whether to load at all, how to split 20–25 g/day, and what changes when you do.',
+          },
+          {
+            slug: 'does-creatine-make-you-gain-weight',
+            title: 'Does Creatine Make You Gain Weight?',
+            desc: 'Water weight versus muscle — what the first-week scale jump actually is.',
+          },
+        ].map((post) => (
+          <li class="surface-card p-5 transition-colors hover:border-[var(--tint-brand-border)]">
+            <a href={localizedUrl(locale, `/blog/${post.slug}`)} class="block">
+              <p class="mb-2 font-bold text-[var(--text-primary)]">{post.title}</p>
+              <p class="text-sm text-[var(--text-secondary)]">{post.desc}</p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>

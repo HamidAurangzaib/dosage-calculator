@@ -36,6 +36,9 @@ interface Props {
   alternateLocales: Locale[];
   /** Non-indexable pages (404) must not advertise alternates. */
   indexable: boolean;
+  /** ISO dates, emitted only where the page has real ones to give. */
+  datePublished?: string;
+  dateModified?: string;
   nodes: SchemaNode[];
 }
 
@@ -48,6 +51,8 @@ const {
   pageType,
   alternateLocales,
   indexable,
+  datePublished,
+  dateModified,
   nodes,
 } = Astro.props;
 
@@ -85,7 +90,16 @@ const graph = {
   '@graph': [
     organizationNode(),
     webSiteNode(tDefault('site.description')),
-    webPageNode({ canonical, title, description, locale, pageType, hasBreadcrumb }),
+    webPageNode({
+      canonical,
+      title,
+      description,
+      locale,
+      pageType,
+      hasBreadcrumb,
+      datePublished,
+      dateModified,
+    }),
     ...pageNodes,
   ],
 };

@@ -95,7 +95,9 @@
       "byWeightLabel": "Dosis por Peso Corporal",
       "byWeightHint": "Referencia rápida para todos los pesos",
       "disclaimerTitle": "Aviso",
-      "disclaimer": "Esta calculadora es solo para fines informativos. Consulta a un profesional de la salud antes de comenzar cualquier suplemento."
+      "disclaimer": "Esta calculadora es solo para fines informativos. Consulta a un profesional de la salud antes de comenzar cualquier suplemento.",
+      "waterLabel": "Calculadora de Agua",
+      "waterHint": "Objetivo diario de hidratación por peso y fase"
     },
     "howItWorks": {
       "title": "Cómo funciona {siteTitle}",
@@ -130,14 +132,42 @@
     "table": {
       "title": "Fase de Carga vs. Sin Fase de Carga",
       "caption": "Comparación de los dos protocolos de creatina según velocidad de saturación, dosis y retención de agua.",
-      "headers": ["Factor", "Con Carga", "Sin Carga"],
+      "headers": [
+        "Factor",
+        "Con Carga",
+        "Sin Carga"
+      ],
       "rows": [
-        ["Protocolo", "0,3 g/kg/día × 7 días, luego 0,03 g/kg/día", "0,03 g/kg/día desde el día 1"],
-        ["Tiempo hasta saturación completa", "5–7 días", "3–4 semanas"],
-        ["Dosis diaria durante el protocolo", "20–25 g (dividida × 4)", "3–5 g (una vez al día)"],
-        ["Riesgo de retención de agua", "Mayor al principio", "Mínimo"],
-        ["Resultado a largo plazo", "Igual que sin carga", "Igual que con carga"],
-        ["Ideal para", "Resultados rápidos antes de competir", "Enfoque gradual y cómodo"]
+        [
+          "Protocolo",
+          "0,3 g/kg/día × 7 días, luego 0,03 g/kg/día",
+          "0,03 g/kg/día desde el día 1"
+        ],
+        [
+          "Tiempo hasta saturación completa",
+          "5–7 días",
+          "3–4 semanas"
+        ],
+        [
+          "Dosis diaria durante el protocolo",
+          "20–25 g (dividida × 4)",
+          "3–5 g (una vez al día)"
+        ],
+        [
+          "Riesgo de retención de agua",
+          "Mayor al principio",
+          "Mínimo"
+        ],
+        [
+          "Resultado a largo plazo",
+          "Igual que sin carga",
+          "Igual que con carga"
+        ],
+        [
+          "Ideal para",
+          "Resultados rápidos antes de competir",
+          "Enfoque gradual y cómodo"
+        ]
       ]
     },
     "furtherReading": {
@@ -196,6 +226,10 @@
       "title": "Dosis de Creatina por Peso — ¿Cuántos Gramos por Kg o Lbs?",
       "description": "¿No sabes cuánta creatina tomar según tu peso? Introduce tus kg o lbs y obtén tu dosis diaria exacta + fase de carga en segundos. Herramienta gratuita."
     },
+    "water": {
+      "title": "Calculadora de Agua para Creatina — ml, oz y Vasos",
+      "description": "¿Cuánta agua beber con creatina? Obtén un objetivo diario personalizado en litros, ml, oz y vasos — ajustado a tu peso, nivel de actividad y fase de carga."
+    },
     "guide": {
       "title": "Guía Completa de Creatina — Dosis, Carga, Tipos y Seguridad",
       "description": "Todo lo que necesitas saber sobre la creatina: cuánto tomar, fase de carga, HCl vs monohidrato, efectos secundarios, momento y dosis por peso. Incluye calculadora gratuita."
@@ -223,6 +257,36 @@
     "sitemap": {
       "title": "Mapa del Sitio — CreatineCalc",
       "description": "Un índice completo de todas las páginas, calculadoras y artículos de CreatineCalc."
+    }
+  },
+  "waterCalculator": {
+    "fields": {
+      "phase": "Fase de creatina",
+      "climate": "Clima"
+    },
+    "phases": {
+      "maintenance": "Mantenimiento (3–5 g/día)",
+      "loading": "Carga (20–25 g/día)"
+    },
+    "climates": {
+      "temperate": "Templado",
+      "hot": "Caluroso / húmedo"
+    },
+    "button": "Calcular Mi Consumo de Agua",
+    "results": {
+      "title": "Tu estimación diaria de agua",
+      "perDay": "al día",
+      "glasses": "≈ {glasses} vasos (250 ml cada uno)",
+      "breakdown": "Cómo se calcula esta cifra",
+      "baseline": "Base (35 ml/kg × {weight} kg)",
+      "activity": "Nivel de actividad",
+      "loadingExtra": "Fase de carga",
+      "climateExtra": "Clima",
+      "subtotal": "Subtotal",
+      "floorNote": "Elevado al mínimo de 2.500 ml. Quien entrena y toma creatina no debería quedarse por debajo de unos 2,5 L al día.",
+      "capNote": "Limitado a 4.500 ml. Tus datos daban {raw} ml, pero más no es mejor: beber muy por encima de la sed conlleva riesgo de hiponatremia (sodio bajo en sangre).",
+      "timing": "Repártela a lo largo del día",
+      "timingValue": "Bebe de forma constante en lugar de mucho de golpe, añade unos 500 ml alrededor del entrenamiento y espera la cifra más alta durante una semana de carga."
     }
   }
 }

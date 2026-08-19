@@ -48,6 +48,7 @@
           { "key": "nav.home", "href": "/" },
           { "key": "nav.hcl", "href": "/creatine-hcl-calculator" },
           { "key": "nav.byWeight", "href": "/creatine-dosage-by-weight" },
+          { "key": "nav.water", "href": "/creatine-water-calculator" },
           { "key": "nav.research", "href": "/creatine-research" },
           { "key": "nav.blog", "href": "/blog" }
         ]

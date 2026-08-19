@@ -243,6 +243,15 @@ const homeSchemas = [appSchema, ...(faqSchema ? [faqSchema] : [])];
             </a>
             <p class="mt-0.5 text-xs text-[var(--text-muted)]">{t('home.sidebar.byWeightHint')}</p>
           </li>
+          <li>
+            <a
+              href={localizedUrl(locale, '/creatine-water-calculator')}
+              class="font-medium text-[var(--accent)] hover:underline"
+            >
+              {t('home.sidebar.waterLabel')} →
+            </a>
+            <p class="mt-0.5 text-xs text-[var(--text-muted)]">{t('home.sidebar.waterHint')}</p>
+          </li>
         </ul>
       </div>
 
