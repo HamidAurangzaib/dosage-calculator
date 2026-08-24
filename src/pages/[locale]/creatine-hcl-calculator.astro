@@ -2,6 +2,7 @@
 import site from '@/config/site.json';
 import Calculator from '@/components/calculator/Calculator.astro';
 import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import AdSlot from '@theme/components/AdSlot.astro';
 import Faq from '@theme/components/Faq.astro';
 import {
   absoluteUrl,
@@ -183,6 +184,8 @@ const schemas = [breadcrumbSchema, appSchema, ...(faqSchema ? [faqSchema] : [])]
       </div>
     </aside>
   </div>
+
+  <AdSlot placement="calculator-hcl-below-widget" />
 
   <section class="mb-12">
     <h2 class="mb-4 text-2xl font-bold text-[var(--text-primary)]">

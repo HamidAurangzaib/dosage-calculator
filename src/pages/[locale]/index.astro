@@ -6,6 +6,7 @@ import Calculator from '@/components/calculator/Calculator.astro';
 import Charts from '@/components/charts/Charts.astro';
 import HomeContent from '@/components/home/HomeContent.astro';
 import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import AdSlot from '@theme/components/AdSlot.astro';
 import ChartSection from '@theme/components/ChartSection.astro';
 import Faq from '@theme/components/Faq.astro';
 import HowItWorks from '@theme/components/HowItWorks.astro';
@@ -177,6 +178,8 @@ const homeSchemas = [appSchema, ...(faqSchema ? [faqSchema] : [])];
   <div class="mb-14 flex flex-col gap-6 lg:flex-row lg:gap-8">
     <div class="surface-raised flex-1 p-6 md:p-8">
       <Calculator locale={locale} />
+
+      <AdSlot placement="home-below-calculator" class="!mt-8 !mb-0" />
     </div>
 
     <aside class="shrink-0 space-y-5 lg:w-80">

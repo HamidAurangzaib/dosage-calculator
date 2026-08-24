@@ -3,6 +3,7 @@ import site from '@/config/site.json';
 import Calculator from '@/components/calculator/Calculator.astro';
 import { calcLoadingDose, calcMaintenanceDose } from '@/lib/creatineFormulas';
 import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import AdSlot from '@theme/components/AdSlot.astro';
 import {
   absoluteUrl,
   localeStaticPaths,
@@ -107,6 +108,8 @@ const schemas = [breadcrumbSchema, appSchema];
   <div class="mb-8 rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-6 shadow-sm md:p-8">
     <Calculator locale={locale} focusWeight />
   </div>
+
+  <AdSlot placement="calculator-by-weight-below-widget" />
 
   <section class="mb-12">
     <h2 class="mb-4 text-2xl font-bold text-[var(--text-primary)]">Creatine Dose Reference Table by Weight</h2>

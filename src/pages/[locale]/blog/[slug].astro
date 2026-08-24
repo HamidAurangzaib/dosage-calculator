@@ -4,6 +4,7 @@ import { getCollection, render, type CollectionEntry } from 'astro:content';
 import site from '@/config/site.json';
 import BaseLayout from '@theme/layouts/BaseLayout.astro';
 import Faq from '@theme/components/Faq.astro';
+import AdSlot from '@theme/components/AdSlot.astro';
 import { BLOG_LOCALES } from '@theme/i18n/config';
 import { absoluteUrl, localizedUrl, useTranslations, type Locale } from '@theme/i18n/utils';
 import { RELATED_POSTS } from '@/lib/relatedPosts';
@@ -205,6 +206,8 @@ const schemas = [articleSchema, breadcrumbSchema, ...(faqSchema ? [faqSchema] : 
             }
           </div>
         </header>
+
+        <AdSlot placement="article-below-title" class="!mt-0 !mb-8" />
 
         <!-- E-E-A-T author box -->
         <div class="mb-8 flex items-start gap-4 rounded-xl border border-[var(--tint-brand-border)] bg-[var(--tint-brand-bg)] p-4">

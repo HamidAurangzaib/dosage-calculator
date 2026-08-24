@@ -1,0 +1,97 @@
+---
+/**
+ * A single display-ad unit.
+ *
+ * The network's snippet sets a GLOBAL `atOptions` and then loads `invoke.js`,
+ * which reads that global as it executes and document.writes an iframe at the
+ * script's position. Three consequences shape this component:
+ *
+ *   1. The script CANNOT be async or deferred. document.write after the parser
+ *      has finished replaces the whole document, so the tag has to run inline,
+ *      exactly where the ad belongs.
+ *   2. Because `atOptions` is a single global, two units on a page race each
+ *      other — the second snippet overwrites the object before the first
+ *      invoke.js has read it. Render AT MOST ONE of these per page. There is
+ *      deliberately no runtime guard: module state in a static build is shared
+ *      across every page in the run, so a "rendered once" flag would silently
+ *      suppress the ad on every page after the first.
+ *   3. The unit is a fixed 468x60. On a narrow viewport that is wider than the
+ *      screen, so the wrapper — not the page — absorbs the overflow. The site
+ *      body is `overflow-x-hidden`, and without this the ad would be clipped
+ *      rather than scrollable.
+ *
+ * KNOWN AND ACCEPTED: this tag hijacks the browser Back button.
+ *
+ * Verified in Chrome against a real build — invoke.js pulls a second,
+ * obfuscated script that calls history.pushState() to plant a duplicate history
+ * entry, listens for popstate, and on the user's BACK button calls
+ * location.replace() to send them to an advertiser URL (the target sits on
+ * `window._bbd._rurl`, carrying this site's publisher id as ?psid=). Pressing
+ * Back navigated the tab to kettledroopingcontinuation.com instead of the
+ * previous page.
+ *
+ * Serving the tag inside a sandboxed srcdoc iframe stops this completely, but
+ * the unit then does not fill — the banner and the hijack ship together. The
+ * site owner was shown both and chose to run the tag as the network supplies
+ * it. That choice is recorded here rather than buried: it is a Chrome
+ * "abusive experience", so if ads are ever reported as blocked on this domain,
+ * or Search rankings move unexpectedly, THIS is the first thing to check.
+ * Reverting is one commit — see git history for the sandboxed variant.
+ *
+ * Space is reserved up front so the injected iframe does not shift content and
+ * cost Cumulative Layout Shift.
+ */
+import site from '@/config/site.json';
+
+interface Props {
+  /** Where this unit sits, e.g. "article-below-title". Rendered as a data attribute. */
+  placement: string;
+  class?: string;
+}
+
+const { placement, class: className = '' } = Astro.props;
+
+const ads = site.ads;
+
+/*
+ * The key lands in both a URL path and a script body, so it is constrained to
+ * the shape the network issues rather than trusted verbatim. A typo in config
+ * becomes a missing ad, never an injection.
+ */
+const key = /^[A-Za-z0-9]+$/.test(ads?.key ?? '') ? ads.key : '';
+const enabled = Boolean(ads?.enabled && key);
+
+const width = Number(ads.width);
+const height = Number(ads.height);
+
+const snippet = `atOptions={'key':'${key}','format':'iframe','height':${height},'width':${width},'params':{}};`;
+---
+
+{
+  enabled && (
+    <aside
+      class={`my-10 flex flex-col items-center ${className}`}
+      data-ad-placement={placement}
+      aria-label="Advertisement"
+    >
+      {/*
+        Labelled because a reader is entitled to know which part of a health
+        page is paid placement and which is editorial. Several jurisdictions
+        require it, and it is the difference between an ad and a disguised one.
+      */}
+      <span class="mb-1.5 text-[11px] font-medium tracking-wide text-[var(--text-muted)] uppercase">
+        Advertisement
+      </span>
+
+      <div
+        class="ad-slot max-w-full overflow-x-auto"
+        style={`min-height:${height}px;min-width:0`}
+      >
+        <div style={`width:${width}px;height:${height}px`}>
+          <script is:inline set:html={snippet} />
+          <script is:inline src={`https://www.highrevenueformat.com/${key}/invoke.js`} />
+        </div>
+      </div>
+    </aside>
+  )
+}
