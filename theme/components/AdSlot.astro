@@ -1,27 +1,35 @@
 ---
 /**
- * A single display-ad unit.
+ * A single display-ad unit, isolated in a sandboxed iframe.
  *
- * The network's snippet works by setting a GLOBAL `atOptions` object and then
- * loading `invoke.js`, which reads that global as it executes and document.writes
- * an iframe at the script's position. Three consequences shape this component:
+ * WHY THE SANDBOX IS NOT OPTIONAL
  *
- *   1. The script CANNOT be async or deferred. document.write after the parser
- *      has finished replaces the whole document, so the tag has to run inline,
- *      exactly where the ad belongs.
- *   2. Because `atOptions` is a single global, two units on a page race each
- *      other — the second snippet overwrites the object before the first
- *      invoke.js has read it. Render AT MOST ONE of these per page. There is
- *      deliberately no runtime guard: module state in a static build is shared
- *      across every page in the run, so a "rendered once" flag would silently
- *      suppress the ad on every page after the first.
- *   3. The unit is a fixed 468x60. On a narrow viewport that is wider than the
- *      screen, so the wrapper — not the page — absorbs the overflow. The site
- *      body is `overflow-x-hidden`, and without this the ad would be clipped
- *      rather than scrollable.
+ * The network's invoke.js does not only draw a banner. Loaded directly into the
+ * page it also pulls a second, obfuscated script that:
  *
- * Space is reserved up front so the injected iframe does not shift content and
- * cost Cumulative Layout Shift.
+ *   - calls history.pushState() to plant a duplicate history entry,
+ *   - listens for popstate, and
+ *   - on the user's BACK button, calls location.replace() to send them to an
+ *     advertiser URL instead of back to where they came from.
+ *
+ * That was verified in a real browser: pressing Back navigated the tab to
+ * kettledroopingcontinuation.com rather than the previous page. It is a
+ * back-button hijack, it is an "abusive experience" under Chrome's own policy,
+ * and on a health site it is not a trade worth making.
+ *
+ * Rendering the tag inside `srcdoc` with `sandbox="allow-scripts"` gives the ad
+ * an opaque origin of its own. The banner still loads and still records its
+ * impression, but the script can no longer see the parent document, cannot
+ * touch the top-level history, and cannot navigate the tab: `allow-top-navigation`
+ * is deliberately absent. `allow-popups` (plus -to-escape-sandbox) is granted so
+ * a genuine click still opens the advertiser in a new tab, which is how the unit
+ * earns.
+ *
+ * Two further wins fall out of the isolation:
+ *   - `atOptions` is per-window now, so units no longer collide and more than
+ *     one per page is safe.
+ *   - document.write happens inside the frame, so the tag can be lazy-loaded
+ *     without any risk of wiping the page.
  */
 import site from '@/config/site.json';
 
@@ -37,13 +45,20 @@ const ads = site.ads;
 
 /*
  * The key lands in both a URL path and a script body, so it is constrained to
- * the hex-ish shape the network issues rather than trusted verbatim. A typo in
- * config becomes a missing ad, never an injection.
+ * the shape the network issues rather than trusted verbatim. A typo in config
+ * becomes a missing ad, never an injection.
  */
 const key = /^[A-Za-z0-9]+$/.test(ads?.key ?? '') ? ads.key : '';
 const enabled = Boolean(ads?.enabled && key);
 
-const snippet = `atOptions={'key':'${key}','format':'iframe','height':${Number(ads.height)},'width':${Number(ads.width)},'params':{}};`;
+const width = Number(ads.width);
+const height = Number(ads.height);
+
+/*
+ * The ad's own little document. `<\/script>` is escaped so the closing tag of
+ * the string cannot terminate this component's own script block.
+ */
+const adDocument = `<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;padding:0;overflow:hidden;background:transparent}</style></head><body><script>atOptions={'key':'${key}','format':'iframe','height':${height},'width':${width},'params':{}};<\/script><script src="https://www.highrevenueformat.com/${key}/invoke.js"><\/script></body></html>`;
 ---
 
 {
@@ -62,14 +77,24 @@ const snippet = `atOptions={'key':'${key}','format':'iframe','height':${Number(a
         Advertisement
       </span>
 
-      <div
-        class="ad-slot max-w-full overflow-x-auto"
-        style={`min-height:${Number(ads.height)}px;min-width:0`}
-      >
-        <div style={`width:${Number(ads.width)}px;height:${Number(ads.height)}px`}>
-          <script is:inline set:html={snippet} />
-          <script is:inline src={`https://www.highrevenueformat.com/${key}/invoke.js`} />
-        </div>
+      {/*
+        The wrapper absorbs the overflow, not the page: the unit is a fixed
+        468px, wider than a phone, and body is overflow-x-hidden — without this
+        the ad would be clipped rather than scrollable. Height is reserved so
+        the frame cannot shift content and cost CLS.
+      */}
+      <div class="max-w-full overflow-x-auto" style={`min-height:${height}px;min-width:0`}>
+        <iframe
+          srcdoc={adDocument}
+          sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
+          width={width}
+          height={height}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          scrolling="no"
+          title="Advertisement"
+          style={`width:${width}px;height:${height}px;border:0;display:block`}
+        />
       </div>
     </aside>
   )

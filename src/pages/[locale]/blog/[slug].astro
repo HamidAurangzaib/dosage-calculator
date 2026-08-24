@@ -207,6 +207,8 @@ const schemas = [articleSchema, breadcrumbSchema, ...(faqSchema ? [faqSchema] : 
           </div>
         </header>
 
+        <AdSlot placement="article-below-title" class="!mt-0 !mb-8" />
+
         <!-- E-E-A-T author box -->
         <div class="mb-8 flex items-start gap-4 rounded-xl border border-[var(--tint-brand-border)] bg-[var(--tint-brand-bg)] p-4">
           <span
@@ -232,8 +234,6 @@ const schemas = [articleSchema, breadcrumbSchema, ...(faqSchema ? [faqSchema] : 
         >
           <Content />
         </div>
-
-        <AdSlot placement="article-end" />
 
         {faqItems.length > 0 && (
           <div class="mt-12 border-t border-[var(--border-subtle)] pt-8">
