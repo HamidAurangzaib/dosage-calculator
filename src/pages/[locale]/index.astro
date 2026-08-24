@@ -6,6 +6,7 @@ import Calculator from '@/components/calculator/Calculator.astro';
 import Charts from '@/components/charts/Charts.astro';
 import HomeContent from '@/components/home/HomeContent.astro';
 import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import AdSlot from '@theme/components/AdSlot.astro';
 import ChartSection from '@theme/components/ChartSection.astro';
 import Faq from '@theme/components/Faq.astro';
 import HowItWorks from '@theme/components/HowItWorks.astro';
@@ -313,6 +314,8 @@ const homeSchemas = [appSchema, ...(faqSchema ? [faqSchema] : [])];
       </>
     )
   }
+
+  <AdSlot placement="home-below-faq" />
 
   <Faq title={t('faq.title')} items={faqItems} />
 

@@ -2,6 +2,7 @@
 import site from '@/config/site.json';
 import WaterCalculator from '@/components/calculator/WaterCalculator.astro';
 import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import AdSlot from '@theme/components/AdSlot.astro';
 import Faq from '@theme/components/Faq.astro';
 import {
   absoluteUrl,
@@ -192,6 +193,8 @@ const pClass = 'mb-3 text-[var(--text-secondary)]';
       </div>
     </aside>
   </div>
+
+  <AdSlot placement="calculator-water-below-widget" />
 
   <section class={sectionClass}>
     <h2 class={h2Class}>How much water should you drink on creatine?</h2>

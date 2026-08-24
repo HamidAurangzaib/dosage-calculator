@@ -1,6 +1,7 @@
 ---
 import site from '@/config/site.json';
 import BaseLayout from '@theme/layouts/BaseLayout.astro';
+import AdSlot from '@theme/components/AdSlot.astro';
 import { absoluteUrl, localeStaticPaths, localizedUrl, useTranslations, type Locale } from '@theme/i18n/utils';
 
 export const getStaticPaths = localeStaticPaths;
@@ -326,4 +327,6 @@ const breadcrumbSchema = {
       }
     </div>
   </section>
+
+  <AdSlot placement="guide-end" />
 </BaseLayout>
