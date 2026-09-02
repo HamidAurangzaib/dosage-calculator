@@ -234,15 +234,170 @@
   "pages": {
     "hcl": {
       "title": "Creatine HCl Dosage Calculator — Exact Dose by Body Weight",
-      "description": "Creatine HCl needs 40–50% less than monohydrate. Enter your weight and get your exact HCl dose instantly. Free, science-backed calculator."
+      "description": "Creatine HCl needs 40–50% less than monohydrate. Enter your weight and get your exact HCl dose instantly. Free, science-backed calculator.",
+      "h1": "Creatine HCl Dosage Calculator",
+      "intro": "Calculate your optimal Creatine HCl dose. HCl requires 40–50% less than monohydrate due to superior absorption — no loading phase needed.",
+      "factsTitle": "HCl Key Facts",
+      "facts": [
+        "Only 1–2g/day needed",
+        "~38x more soluble than monohydrate",
+        "No loading phase required",
+        "Gentler on digestion"
+      ],
+      "compareTitle": "Compare Types",
+      "backToMain": "Back to Main Calculator",
+      "toByWeight": "Dose by Weight",
+      "whyHeading": "Why Does Creatine HCl Require a Lower Dose?",
+      "whyP1": "Creatine HCl (hydrochloride) is formed by binding creatine to hydrochloric acid, which dramatically increases its water solubility — approximately 38 times more soluble than creatine monohydrate. This superior solubility translates directly into better absorption in the gastrointestinal tract.",
+      "whyP2": "Because more of the HCl form is absorbed per gram, you need a smaller dose to saturate your muscles. Where monohydrate requires 3–5g/day for maintenance, HCl typically only needs 1–2g/day — and no loading phase.",
+      "whyP3": "This also means less bloating and fewer GI side effects, making HCl the preferred choice for athletes with sensitive stomachs.",
+      "tableHeading": "Creatine HCl vs Monohydrate: Side-by-Side",
+      "tableHeaders": [
+        "Factor",
+        "Monohydrate",
+        "HCl"
+      ],
+      "moreHeading": "Further Reading",
+      "rows": [
+        [
+          "Daily dose",
+          "3–5g",
+          "1–2g"
+        ],
+        [
+          "Loading phase",
+          "Optional (20–25g/day × 7 days)",
+          "Not needed"
+        ],
+        [
+          "Research backing",
+          "Extensive (30+ years)",
+          "Limited but growing"
+        ],
+        [
+          "Solubility",
+          "Lower",
+          "~38x higher"
+        ],
+        [
+          "Cost per serving",
+          "Lower",
+          "Higher"
+        ],
+        [
+          "Stomach sensitivity",
+          "Occasional bloating",
+          "Gentler on digestion"
+        ]
+      ],
+      "faq": [
+        {
+          "question": "What is the correct Creatine HCl dose?",
+          "answer": "Creatine HCl is typically dosed at 1–2g per day. Because of its superior solubility, your body absorbs it more efficiently than monohydrate, meaning you need roughly 40–50% less to achieve the same muscle saturation."
+        },
+        {
+          "question": "Does Creatine HCl require a loading phase?",
+          "answer": "No. Due to its high bioavailability, Creatine HCl does not require a loading phase. Simply take 1–2g per day consistently."
+        },
+        {
+          "question": "Is Creatine HCl better than monohydrate?",
+          "answer": "Creatine HCl is better tolerated by those with sensitive stomachs and requires a smaller dose. However, monohydrate has 30+ years of research behind it. Both are effective."
+        },
+        {
+          "question": "Can I take Creatine HCl without water?",
+          "answer": "You can, but staying well-hydrated is still important. Drink at least 2.5L of water daily when supplementing with any form of creatine."
+        }
+      ]
     },
     "byWeight": {
       "title": "Creatine Dosage by Weight — How Many Grams Per Kg or Lbs?",
-      "description": "Not sure how much creatine to take for your weight? Enter your kg or lbs and get your exact daily dose + loading phase in seconds. Free tool."
+      "description": "Not sure how much creatine to take for your weight? Enter your kg or lbs and get your exact daily dose + loading phase in seconds. Free tool.",
+      "h1": "Creatine Dosage by Weight Calculator",
+      "intro": "Your body weight is the primary factor in determining your creatine dose. Enter your exact weight below for a personalized recommendation in grams.",
+      "tableHeading": "Creatine Dose Reference Table by Weight",
+      "tableIntro": "Use this quick-reference table to see standard maintenance and loading doses for common body weights (assuming Creatine Monohydrate, Muscle Growth goal, Moderate activity).",
+      "tableHeaders": [
+        "Body Weight (kg)",
+        "Body Weight (lbs)",
+        "Maintenance Dose",
+        "Loading Dose (×7 days)"
+      ],
+      "whyHeading": "Why Body Weight Determines Your Creatine Dose",
+      "whyP1": "Creatine is stored in muscle tissue as phosphocreatine. The more muscle mass you have — which generally correlates with body weight — the larger your total creatine pool needs to be for full saturation. This is why the ISSN recommends dosing based on body weight rather than a flat dose for everyone.",
+      "whyP2": "The maintenance formula is 0.03 grams per kilogram of body weight per day. For a 70kg person, that's 2.1g — but because the practical minimum effective dose is 3g, the calculator floors the recommendation there. For a 100kg person, the formula yields 3g, adjusted upward by goal and activity multipliers.",
+      "whyP3": "The loading formula is even more weight-sensitive: 0.3g/kg/day for 5–7 days. A 100kg athlete would take 30g/day during loading, though the ISSN caps this recommendation at 25g to minimize GI stress.",
+      "whyP4": "Beyond weight, your goal (muscle growth vs general health) and activity level further fine-tune the recommendation — which is why our calculator accounts for all three factors.",
+      "moreHeading": "Further Reading"
     },
     "water": {
       "title": "Creatine Water Intake Calculator — Daily ml, oz & Cups",
-      "description": "How much water should you drink on creatine? Get a personalised daily target in litres, ml, fl oz and glasses — scaled by your body weight, activity level and loading phase."
+      "description": "How much water should you drink on creatine? Get your daily target in litres, ml and fl oz — scaled by body weight, activity and loading phase.",
+      "h1": "Creatine Water Intake Calculator",
+      "intro": "Work out how much water to drink while supplementing with creatine. Your target scales with body weight, training load and whether you are loading or maintaining.",
+      "factsTitle": "Hydration Key Facts",
+      "facts": [
+        "Baseline ≈ 35 ml per kg of body weight",
+        "Add ~500 ml during a loading week",
+        "Creatine does not dehydrate you",
+        "More is not better — 4.5 L/day cap"
+      ],
+      "relatedTitle": "Related Tools",
+      "backToMain": "Back to Main Calculator",
+      "toByWeight": "Dose by Weight",
+      "toHcl": "HCl Calculator",
+      "tableHeading": "Daily water target by body weight",
+      "tableIntro": "Maintenance phase, temperate climate. Every figure below is produced by the same formula the calculator uses.",
+      "tableHeaders": [
+        "Body weight",
+        "Sedentary",
+        "Moderately active",
+        "Elite athlete"
+      ],
+      "safetyHeading": "Safety note",
+      "moreHeading": "Further Reading",
+      "s1Heading": "How much water should you drink on creatine?",
+      "s1P1": "For most people the answer lands between 2.5 and 4 litres a day, and the figure moves with your body weight and how hard you train rather than being a single number that suits everyone. A sedentary 60 kg person sits at the lower bound; a 90 kg athlete training twice a day sits near the top.",
+      "s1P2Pre": "The calculator above turns that range into one target for your inputs. If you want the reasoning rather than the number, the",
+      "s1Link": "full hydration guide",
+      "s1P2Post": "covers the research and the practical habits in depth.",
+      "s2Heading": "Why creatine increases your water needs",
+      "s2P1": "Creatine is stored in muscle as phosphocreatine, and it is osmotically active — it pulls water into the muscle cell with it. This is cell volumisation, and it is part of how creatine works rather than a side effect to avoid. It is also why the scale often moves up 1–2 kg in the first week: that is intracellular water, not fat.",
+      "s2P2": "Because more of your total body water is now held inside muscle, keeping overall intake a little higher is sensible. Worth being clear about what the evidence does not say: the ISSN position stand (Kreider et al., 2017) found no evidence that creatine causes dehydration or cramping. Higher intake is about supporting the shift, not correcting a deficit creatine created.",
+      "s3Heading": "Loading vs maintenance hydration",
+      "s3P1": "A loading phase runs 20–25 g per day for 5–7 days to saturate muscle stores quickly. More creatine entering muscle over that week means more water drawn in with it, so the calculator adds 500 ml per day while you are loading.",
+      "s3P2": "On a 3–5 g maintenance dose that extra allowance disappears and your target returns to the baseline figure. If you skip loading entirely — which reaches the same saturation in 3–4 weeks — you never need the loading-week increase at all.",
+      "s4Heading": "How this calculation works",
+      "s4Intro": "There is no official hydration equation the way there is an ISSN dosing guideline, so rather than present a formula as settled science, here is exactly what the tool adds up:",
+      "s4B1": "Baseline — {ml} ml per kg of body weight.",
+      "s4B1Rest": "A standard adult total-water estimate, consistent with the National Academies adequate-intake figures.",
+      "s4B2": "Activity — 0 to {ml} ml.",
+      "s4B2Rest": "Approximates ACSM fluid-replacement guidance; sweat losses scale with training volume.",
+      "s4B3": "Loading — {ml} ml.",
+      "s4B3Rest": "Applied only during a loading week.",
+      "s4B4": "Hot or humid climate — {ml} ml.",
+      "s4B4Rest": "Optional, off by default.",
+      "s4B5": "Floor {floor} ml, cap {cap} ml.",
+      "s4B5Rest": "The floor matches the minimum used across this site. The cap exists because over-hydration carries real risk, so the tool stops rather than scaling without limit.",
+      "s4Close": "The result panel shows each component separately, so you can see how your number was built and judge whether the assumptions fit you.",
+      "safetyBody": "Individual needs vary with climate, sweat rate, diet, and health status. These figures are general estimates, not medical advice. Drinking far beyond your thirst and these targets can cause hyponatremia (low blood sodium). Anyone with kidney or heart conditions, or who is pregnant or breastfeeding, should consult a qualified professional.",
+      "faq": [
+        {
+          "question": "Does creatine dehydrate you?",
+          "answer": "No. Creatine does not dehydrate you — it does the opposite at the cellular level, drawing water into muscle cells. The older dehydration and cramping warnings were not borne out by research; the ISSN position stand (Kreider et al., 2017) reports no evidence that creatine causes dehydration or muscle cramping. What changes is where your body water sits, which is why a modestly higher daily intake is sensible."
+        },
+        {
+          "question": "How much water should I drink with creatine?",
+          "answer": "Most people supplementing with creatine land between 2.5 and 4 litres a day once body weight and training load are accounted for. The calculator above starts from roughly 35 ml per kilogram of body weight, adds for activity level and for a loading phase, and never returns less than 2.5 litres or more than 4.5 litres."
+        },
+        {
+          "question": "Do I need more water during creatine loading?",
+          "answer": "Yes, modestly. A loading phase of 20–25 g per day saturates muscle stores faster and pulls more water into the muscle along with it, so the calculator adds roughly 500 ml per day for the loading week. Once you drop to a 3–5 g maintenance dose, your requirement returns to the maintenance figure."
+        },
+        {
+          "question": "Can you drink too much water on creatine?",
+          "answer": "Yes. Drinking far beyond thirst and these targets can dilute blood sodium and cause hyponatremia, which is rare but serious. This is why the calculator caps its recommendation at 4.5 litres per day rather than scaling upward without limit. Use thirst and pale-yellow urine as your everyday guide, and do not force fluid to hit a number."
+        }
+      ]
     },
     "guide": {
       "title": "Complete Creatine Guide — Dosage, Loading, Types & Safety",
@@ -271,6 +426,10 @@
     "sitemap": {
       "title": "Sitemap — CreatineCalc",
       "description": "A complete index of every page, calculator, and article on CreatineCalc."
+    },
+    "editorial": {
+      "title": "Editorial Team & Review Process — CreatineCalc",
+      "description": "Who writes CreatineCalc, how every dosage figure is sourced and checked, and how to report a correction."
     }
   },
   "waterCalculator": {

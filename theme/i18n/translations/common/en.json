@@ -57,6 +57,7 @@
     "next": "Next",
     "page": "Page",
     "showingResults": "Showing {from}–{to} of {total} articles",
-    "goToPage": "Go to page {page}"
+    "goToPage": "Go to page {page}",
+    "of": "of"
   }
 }

@@ -6,6 +6,7 @@ import AdSlot from '@theme/components/AdSlot.astro';
 import Faq from '@theme/components/Faq.astro';
 import {
   absoluteUrl,
+  getEntry,
   localeStaticPaths,
   localizedUrl,
   useTranslations,
@@ -21,46 +22,31 @@ const path = localizedUrl(locale, '/creatine-hcl-calculator');
 const pageUrl = absoluteUrl(site.url, path);
 const pageName = 'Creatine HCl Dosage Calculator';
 
-// Page-specific English copy: these strings live with the page rather than in
-// the i18n bundles, because they are unique to this landing page.
-const keyFacts = [
-  'Only 1–2g/day needed',
-  '~38x more soluble than monohydrate',
-  'No loading phase required',
-  'Gentler on digestion',
+/*
+ * All visible copy comes from the i18n bundles.
+ *
+ * It used to be hardcoded English here, which meant /ar and /es served an
+ * Arabic or Spanish <title> over an entirely English page — the exact mismatch
+ * that made the by-weight page the site's best-ranked URL and its worst
+ * converting one.
+ */
+const keyFacts = getEntry<string[]>(locale, 'pages.hcl.facts') ?? [];
+const tableHeaders = getEntry<string[]>(locale, 'pages.hcl.tableHeaders') ?? [];
+const comparisonRows = getEntry<[string, string, string][]>(locale, 'pages.hcl.rows') ?? [];
+
+/*
+ * The blog is English-only, so its cards dead-end for an ar/es reader. Those
+ * locales get the sibling calculators, which do exist in their language.
+ */
+const showBlogLinks = locale === 'en';
+
+const siblingTools = [
+  { href: '/', key: 'nav.home' },
+  { href: '/creatine-dosage-by-weight', key: 'nav.byWeight' },
+  { href: '/creatine-water-calculator', key: 'nav.water' },
 ];
 
-const comparisonRows: [string, string, string][] = [
-  ['Daily dose', '3–5g', '1–2g'],
-  ['Loading phase', 'Optional (20–25g/day × 7 days)', 'Not needed'],
-  ['Research backing', 'Extensive (30+ years)', 'Limited but growing'],
-  ['Solubility', 'Lower', '~38x higher'],
-  ['Cost per serving', 'Lower', 'Higher'],
-  ['Stomach sensitivity', 'Occasional bloating', 'Gentler on digestion'],
-];
-
-const faqItems = [
-  {
-    question: 'What is the correct Creatine HCl dose?',
-    answer:
-      'Creatine HCl is typically dosed at 1–2g per day. Because of its superior solubility, your body absorbs it more efficiently than monohydrate, meaning you need roughly 40–50% less to achieve the same muscle saturation.',
-  },
-  {
-    question: 'Does Creatine HCl require a loading phase?',
-    answer:
-      'No. Due to its high bioavailability, Creatine HCl does not require a loading phase. Simply take 1–2g per day consistently.',
-  },
-  {
-    question: 'Is Creatine HCl better than monohydrate?',
-    answer:
-      'Creatine HCl is better tolerated by those with sensitive stomachs and requires a smaller dose. However, monohydrate has 30+ years of research behind it. Both are effective.',
-  },
-  {
-    question: 'Can I take Creatine HCl without water?',
-    answer:
-      'You can, but staying well-hydrated is still important. Drink at least 2.5L of water daily when supplementing with any form of creatine.',
-  },
-];
+const faqItems = getEntry<{ question: string; answer: string }[]>(locale, 'pages.hcl.faq') ?? [];
 
 const furtherReading = [
   {
@@ -139,11 +125,10 @@ const schemas = [breadcrumbSchema, appSchema, ...(faqSchema ? [faqSchema] : [])]
 >
   <section class="mb-10 text-center">
     <h1 class="mb-4 text-4xl font-extrabold text-[var(--text-primary)] md:text-5xl">
-      Creatine HCl Dosage Calculator
+      {t('pages.hcl.h1')}
     </h1>
     <p class="mx-auto max-w-2xl text-lg text-[var(--text-secondary)]">
-      Calculate your optimal Creatine HCl dose. HCl requires 40–50% less than monohydrate due to
-      superior absorption — no loading phase needed.
+      {t('pages.hcl.intro')}
     </p>
   </section>
 
@@ -154,7 +139,7 @@ const schemas = [breadcrumbSchema, appSchema, ...(faqSchema ? [faqSchema] : [])]
 
     <aside class="shrink-0 space-y-5 lg:w-72">
       <div class="rounded-2xl border border-[var(--tint-brand-border)] bg-[var(--tint-brand-bg)] p-5">
-        <p class="mb-3 font-bold text-[var(--tint-brand-ink)]">🔬 HCl Key Facts</p>
+        <p class="mb-3 font-bold text-[var(--tint-brand-ink)]">🔬 {t('pages.hcl.factsTitle')}</p>
         <ul class="space-y-2 text-sm text-[var(--accent)]">
           {
             keyFacts.map((fact) => (
@@ -168,18 +153,18 @@ const schemas = [breadcrumbSchema, appSchema, ...(faqSchema ? [faqSchema] : [])]
       </div>
 
       <div class="rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-5 text-sm">
-        <p class="mb-3 font-bold text-[var(--text-primary)]">Compare Types</p>
+        <p class="mb-3 font-bold text-[var(--text-primary)]">{t('pages.hcl.compareTitle')}</p>
         <a
           href={localizedUrl(locale, '/')}
           class="mb-2 block font-medium text-[var(--accent)] hover:underline"
         >
-          ← Back to Main Calculator
+          ← {t('pages.hcl.backToMain')}
         </a>
         <a
           href={localizedUrl(locale, '/creatine-dosage-by-weight')}
           class="block font-medium text-[var(--accent)] hover:underline"
         >
-          Dose by Weight →
+          {t('pages.hcl.toByWeight')} →
         </a>
       </div>
     </aside>
@@ -189,38 +174,28 @@ const schemas = [breadcrumbSchema, appSchema, ...(faqSchema ? [faqSchema] : [])]
 
   <section class="mb-12">
     <h2 class="mb-4 text-2xl font-bold text-[var(--text-primary)]">
-      Why Does Creatine HCl Require a Lower Dose?
+      {t('pages.hcl.whyHeading')}
     </h2>
-    <p class="mb-3 text-[var(--text-secondary)]">
-      Creatine HCl (hydrochloride) is formed by binding creatine to hydrochloric acid, which
-      dramatically increases its water solubility — approximately <strong
-        >38 times more soluble</strong
-      > than creatine monohydrate. This superior solubility translates directly into better absorption
-      in the gastrointestinal tract.
-    </p>
-    <p class="mb-3 text-[var(--text-secondary)]">
-      Because more of the HCl form is absorbed per gram, you need a smaller dose to saturate your
-      muscles. Where monohydrate requires 3–5g/day for maintenance, HCl typically only needs <strong
-        >1–2g/day</strong
-      > — and no loading phase.
-    </p>
-    <p class="text-[var(--text-secondary)]">
-      This also means less bloating and fewer GI side effects, making HCl the preferred choice for
-      athletes with sensitive stomachs.
-    </p>
+    <p class="mb-3 text-[var(--text-secondary)]">{t('pages.hcl.whyP1')}</p>
+    <p class="mb-3 text-[var(--text-secondary)]">{t('pages.hcl.whyP2')}</p>
+    <p class="text-[var(--text-secondary)]">{t('pages.hcl.whyP3')}</p>
   </section>
 
   <section class="mb-12">
     <h2 class="mb-4 text-2xl font-bold text-[var(--text-primary)]">
-      Creatine HCl vs Monohydrate: Side-by-Side
+      {t('pages.hcl.tableHeading')}
     </h2>
     <div class="overflow-x-auto rounded-xl border border-[var(--border-subtle)]">
       <table class="w-full border-collapse text-sm">
         <thead>
           <tr class="bg-brand-600 text-white">
-            <th scope="col" class="p-3 text-start font-semibold">Factor</th>
-            <th scope="col" class="p-3 text-start font-semibold">Monohydrate</th>
-            <th scope="col" class="p-3 text-start font-semibold">HCl</th>
+            {
+              tableHeaders.map((header) => (
+                <th scope="col" class="p-3 text-start font-semibold">
+                  {header}
+                </th>
+              ))
+            }
           </tr>
         </thead>
         <tbody>
@@ -246,25 +221,38 @@ const schemas = [breadcrumbSchema, appSchema, ...(faqSchema ? [faqSchema] : [])]
   <Faq title={t('faq.title')} items={faqItems} />
 
   <section class="mt-8">
-    <h2 class="mb-6 text-2xl font-bold text-[var(--text-primary)]">Further Reading</h2>
+    <h2 class="mb-6 text-2xl font-bold text-[var(--text-primary)]">{t('pages.hcl.moreHeading')}</h2>
     <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {
-        furtherReading.map((article) => (
-          <li>
-            <a
-              href={localizedUrl(locale, `/blog/${article.slug}`)}
-              class="group block h-full rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-5 transition-all hover:border-[var(--tint-brand-border)] hover:shadow-md"
-            >
-              <h3 class="mb-2 font-bold text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent)]">
-                {article.title}
-              </h3>
-              <p class="text-sm leading-relaxed text-[var(--text-secondary)]">{article.desc}</p>
-              <span class="mt-3 inline-block text-sm font-medium text-[var(--accent)]">
-                {t('common.readArticle')} →
-              </span>
-            </a>
-          </li>
-        ))
+        showBlogLinks
+          ? furtherReading.map((article) => (
+              <li>
+                <a
+                  href={localizedUrl(locale, `/blog/${article.slug}`)}
+                  class="group block h-full rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-5 transition-all hover:border-[var(--tint-brand-border)] hover:shadow-md"
+                >
+                  <h3 class="mb-2 font-bold text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent)]">
+                    {article.title}
+                  </h3>
+                  <p class="text-sm leading-relaxed text-[var(--text-secondary)]">{article.desc}</p>
+                  <span class="mt-3 inline-block text-sm font-medium text-[var(--accent)]">
+                    {t('common.readArticle')} →
+                  </span>
+                </a>
+              </li>
+            ))
+          : siblingTools.map((tool) => (
+              <li>
+                <a
+                  href={localizedUrl(locale, tool.href)}
+                  class="group block h-full rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-5 transition-all hover:border-[var(--tint-brand-border)] hover:shadow-md"
+                >
+                  <h3 class="mb-2 font-bold text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent)]">
+                    {t(tool.key)}
+                  </h3>
+                </a>
+              </li>
+            ))
       }
     </ul>
   </section>

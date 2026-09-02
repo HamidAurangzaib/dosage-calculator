@@ -220,15 +220,170 @@
   "pages": {
     "hcl": {
       "title": "Calculadora de Dosis de Creatina HCl por Peso Corporal",
-      "description": "La creatina HCl requiere un 40–50% menos que el monohidrato. Introduce tu peso y obtén tu dosis exacta de HCl al instante. Calculadora gratuita y basada en la ciencia."
+      "description": "La creatina HCl requiere un 40–50% menos que el monohidrato. Introduce tu peso y obtén tu dosis exacta de HCl al instante. Calculadora gratuita y basada en la ciencia.",
+      "h1": "Calculadora de Dosis de Creatina HCl",
+      "intro": "Calcula tu dosis óptima de creatina HCl. El HCl necesita entre un 40 y un 50% menos que el monohidrato gracias a su mejor absorción, y no requiere fase de carga.",
+      "factsTitle": "Datos clave sobre el HCl",
+      "facts": [
+        "Solo 1–2 g al día",
+        "Unas 38 veces más soluble que el monohidrato",
+        "No necesita fase de carga",
+        "Más suave para la digestión"
+      ],
+      "compareTitle": "Comparar tipos",
+      "backToMain": "Volver a la calculadora principal",
+      "toByWeight": "Dosis por peso",
+      "whyHeading": "Por qué la creatina HCl necesita una dosis menor",
+      "whyP1": "La creatina HCl (clorhidrato) se forma uniendo creatina con ácido clorhídrico, lo que aumenta enormemente su solubilidad en agua: unas 38 veces más soluble que el monohidrato. Esa mayor solubilidad se traduce directamente en una mejor absorción en el tracto digestivo.",
+      "whyP2": "Como se absorbe una proporción mayor por gramo, necesitas una dosis menor para saturar los músculos. Mientras el monohidrato requiere 3–5 g al día de mantenimiento, el HCl suele necesitar solo 1–2 g, y sin fase de carga.",
+      "whyP3": "Esto también significa menos hinchazón y menos molestias digestivas, lo que convierte al HCl en la opción preferida para deportistas con el estómago sensible.",
+      "tableHeading": "Creatina HCl frente a monohidrato: comparativa",
+      "tableHeaders": [
+        "Factor",
+        "Monohidrato",
+        "HCl"
+      ],
+      "moreHeading": "Más calculadoras",
+      "rows": [
+        [
+          "Dosis diaria",
+          "3–5 g",
+          "1–2 g"
+        ],
+        [
+          "Fase de carga",
+          "Opcional (20–25 g/día × 7 días)",
+          "No necesaria"
+        ],
+        [
+          "Respaldo científico",
+          "Amplio (más de 30 años)",
+          "Limitado pero creciente"
+        ],
+        [
+          "Solubilidad",
+          "Menor",
+          "Unas 38 veces mayor"
+        ],
+        [
+          "Coste por toma",
+          "Menor",
+          "Mayor"
+        ],
+        [
+          "Sensibilidad estomacal",
+          "Hinchazón ocasional",
+          "Más suave para la digestión"
+        ]
+      ],
+      "faq": [
+        {
+          "question": "¿Cuál es la dosis correcta de creatina HCl?",
+          "answer": "La creatina HCl se dosifica habitualmente entre 1 y 2 g al día. Gracias a su mayor solubilidad, el cuerpo la absorbe de forma más eficiente que el monohidrato, por lo que necesitas entre un 40 y un 50% menos para lograr la misma saturación muscular."
+        },
+        {
+          "question": "¿La creatina HCl necesita fase de carga?",
+          "answer": "No. Por su alta biodisponibilidad, la creatina HCl no requiere fase de carga. Basta con tomar 1–2 g al día de forma constante."
+        },
+        {
+          "question": "¿Es mejor la creatina HCl que el monohidrato?",
+          "answer": "La creatina HCl la toleran mejor quienes tienen el estómago sensible y necesita una dosis menor. Sin embargo, el monohidrato cuenta con más de 30 años de investigación. Ambas son eficaces."
+        },
+        {
+          "question": "¿Puedo tomar creatina HCl sin agua?",
+          "answer": "Puedes, pero mantenerte bien hidratado sigue siendo importante. Bebe al menos 2,5 L de agua al día cuando tomes cualquier forma de creatina."
+        }
+      ]
     },
     "byWeight": {
       "title": "Dosis de Creatina por Peso — ¿Cuántos Gramos por Kg o Lbs?",
-      "description": "¿No sabes cuánta creatina tomar según tu peso? Introduce tus kg o lbs y obtén tu dosis diaria exacta + fase de carga en segundos. Herramienta gratuita."
+      "description": "¿No sabes cuánta creatina tomar según tu peso? Introduce tus kg o lbs y obtén tu dosis diaria exacta + fase de carga en segundos. Herramienta gratuita.",
+      "h1": "Calculadora de Dosis de Creatina por Peso Corporal",
+      "intro": "Tu peso corporal es el factor principal para determinar tu dosis de creatina. Introduce tu peso exacto en kg o libras y obtén una recomendación personalizada en gramos.",
+      "tableHeading": "Tabla de dosis de creatina por peso corporal",
+      "tableIntro": "Consulta esta tabla rápida para ver las dosis de mantenimiento y de carga habituales según el peso corporal (creatina monohidrato, objetivo de crecimiento muscular, actividad moderada).",
+      "tableHeaders": [
+        "Peso corporal (kg)",
+        "Peso corporal (lbs)",
+        "Dosis de mantenimiento",
+        "Dosis de carga (×7 días)"
+      ],
+      "whyHeading": "Por qué tu peso corporal determina la dosis de creatina",
+      "whyP1": "La creatina se almacena en el tejido muscular como fosfocreatina. Cuanta más masa muscular tengas —algo que suele correlacionar con el peso corporal— mayor debe ser tu reserva total de creatina para alcanzar la saturación completa. Por eso la ISSN recomienda dosificar según el peso corporal en lugar de una dosis fija para todo el mundo.",
+      "whyP2": "La fórmula de mantenimiento es 0,03 gramos de creatina por kilo de peso corporal al día. Para una persona de 70 kg son 2,1 g, pero como la dosis mínima eficaz en la práctica es de 3 g, la calculadora eleva la recomendación hasta ahí. Para una persona de 100 kg la fórmula da 3 g, ajustados al alza según el objetivo y el nivel de actividad.",
+      "whyP3": "La fórmula de carga depende aún más del peso: 0,3 g/kg al día durante 5–7 días. Un atleta de 100 kg tomaría 30 g al día durante la carga, aunque la ISSN limita esta recomendación a 25 g para reducir las molestias digestivas.",
+      "whyP4": "Además del peso, tu objetivo (crecimiento muscular frente a salud general) y tu nivel de actividad afinan aún más la recomendación, y por eso la calculadora tiene en cuenta los tres factores.",
+      "moreHeading": "Más calculadoras"
     },
     "water": {
       "title": "Calculadora de Agua para Creatina — ml, oz y Vasos",
-      "description": "¿Cuánta agua beber con creatina? Obtén un objetivo diario personalizado en litros, ml, oz y vasos — ajustado a tu peso, nivel de actividad y fase de carga."
+      "description": "¿Cuánta agua beber con creatina? Obtén tu objetivo diario en litros, ml y oz, ajustado a tu peso, actividad y fase de carga.",
+      "h1": "Calculadora de Agua para Creatina",
+      "intro": "Calcula cuánta agua beber mientras tomas creatina. Tu objetivo varía según el peso corporal, la carga de entrenamiento y si estás en fase de carga o de mantenimiento.",
+      "factsTitle": "Datos clave sobre hidratación",
+      "facts": [
+        "Base ≈ 35 ml por kg de peso corporal",
+        "Añade unos 500 ml durante la semana de carga",
+        "La creatina no te deshidrata",
+        "Más no es mejor: límite de 4,5 L al día"
+      ],
+      "relatedTitle": "Herramientas relacionadas",
+      "backToMain": "Volver a la calculadora principal",
+      "toByWeight": "Dosis por peso",
+      "toHcl": "Calculadora de HCl",
+      "tableHeading": "Objetivo diario de agua según el peso corporal",
+      "tableIntro": "Fase de mantenimiento, clima templado. Todas las cifras salen de la misma fórmula que usa la calculadora.",
+      "tableHeaders": [
+        "Peso corporal",
+        "Sedentario",
+        "Actividad moderada",
+        "Atleta de élite"
+      ],
+      "safetyHeading": "Nota de seguridad",
+      "moreHeading": "Más calculadoras",
+      "s1Heading": "¿Cuánta agua deberías beber con creatina?",
+      "s1P1": "Para la mayoría de la gente la respuesta está entre 2,5 y 4 litros al día, y la cifra varía según tu peso corporal y la intensidad con la que entrenas, en lugar de ser un número único válido para todos. Una persona sedentaria de 60 kg está en el límite inferior; un atleta de 90 kg que entrena dos veces al día se acerca al superior.",
+      "s1P2Pre": "La calculadora de arriba convierte ese rango en un objetivo concreto para tus datos. Si prefieres el razonamiento antes que la cifra, la",
+      "s1Link": "guía completa de hidratación",
+      "s1P2Post": "cubre en profundidad la investigación y los hábitos prácticos.",
+      "s2Heading": "Por qué la creatina aumenta tu necesidad de agua",
+      "s2P1": "La creatina se almacena en el músculo como fosfocreatina y es osmóticamente activa: arrastra agua hacia el interior de la célula muscular. Esto se llama volumización celular y forma parte de cómo funciona la creatina, no es un efecto secundario que evitar. También explica que la báscula suba 1–2 kg la primera semana: es agua intracelular, no grasa.",
+      "s2P2": "Como ahora una mayor parte del agua corporal está retenida dentro del músculo, tiene sentido mantener la ingesta total algo más alta. Conviene aclarar lo que la evidencia no dice: la declaración de la ISSN (Kreider et al., 2017) no encontró pruebas de que la creatina cause deshidratación ni calambres. Beber más sirve para acompañar ese cambio, no para corregir un déficit creado por la creatina.",
+      "s3Heading": "Hidratación en carga frente a mantenimiento",
+      "s3P1": "Una fase de carga consiste en 20–25 g al día durante 5–7 días para saturar rápidamente las reservas musculares. Que entre más creatina en el músculo esa semana significa que se arrastra más agua con ella, así que la calculadora añade 500 ml al día mientras estás en carga.",
+      "s3P2": "Con una dosis de mantenimiento de 3–5 g esa cantidad extra desaparece y tu objetivo vuelve a la cifra base. Y si te saltas la carga por completo —algo que alcanza la misma saturación en 3–4 semanas— nunca necesitarás ese aumento.",
+      "s4Heading": "Cómo funciona este cálculo",
+      "s4Intro": "No existe una ecuación oficial de hidratación como sí existe una guía de dosificación de la ISSN, así que en lugar de presentar una fórmula como ciencia cerrada, esto es exactamente lo que suma la herramienta:",
+      "s4B1": "Base: {ml} ml por kilo de peso corporal.",
+      "s4B1Rest": "Una estimación estándar de agua total en adultos, coherente con las cifras de ingesta adecuada de las Academias Nacionales.",
+      "s4B2": "Actividad: de 0 a {ml} ml.",
+      "s4B2Rest": "Se aproxima a las recomendaciones de reposición de líquidos de la ACSM; las pérdidas por sudor crecen con el volumen de entrenamiento.",
+      "s4B3": "Carga: {ml} ml.",
+      "s4B3Rest": "Solo se aplica durante la semana de carga.",
+      "s4B4": "Clima cálido o húmedo: {ml} ml.",
+      "s4B4Rest": "Opcional, desactivado por defecto.",
+      "s4B5": "Mínimo {floor} ml, máximo {cap} ml.",
+      "s4B5Rest": "El mínimo coincide con el que usa todo el sitio. El máximo existe porque la sobrehidratación conlleva un riesgo real, así que la herramienta se detiene en lugar de crecer sin límite.",
+      "s4Close": "El panel de resultados muestra cada componente por separado, para que veas cómo se ha construido tu cifra y juzgues si las suposiciones encajan contigo.",
+      "safetyBody": "Las necesidades individuales varían según el clima, la tasa de sudoración, la dieta y el estado de salud. Estas cifras son estimaciones generales, no consejo médico. Beber muy por encima de la sed y de estos objetivos puede provocar hiponatremia (sodio bajo en sangre). Quien tenga problemas renales o cardíacos, o esté embarazada o en periodo de lactancia, debería consultar a un profesional cualificado.",
+      "faq": [
+        {
+          "question": "¿La creatina te deshidrata?",
+          "answer": "No. La creatina no te deshidrata: a nivel celular hace lo contrario, atrayendo agua hacia el interior de las células musculares. Las viejas advertencias sobre deshidratación y calambres no se confirmaron en la investigación; la declaración de la ISSN (Kreider et al., 2017) no encuentra pruebas de que la creatina cause deshidratación ni calambres musculares. Lo que cambia es dónde se sitúa el agua corporal, y por eso tiene sentido una ingesta diaria algo mayor."
+        },
+        {
+          "question": "¿Cuánta agua debo beber con creatina?",
+          "answer": "La mayoría de quienes toman creatina se sitúan entre 2,5 y 4 litros al día una vez considerados el peso corporal y la carga de entrenamiento. La calculadora parte de unos 35 ml por kilo de peso corporal, suma según el nivel de actividad y la fase de carga, y nunca devuelve menos de 2,5 litros ni más de 4,5."
+        },
+        {
+          "question": "¿Necesito más agua durante la carga de creatina?",
+          "answer": "Sí, moderadamente. Una fase de carga de 20–25 g al día satura antes las reservas musculares y arrastra más agua hacia el músculo, así que la calculadora añade unos 500 ml al día durante esa semana. Al volver a una dosis de mantenimiento de 3–5 g, tu necesidad regresa a la cifra de mantenimiento."
+        },
+        {
+          "question": "¿Se puede beber demasiada agua con creatina?",
+          "answer": "Sí. Beber muy por encima de la sed y de estos objetivos puede diluir el sodio en sangre y provocar hiponatremia, algo raro pero grave. Por eso la calculadora limita su recomendación a 4,5 litros al día en lugar de crecer sin tope. Usa la sed y una orina amarillo pálido como guía diaria, y no fuerces la ingesta para alcanzar una cifra."
+        }
+      ]
     },
     "guide": {
       "title": "Guía Completa de Creatina — Dosis, Carga, Tipos y Seguridad",
@@ -257,6 +412,10 @@
     "sitemap": {
       "title": "Mapa del Sitio — CreatineCalc",
       "description": "Un índice completo de todas las páginas, calculadoras y artículos de CreatineCalc."
+    },
+    "editorial": {
+      "title": "Equipo Editorial y Proceso de Revisión — CreatineCalc",
+      "description": "Quién escribe CreatineCalc, cómo se documenta y verifica cada cifra de dosis, y cómo informar de una corrección."
     }
   },
   "waterCalculator": {
