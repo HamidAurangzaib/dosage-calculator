@@ -4,7 +4,7 @@
     "description": "Calculadora de dosis de creatina basada en la ciencia y recurso educativo fundamentado en las directrices de la ISSN."
   },
   "meta": {
-    "title": "Calculadora de Dosis de Creatina — Encuentra tu Dosis Diaria por Peso",
+    "title": "Calculadora de Dosis de Creatina — Dosis Diaria por Peso",
     "description": "Calcula tu dosis exacta de creatina según tu peso corporal, objetivo y nivel de actividad. Basado en las directrices de la ISSN."
   },
   "calculator": {
@@ -173,7 +173,10 @@
     "furtherReading": {
       "title": "Lecturas Adicionales",
       "guideLink": "Guía Completa de Creatina"
-    }
+    },
+    "eyebrow": "Basado en las directrices de la ISSN",
+    "answerLead": "La mayoría toma de 3 a 5 g de creatina monohidrato al día.",
+    "answerRest": "La cifra exacta es tu peso corporal en kilos × 0,03, con un mínimo de 3 g: una persona de 75 kg (165 lb) toma 3 g al día y una de 115 kg (254 lb), 3,5 g. La fase de carga opcional son 0,3 g/kg al día durante 5–7 días. Introduce tu peso abajo para obtener tu cifra."
   },
   "blog": {
     "title": "Artículos y Guías de Creatina",

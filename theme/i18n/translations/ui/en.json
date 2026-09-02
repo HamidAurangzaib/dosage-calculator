@@ -173,7 +173,10 @@
     "furtherReading": {
       "title": "Further Reading",
       "guideLink": "Complete Creatine Guide"
-    }
+    },
+    "eyebrow": "Based on ISSN guidelines",
+    "answerLead": "Most people take 3–5 g of creatine monohydrate per day.",
+    "answerRest": "The exact figure is your body weight in kilograms × 0.03, with a 3 g floor — so a 75 kg (165 lb) lifter takes 3 g/day and a 115 kg (254 lb) lifter takes 3.5 g/day. An optional loading phase runs 0.3 g/kg/day for 5–7 days. Enter your weight below for your own number."
   },
   "blog": {
     "title": "Creatine Articles & Guides",
