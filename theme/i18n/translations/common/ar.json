@@ -57,6 +57,7 @@
     "next": "التالي",
     "page": "صفحة",
     "showingResults": "عرض {from}–{to} من {total} مقالاً",
-    "goToPage": "اذهب إلى الصفحة {page}"
+    "goToPage": "اذهب إلى الصفحة {page}",
+    "of": "من"
   }
 }

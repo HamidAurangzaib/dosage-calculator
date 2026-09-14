@@ -5,6 +5,7 @@ import site from '@/config/site.json';
 import Header from '@theme/components/Header.astro';
 import Footer from '@theme/components/Footer.astro';
 import Analytics from '@theme/components/Analytics.astro';
+import AdSense from '@theme/components/AdSense.astro';
 import Motion from '@theme/components/Motion.astro';
 import PushNotifications from '@theme/components/PushNotifications.astro';
 import PwaInstallPrompt from '@theme/components/PwaInstallPrompt.astro';
@@ -171,6 +172,7 @@ const indexable = !/noindex/i.test(robots);
     <slot name="head" />
 
     <Analytics />
+    <AdSense />
   </head>
 
   <body class="relative flex min-h-screen flex-col overflow-x-hidden">

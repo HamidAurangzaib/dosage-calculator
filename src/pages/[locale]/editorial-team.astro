@@ -22,9 +22,9 @@ const path = localizedUrl(locale, '/editorial-team');
 const posts = await getCollection('blog', ({ data }) => !data.draft);
 const reviewed = posts.filter((post) => post.data.reviewedBy).length;
 
-const title = 'Editorial Team & Review Process — CreatineCalc';
-const description =
-  'Who writes CreatineCalc, how every dosage figure is sourced and checked, and how to report a correction.';
+// Per-locale, so /ar and /es no longer share one English title with /en.
+const title = t('pages.editorial.title');
+const description = t('pages.editorial.description');
 
 // The AboutPage node comes from `pageType="about"` below — SeoHead builds it
 // once with a stable @id and a reference to the shared Organization, so a

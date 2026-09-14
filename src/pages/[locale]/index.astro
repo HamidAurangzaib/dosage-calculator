@@ -81,6 +81,14 @@ const FURTHER_READING_SLUGS = [
   'how-much-creatine-per-day-by-weight',
 ];
 
+const showBlogLinks = locale === 'en';
+
+const siblingTools = [
+  { href: '/creatine-dosage-by-weight', key: 'nav.byWeight' },
+  { href: '/creatine-hcl-calculator', key: 'nav.hcl' },
+  { href: '/creatine-water-calculator', key: 'nav.water' },
+];
+
 const posts = await getCollection('blog', ({ data }) => !data.draft);
 const furtherReading = FURTHER_READING_SLUGS.map((slug) =>
   posts.find((post) => post.id === slug),
@@ -134,7 +142,7 @@ const homeSchemas = [appSchema, ...(faqSchema ? [faqSchema] : [])];
 >
 
   <section class="mb-10 text-center">
-    <p class="eyebrow mb-4">Based on ISSN guidelines</p>
+    <p class="eyebrow mb-4">{t('home.eyebrow')}</p>
 
     <!--
       Words rise in sequence. Each is a real text node inside the h1, so the
@@ -152,6 +160,21 @@ const homeSchemas = [appSchema, ...(faqSchema ? [faqSchema] : [])];
       style="--reveal-delay:320ms"
     >
       {t('home.intro')}
+    </p>
+
+    <!--
+      The answer, in text, before the tool.
+      The calculator is a client island, so a crawler reads nothing from it —
+      and the queries arriving here are "how much creatine should i take"
+      variants. This paragraph answers them without needing JavaScript.
+    -->
+    <p
+      class="mx-auto mb-7 max-w-2xl text-pretty text-[var(--text-secondary)]"
+      data-reveal
+      style="--reveal-delay:360ms"
+    >
+      <strong class="text-[var(--text-primary)]">{t('home.answerLead')}</strong>{' '}
+      {t('home.answerRest')}
     </p>
 
     <ul class="flex flex-wrap justify-center gap-2.5 text-sm" data-reveal-group>
@@ -323,7 +346,8 @@ const homeSchemas = [appSchema, ...(faqSchema ? [faqSchema] : [])];
     <h2 class="mb-6 text-2xl font-bold text-[var(--text-primary)]">{t('home.furtherReading.title')}</h2>
     <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {
-        furtherReading.map((post) => (
+        showBlogLinks
+        ? furtherReading.map((post) => (
           <li>
             <a
               href={localizedUrl(locale, `/blog/${post.id}`)}
@@ -338,6 +362,18 @@ const homeSchemas = [appSchema, ...(faqSchema ? [faqSchema] : [])];
               <span class="mt-3 inline-block text-sm font-medium text-[var(--accent)]">
                 {t('common.readArticle')} →
               </span>
+            </a>
+          </li>
+        ))
+        : siblingTools.map((tool) => (
+          <li>
+            <a
+              href={localizedUrl(locale, tool.href)}
+              class="group block h-full rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-5 transition-all hover:border-[var(--tint-brand-border)] hover:shadow-md"
+            >
+              <h3 class="mb-2 text-base font-bold text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent)]">
+                {t(tool.key)}
+              </h3>
             </a>
           </li>
         ))

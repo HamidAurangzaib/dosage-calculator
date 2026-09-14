@@ -1,0 +1,32 @@
+---
+/**
+ * Google AdSense site-level loader.
+ *
+ * This is the snippet AdSense asks for during site review: it goes in <head>
+ * on every page so the crawler can confirm the publisher owns the site. It
+ * places no ad units by itself — Auto ads or manual units are configured in
+ * the AdSense dashboard after approval.
+ *
+ * `async` is correct here, unlike the Adsterra tag in AdSlot.astro:
+ * adsbygoogle.js never document.writes, so it can load without blocking the
+ * parser. Must stay a plain inline tag rather than a bundled script, or
+ * Astro would rewrite it and AdSense's verifier would not recognise it.
+ */
+import site from '@/config/site.json';
+
+// Constrained to the shape Google issues, so a typo in config becomes a missing
+// tag rather than an injected URL.
+const client = /^ca-pub-\d{16}$/.test(site.adsense?.client ?? '') ? site.adsense.client : '';
+const enabled = Boolean(site.adsense?.enabled && client);
+---
+
+{
+  enabled && (
+    <script
+      is:inline
+      async
+      src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${client}`}
+      crossorigin="anonymous"
+    />
+  )
+}

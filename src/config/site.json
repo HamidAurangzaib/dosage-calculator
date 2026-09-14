@@ -21,6 +21,10 @@
     "width": 468,
     "height": 60
   },
+  "adsense": {
+    "enabled": true,
+    "client": "ca-pub-7279468081497893"
+  },
   "push": {
     "appId": "6a2e9401-d0a5-48e1-bd4d-15b1609367c5",
     "safariWebId": "web.onesignal.auto.283a79e5-74a1-4b9f-8067-e75dbf426ba4"
