@@ -15,7 +15,7 @@
     "gaMeasurementId": "G-DKF13YZ9HK"
   },
   "ads": {
-    "enabled": true,
+    "enabled": false,
     "network": "adsterra",
     "key": "31b53858ada7a3d39d65049519ba9d22",
     "width": 468,
